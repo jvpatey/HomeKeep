@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vanilla HTML with Tailwind CSS and DaisyUI</title>
+    <!-- Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Tailwind CSS Dark Mode Plugin -->
+    <script src="https://cdn.jsdelivr.net/npm/tailwindcss-dark-mode"></script>
+</head>
+
+<body class="bg-white dark:bg-gray-900 text-black dark:text-white">
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-4">Welcome to Vanilla HTML with Tailwind CSS and DaisyUI</h1>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2">Using Tailwind CSS</h2>
+                <p class="text-lg">Tailwind CSS is a utility-first CSS framework that helps you quickly build
+                    custom designs.</p>
+            </div>
+            <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-2">Using DaisyUI</h2>
+                <p class="text-lg">DaisyUI is a component library for Tailwind CSS that provides beautiful
+                    UI components.</p>
+                    <div class="form-checkbox mt-2">
+                        <input type="checkbox" class="form-checkbox h-6 w-6 text-blue-500">
+                        <label class="ml-2">Example Checkbox</label>
+                    </div>
+
+                    <input type="checkbox" class="toggle" checked />
+
+                    <div class="card w-96 bg-base-100 shadow-xl">
+                        <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes" /></figure>
+                        <div class="card-body">
+                          <h2 class="card-title">Shoes!</h2>
+                          <p>If a dog chews shoes whose shoes does he choose?</p>
+                          <div class="card-actions justify-end">
+                            <button class="btn btn-primary">Action</button>
+                          </div>
+                        </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
