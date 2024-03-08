@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeKeep - Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                navy: '#082032',
+                smoke: '#2C394B',
+                teal: '#334756',
+                orange: '#FF4C29'
+              }
+            }
+          }
+        }
+      </script>
+</head>
+
+<body class="bg-navy h-screen">
+
+    <div class="navbar bg-navy">
+        <div class="flex-1">
+          <a class="btn btn-ghost text-xl text-orange">HomeKeep</a>
+        </div>
+        <div class="flex-none">
+        </div>
+        <div class="flex space-x-6">
+            <label class="label">
+                <a href="#" class="label-text-alt text-base link link-hover">Sign-In</a>
+            </label>
+            <label class="label">
+                <a href="#" class="label-text-alt text-base link link-hover">Sign-Up</a>
+            </label>
+            <label class="label">
+                <a href="#" class="label-text-alt pr-4 text-base link link-hover">Help</a>
+            </label>
+        </div>
+      </div>
+
+      <div class="hero min-h-screen bg-navy">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+          <div class="text-center lg:text-left">
+            <h1 class="text-5xl font-bold pl-2">Welcome to HomeKeep</h1>
+            <p class="py-6 pl-2">Get ready to simplify your life and ensure your home is always in tip-top condition</p>
+          </div>
+          <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-smoke">
+            <form class="card-body">
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Email</span>
+                </label>
+                <input type="email" placeholder="email" class="input input-bordered bg-teal" required />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Password</span>
+                </label>
+                <input type="password" placeholder="password" class="input input-bordered bg-teal" required />
+                <label class="label">
+                  <a href="#" class="label-text-alt link link-hover font-bold">New User? Sign-Up</a>
+                </label>
+              </div>
+              <div class="form-control mt-6">
+                <button class="btn btn-primary bg-orange border-orange text-navy">Login</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
+        <span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+            <li>
+                <a href="#" class="hover:underline me-4 md:me-6">Help</a>
+            </li>
+        </ul>
+    </footer>
+    
+</body>
+</html>
