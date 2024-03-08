@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeKeep - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                navy: '#082032',
+                smoke: '#2C394B',
+                teal: '#334756',
+                orange: '#FF4C29'
+              }
+            }
+          }
+        }
+      </script>
+</head>
+
+<body class="bg-navy h-screen">
+
+    <div class="navbar bg-navy">
+        <div class="flex-1">
+          <a class="btn btn-ghost text-xl text-orange">HomeKeep</a>
+        </div>
+        <div class="flex-none">
+        </div>
+        <div class="flex space-x-6">
+            <label class="label">
+                <a href="#" class="label-text-alt text-base link link-hover">Dashboard</a>
+            </label>
+            <label class="label pr-5">
+                <a href="#" class="label-text-alt text-base font-light link link-hover">Sign Out</a>
+            </label>
+        </div>
+      </div>
+
+      <div class="flex items-end pt-16 pl-8">
+        <button class=" btn border-orange bg-navy text-orange text-sm m-2">+</button>
+        <button class=" btn border-orange bg-navy text-orange text-sm m-2">Calendar View</button>
+      </div>
+
+
+      <!-- Table with sample data -->
+      <div class="overflow-x-auto px-8">
+        <table class="table bg-smoke">
+          <!-- head -->
+          <thead class="text-orange">
+            <tr>
+              <th>Task</th>
+              <th>Category</th>
+              <th>Start Date</th>
+              <th>Maintenance Interval</th>
+              <th style="width: 250px;">Description</th>
+              <th>Reminder On/Off</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- row 1 -->
+            <tr>
+              <td>
+                <div class="flex items-center gap-3">
+                  <div>
+                    <div class="font-bold">Heat pump filters</div>
+                  </div>
+                </div>
+              </td>
+              <td>Heating/Cooling</td>
+              <td>March 15, 2024</td>
+              <td>14 days</td>
+              <td>Remove, clean, and reinstall heat pump filters for all units</td>
+              <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+              <td class-="flex items-center justify-center"><i class="fa-solid fa-pencil pr-2"></i><i class="fa-solid fa-trash pl-2"></i></td>
+            </tr>
+            <!-- row 2 -->
+            <tr>
+                <td>
+                  <div class="flex items-center gap-3">
+                    <div>
+                      <div class="font-bold">Water softener salt</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Water system</td>
+                <td>March 30, 2024</td>
+                <td>30 days</td>
+                <td>Add 2 bags of water softening salt to system</td>
+                <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+                <td class-="flex items-center justify-center"><i class="fa-solid fa-pencil pr-2"></i><i class="fa-solid fa-trash pl-2"></i></td>
+              </tr>
+            <!-- row 3 -->
+            <tr>
+                <td>
+                  <div class="flex items-center gap-3">
+                    <div>
+                      <div class="font-bold">Air exchanger filter</div>
+                    </div>
+                  </div>
+                </td>
+                <td>HVAC</td>
+                <td>March 30, 2024</td>
+                <td>90 days</td>
+                <td>Remove, clean, and reinstall air exchanger filter</td>
+                <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+                <td class-="flex items-center justify-center"><i class="fa-solid fa-pencil pr-2"></i><i class="fa-solid fa-trash pl-2"></i></td>
+              </tr>
+            <!-- row 4 -->
+            <tr>
+                <td>
+                  <div class="flex items-center gap-3">
+                    <div>
+                      <div class="font-bold">Testing smoke detectors</div>
+                    </div>
+                  </div>
+                </td>
+                <td>Fire safety</td>
+                <td>March 30, 2024</td>
+                <td>60 days</td>
+                <td>Test smoke detectors in home to ensure proper function</td>
+                <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+                <td class-="flex items-center justify-center"><i class="fa-solid fa-pencil pr-2"></i><i class="fa-solid fa-trash pl-2"></i></td>
+              </tr>
+          </tbody>
+          <!-- foot -->
+          <tfoot class="text-orange">
+            <tr>
+                <th>Task</th>
+                <th>Category</th>
+                <th>Start Date</th>
+                <th>Maintenance Interval</th>
+                <th>Description</th>
+                <th>Reminder On/Off</th>
+                <th></th>
+              </tr>
+          </tfoot>
+          
+        </table>
+      </div>
+
+    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
+        <span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+            <li>
+                <a href="#" class="hover:underline me-4 md:me-6">Help</a>
+            </li>
+        </ul>
+    </footer>
+    
+</body>
+</html>
