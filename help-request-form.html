@@ -15,7 +15,8 @@
                 navy: '#082032',
                 smoke: '#2C394B',
                 teal: '#334756',
-                orange: '#FF4C29'
+                orange: '#FF4C29',
+                grey: '#a5adbb'
               }
             }
           }
@@ -27,7 +28,7 @@
 
     <div class="navbar bg-navy">
         <div class="flex-1">
-          <a href="dashboard.html" target="_self" class="btn btn-ghost text-xl text-orange">HomeKeep</a>
+          <a href="dashboard.html" target="_self" class="btn btn-ghost text-xl text-orange hover:bg-navy hover:text-grey">HomeKeep</a>
         </div>
         <div class="flex-none">
         </div>
@@ -47,8 +48,8 @@
             </label>
             <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-teal" placeholder="Message"></textarea>
             <div class="mx-auto w-44 py-2">
-                <button onclick="window.location.href = 'dashboard.html';" class="btn bg-orange border-teal text-navy">Cancel</button>
-                <button class="btn bg-orange border-teal text-navy">Submit</button>
+                <button onclick="window.location.href = 'dashboard.html';" class="btn bg-orange border-teal text-navy hover:bg-navy hover:border-navy hover:text-orange">Cancel</button>
+                <button class="btn bg-orange border-teal text-navy hover:bg-navy hover:border-navy hover:text-orange">Submit</button>
             </div>
         </div>
     </div>
