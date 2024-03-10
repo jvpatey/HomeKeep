@@ -35,32 +35,32 @@
       </div>
     
     <div class="container mx-auto p-4"></div>
-        <div class="w-96 mx-auto bg-smoke p-4 rounded-md">
+        <form id="addTaskForm" class="w-96 mx-auto bg-smoke p-4 rounded-md">
             <h1 class="text-center text-xl mb-3 text-beige">Add a Task</h1>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Task Name" />
+                <input id="taskName" type="text" class="grow" placeholder="Task Name" />
             </label>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Category" />
+                <input id="category" type="text" class="grow" placeholder="Category" />
             </label>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Maintenance Start Date" />
+                <input id="startDate" type="text" class="grow" placeholder="Maintenance Start Date" />
             </label>
             <label class="input input-bordered flex items-center gap-2 bg-teal">
-                <input type="text" class="grow" placeholder="Maintenance Interval" />
+                <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
             </label>
-            <textarea class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-teal" placeholder="Maintenace Description"></textarea>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-teal" placeholder="Maintenace Description"></textarea>
             <div class="form-control">
                 <label class="label cursor-pointer">
                   <span class="label-text text-base text-beige mx-auto">Set Reminder?</span> 
                   <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey mx-auto checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
                 </label>
-              </div>
-            <div class="mx-auto w-44 py-2">
-                <button onclick="window.location.href = 'dashboard.html';" class="btn bg-orange border-orange text-navy hover:border-navy hover:text-orange hover:bg-navy">Cancel</button>
-                <button class="btn bg-orange border-orange text-navy hover:border-navy hover:text-orange hover:bg-navy">Submit</button>
             </div>
-        </div>
+            <div class="mx-auto w-44 py-2">
+                <button type="button" onclick="window.location.href ='dashboard.html';" class="btn bg-orange border-orange text-navy hover:border-navy hover:text-orange hover:bg-navy">Cancel</button>
+                <button type="button" onclick="saveFormData()" class="btn bg-orange border-orange text-navy hover:border-navy hover:text-orange hover:bg-navy">Submit</button>
+            </div>
+          </form>
     </div>
 
     <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6">
@@ -75,6 +75,7 @@
             </li>
         </ul>
     </footer>
-    
+ 
+<script src="script.js"></script> 
 </body>
 </html>

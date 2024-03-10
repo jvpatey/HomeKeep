@@ -51,7 +51,7 @@
 
       <!-- Table with sample data -->
       <div class="overflow-x-auto px-8">
-        <table class="table bg-smoke">
+        <table class="table bg-smoke" id="taskTable">
           <!-- head -->
           <thead class="text-orange">
             <tr>
@@ -126,23 +126,10 @@
                 <td>March 30, 2024</td>
                 <td>60 days</td>
                 <td>Test smoke detectors in home to ensure proper function</td>
-                <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+                <td  class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
                 <td class-="flex items-center justify-center"><a href="edit-task-form.html" class="fa-solid fa-pencil pr-2 hover:text-orange"></a><i class="fa-solid fa-trash pl-2 hover:text-orange"></i></td>
               </tr>
-          </tbody>
-          <!-- foot -->
-          <tfoot class="text-orange">
-            <tr>
-                <th>Task</th>
-                <th>Category</th>
-                <th>Start Date</th>
-                <th>Maintenance Interval</th>
-                <th>Description</th>
-                <th>Reminder On/Off</th>
-                <th></th>
-              </tr>
-          </tfoot>
-          
+            </tbody>
         </table>
       </div>
 
@@ -155,6 +142,7 @@
             </li>
         </ul>
     </footer>
-    
+
+<script src="script.js"></script>
 </body>
 </html>
