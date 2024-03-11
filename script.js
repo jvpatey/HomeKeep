@@ -39,14 +39,50 @@ function addToTable(task, category, startDate, interval, description) {
     var cell3 = row.insertCell(2);
     var cell4 = row.insertCell(3);
     var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    var cell7 = row.insertCell(6);
    
     cell1.innerHTML = task;
     cell2.innerHTML = category;
     cell3.innerHTML = startDate;
     cell4.innerHTML = interval;
     cell5.innerHTML = description;
-}
+
+    // DaisyUI toggle switch for cell 3
+    var toggleSwitch = document.createElement('input');
+    toggleSwitch.type = 'checkbox';
+    toggleSwitch.classList.add('toggle');
+    cell6.appendChild(toggleSwitch);
+    cell6.classList.add('flex', 'items-center', 'justify-center'); // Center toggle switch
+
+    // Flex container for icons in cell 7
+    var iconsContainer = document.createElement('div');
+    iconsContainer.classList.add('flex', 'items-center');
+
+    // Anchor for pencil icon
+    var editLink = document.createElement('a');
+    editLink.href = 'edit-task-form.html'; // Link destination
+    editLink.style.marginRight = '8px'; // Add spacing between icons
+    iconsContainer.appendChild(editLink);
+
+    // Font Awesome pencil icon
+    var pencilIcon = document.createElement('i');
+    pencilIcon.className = 'fas fa-pencil-alt';
+    pencilIcon.classList.add('hover:text-orange');
+    editLink.appendChild(pencilIcon);
+
+    // Font Awesome garbage can icon
+    var garbageIcon = document.createElement('i');
+    garbageIcon.className = 'fas fa-trash-alt';
+    garbageIcon.classList.add('hover:text-orange');
+    iconsContainer.appendChild(garbageIcon);
+
+    // Append the icons container to cell 7
+    cell7.appendChild(iconsContainer);
+
+    pencilIcon.style.marginRight = '10px';
+};
 
 if (document.getElementById("taskTable")) {
     displayFormData();
-}
+};

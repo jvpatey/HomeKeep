@@ -50,10 +50,10 @@
 
 
       <!-- Table with sample data -->
-      <div class="overflow-x-auto px-8">
-        <table class="table bg-smoke" id="taskTable">
+        <div class="px-8 h-96 overflow-scroll">
+        <table class="overflow-scroll table bg-smoke" id="taskTable">
           <!-- head -->
-          <thead class="text-orange">
+          <thead class="text-orange text-base">
             <tr>
               <th>Task</th>
               <th>Category</th>
@@ -78,8 +78,8 @@
               <td>March 15, 2024</td>
               <td>14 days</td>
               <td>Remove, clean, and reinstall heat pump filters for all units</td>
-              <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
-              <td class-="flex items-center justify-center"><a href="edit-task-form.html" class="fa-solid fa-pencil pr-2 hover:text-orange"></a><i class="fa-solid fa-trash pl-2 hover:text-orange"></i></td>
+              <td class="flex items-center justify-center"><input type="checkbox" class="toggle" checked /></td>
+              <td id="icons" class-="flex items-center justify-center"><a href="edit-task-form.html" class="fa-solid fa-pencil pr-2 hover:text-orange"></a><i class="fa-solid fa-trash pl-2 hover:text-orange"></i></td>
             </tr>
             <!-- row 2 -->
             <tr>
@@ -94,7 +94,7 @@
                 <td>March 30, 2024</td>
                 <td>30 days</td>
                 <td>Add 2 bags of water softening salt to system</td>
-                <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+                <td class="flex items-center justify-center"><input type="checkbox" class="toggle" checked /></td>
                 <td class-="flex items-center justify-center"><a href="edit-task-form.html" class="fa-solid fa-pencil pr-2 hover:text-orange"></a><i class="fa-solid fa-trash pl-2 hover:text-orange"></i></td>
               </tr>
             <!-- row 3 -->
@@ -110,7 +110,7 @@
                 <td>March 30, 2024</td>
                 <td>90 days</td>
                 <td>Remove, clean, and reinstall air exchanger filter</td>
-                <td class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+                <td class="flex items-center justify-center"><input type="checkbox" class="toggle" checked /></td>
                 <td class-="flex items-center justify-center"><a href="edit-task-form.html" class="fa-solid fa-pencil pr-2 hover:text-orange"></a><i class="fa-solid fa-trash pl-2 hover:text-orange"></i></td>
               </tr>
             <!-- row 4 -->
@@ -126,15 +126,15 @@
                 <td>March 30, 2024</td>
                 <td>60 days</td>
                 <td>Test smoke detectors in home to ensure proper function</td>
-                <td  class="flex items-center justify-center"><input type="checkbox" class="toggle toggle-success" checked /></td>
+                <td  class="flex items-center justify-center"><input type="checkbox" class="toggle" checked /></td>
                 <td class-="flex items-center justify-center"><a href="edit-task-form.html" class="fa-solid fa-pencil pr-2 hover:text-orange"></a><i class="fa-solid fa-trash pl-2 hover:text-orange"></i></td>
               </tr>
             </tbody>
         </table>
       </div>
 
-    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
-        <span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-navy border-navy shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
+        <span class="text-sm text-grey sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
         </span>
         <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
             <li>
