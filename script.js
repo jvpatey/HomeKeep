@@ -1,3 +1,4 @@
+// function to save form from add a task table
 function saveFormData() {
     var task = document.getElementById("taskName").value;
     var category = document.getElementById("category").value;
@@ -12,13 +13,12 @@ function saveFormData() {
     }
 
     existingData.push({ task: task, category: category, startDate: startDate, interval: interval, description: description});
-    
     localStorage.setItem('formData', JSON.stringify(existingData));
-
     window.location.href = 'dashboard.html';
 
     };
 
+// function to retrieve the data from storage to display it in the table
 function displayFormData() {
     var formData = JSON.parse(localStorage.getItem('formData'));
 
@@ -29,6 +29,7 @@ function displayFormData() {
     }
 }
 
+// function to add a new row to exisiting table with the retrieved data
 function addToTable(task, category, startDate, interval, description) {
     
     var table = document.getElementById("taskTable");
@@ -48,12 +49,12 @@ function addToTable(task, category, startDate, interval, description) {
     cell4.innerHTML = interval;
     cell5.innerHTML = description;
 
-    // DaisyUI toggle switch for cell 3
+    // DaisyUI toggle switch for cell 6
     var toggleSwitch = document.createElement('input');
     toggleSwitch.type = 'checkbox';
     toggleSwitch.classList.add('toggle');
     cell6.appendChild(toggleSwitch);
-    cell6.classList.add('flex', 'items-center', 'justify-center'); // Center toggle switch
+    cell6.classList.add('flex', 'items-center', 'justify-center');
 
     // Flex container for icons in cell 7
     var iconsContainer = document.createElement('div');
@@ -61,8 +62,8 @@ function addToTable(task, category, startDate, interval, description) {
 
     // Anchor for pencil icon
     var editLink = document.createElement('a');
-    editLink.href = 'edit-task-form.html'; // Link destination
-    editLink.style.marginRight = '8px'; // Add spacing between icons
+    editLink.href = 'edit-task-form.html';
+    editLink.style.marginRight = '8px';
     iconsContainer.appendChild(editLink);
 
     // Font Awesome pencil icon
@@ -76,8 +77,6 @@ function addToTable(task, category, startDate, interval, description) {
     garbageIcon.className = 'fas fa-trash-alt';
     garbageIcon.classList.add('hover:text-orange');
     iconsContainer.appendChild(garbageIcon);
-
-    // Append the icons container to cell 7
     cell7.appendChild(iconsContainer);
 
     pencilIcon.style.marginRight = '10px';
