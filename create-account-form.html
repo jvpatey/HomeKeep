@@ -33,28 +33,31 @@
         <div class="flex-none">
         </div>
       </div>
-    
-    <div class="container mx-auto p-4"></div>
-        <div class="w-96 mx-auto bg-smoke p-4 rounded-md">
-            <h1 class="text-center text-xl mb-3">Create Account</h1>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="First Name" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Last Name" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Email Address" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="password" class="grow" placeholder="Password" />
-            </label>
-            <div class="mx-auto w-44 py-2">
-                <button onclick="window.location.href = 'welcome-screen.html';" class="btn bg-orange border-teal text-navy hover:border-navy hover:text-orange hover:bg-navy">Cancel</button>
-                <button class="btn bg-orange border-teal text-navy hover:border-navy hover:text-orange hover:bg-navy">Submit</button>
-            </div>
-        </div>
+
+    <div class="hero mx-auto pt-10 bg-navy">
+      <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-smoke">
+        <form class="card-body">
+          <h1 class="text-center text-2xl mb-1">Create an Account</h1>
+          <div class="form-control">
+            <input type="text" placeholder="first name" class="input input-bordered bg-teal" required />
+          </div>
+          <div class="form-control">
+            <input type="text" placeholder="last name" class="input input-bordered bg-teal" required />
+          </div>
+          <div class="form-control">
+            <input type="email" placeholder="email address" class="input input-bordered bg-teal" required />
+          </div>
+          <div class="form-control">
+            <input type="password" placeholder="password" class="input input-bordered bg-teal" required />
+          </div>
+          <div class="mx-auto w-44 py-2">
+            <button onclick="window.location.href = 'welcome-screen.html';" class="btn bg-orange border-teal text-navy hover:bg-navy hover:border-navy hover:text-orange">Cancel</button>
+            <button class="btn btn-primary bg-orange border-orange text-navy hover:bg-navy hover:text-orange hover:border-navy">Login</button>
+          </div>
+        </form>
+      </div>
     </div>
+  </div>
 
     <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6">
         <span class="text-sm sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
