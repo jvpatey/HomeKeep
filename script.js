@@ -1,4 +1,4 @@
-// function to save form from add a task table
+// function to save form from "add a task" table
 function saveFormData() {
     var task = document.getElementById("taskName").value;
     var category = document.getElementById("category").value;
@@ -18,7 +18,7 @@ function saveFormData() {
 
     };
 
-// function to retrieve the data from storage to display it in the table
+// function to retrieve the data from storage to display it in the dashboard table
 function displayFormData() {
     var formData = JSON.parse(localStorage.getItem('formData'));
 
@@ -26,22 +26,37 @@ function displayFormData() {
         formData.forEach(entry => {
             addToTable(entry.task, entry.category, entry.startDate, entry.interval, entry.description);
         });
+    } else {
+        addToTable('', '', '', '', '');
+        var emptyRow = document.getElementById("taskTable").querySelector('.empty-row');
+        emptyRow.classList.add('empty-row');
     }
 }
 
-// function to add a new row to exisiting table with the retrieved data
+// function to add a new row to exisiting dashboard table with the retrieved data
 function addToTable(task, category, startDate, interval, description) {
     
     var table = document.getElementById("taskTable");
-    var row = table.insertRow(-1);
+    var tbody = table.querySelector('tbody');
 
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    var cell7 = row.insertCell(6);
+    // check if there are any empty rows
+    var emptyRow = tbody.querySelector('.empty-row');
+
+    // if statement to check if first row needs to replace the empty default row
+    if (emptyRow) {
+        var newRow = emptyRow;
+        newRow.classList.remove('empty-row'); 
+    } else {
+        var newRow = tbody.insertRow(-1);
+    };
+
+    var cell1 = newRow.insertCell(0);
+    var cell2 = newRow.insertCell(1);
+    var cell3 = newRow.insertCell(2);
+    var cell4 = newRow.insertCell(3);
+    var cell5 = newRow.insertCell(4);
+    var cell6 = newRow.insertCell(5);
+    var cell7 = newRow.insertCell(6);
    
     cell1.innerHTML = task;
     cell2.innerHTML = category;
