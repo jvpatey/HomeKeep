@@ -95,7 +95,24 @@ function addToTable(task, category, startDate, interval, description) {
     cell7.appendChild(iconsContainer);
 
     pencilIcon.style.marginRight = '10px';
-};
+
+    // adding delete functionality to garbage can icon
+    garbageIcon.addEventListener('click', function() {
+        var rowIndex = newRow.rowIndex;
+        table.deleteRow(rowIndex);
+        if (table.rows.length === 1) {
+            emptyRow = tbody.querySelector('.empty-row');
+            if (!emptyRow) {
+                emptyRow = tbody.insertRow(-1);
+                emptyRow.classList.add('empty-row');
+                var emptyCell = emptyRow.insertCell(0);
+                emptyCell.colSpan = 7;
+                emptyCell.classList.add('text-center');
+                emptyCell.textContent = 'No tasks added yet';
+            }
+        }
+    });
+}
 
 if (document.getElementById("taskTable")) {
     displayFormData();
