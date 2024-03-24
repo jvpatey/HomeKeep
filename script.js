@@ -226,3 +226,8 @@ function showHelpModal() {
         helpModal.showModal();
     }
 };
+
+function toggleDropdown() {
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.classList.toggle("hidden")
+    };

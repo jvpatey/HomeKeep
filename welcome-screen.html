@@ -27,22 +27,26 @@
 </head>
 
 <body class="bg-navy h-screen">
-    <div class="navbar bg-navy">
-        <div class="flex-1">
-          <a href="welcome-screen.html" target="_self" class="btn btn-ghost text-2xl bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</a>
-        </div>
-        <div class="flex space-x-6">
-            <label class="label">
-                <a href="sign-in-form.html" target="_self" class="label-text-alt text-base link link-hover">Sign-In</a>
-            </label>
-            <label class="label">
-                <a href="create-account-form.html" target="_self" class="label-text-alt text-base link link-hover">Sign-Up</a>
-            </label>
-            <label class="label">
-                <a id="helpLink" href="#" class="label-text-alt pr-4 text-base link link-hover" onclick="showHelpModal(); return false;">Help</a>
-            </label>
-        </div>
+  <!--navbar -->
+  <div class="navbar bg-navy">
+    <div class="navbar-start">
+      <a href="welcome-screen.html" target="_self" class="btn btn-ghost text-3xl bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</a>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown relative">
+        <button class="btn btn-ghost" tabindex="0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
+          <li><a href="sign-in-form.html" target="_self" class="label-text-alt no-underline link text-base mt-2">Sign-in</a></li>
+          <li><a href="create-account-form.html" target="_self" class="label-text-alt no-underline link text-base mt-2">Sign-up</a></li>
+          <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showHelpModal(); return false;">Help</a></li>
+        </ul>
       </div>
+    </div>
+  </div>
 
       <div class="hero min-h-screen bg-navy">
         <div class="hero-content flex-col lg:flex-row-reverse">
@@ -66,10 +70,10 @@
                 <input type="password" placeholder="password" class="input input-bordered bg-teal" required />
               </div>
                 <div>
-                  <a href="create-account-form.html" target="_self" class="label-text-alt no-underline link text-md hover:text-orange hover:no-underline">New User? Sign-Up</a>
+                  <a href="create-account-form.html" target="_self" class="label-text-alt no-underline link text-md label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">New User? Sign-Up</a>
                 </div>
               <div class="form-control mt-4">
-                <button class="btn text-dark_smoke bg-gradient-to-r from-orange via-light_orange to-orange hover:bg-gradient-to-r hover:from-orange hover:via-grey hover:to-orange w-full">Login</button>
+                <button class="btn text-orange font-semibold bg-smoke border-orange hover:border-grey hover:bg-smoke hover:text-grey w-full">Login</button>
               </div>
             </form>
           </div>
@@ -97,7 +101,7 @@
                 <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-smoke" placeholder="message"></textarea>
               </div>
               <div class="mx-auto w-3/4 py-1 text-center">
-                <button class="btn text-dark_smoke bg-gradient-to-r from-orange via-light_orange to-orange hover:bg-gradient-to-r hover:from-orange hover:via-grey hover:to-orange w-full">Submit</button>
+                <button class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
               </div>
             </form>
           </div>
@@ -110,7 +114,7 @@
         </span>
         <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
           <li>
-            <a id="helpLink" href="#" class="hover:underline me-4 md:me-6" onclick="showHelpModal(); return false;">Help</a>
+            <a id="helpLink" href="#" class="label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text" onclick="showHelpModal(); return false;">Help</a>
         </li>
         </ul>
     </footer>

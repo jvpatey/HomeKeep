@@ -15,33 +15,61 @@
               colors: {
                 navy: '#082032',
                 smoke: '#2C394B',
+                dark_smoke: '#282e38',
                 teal: '#334756',
                 orange: '#FF4C29',
-				grey: '#a5adbb'
+                light_orange: '#d2691e',
+                grey: '#a5adbb'
               }
             }
           }
         }
       </script>
+<style>
+    /* Add gradient effect to HomeKeep link */
+    .navbar-start .btn-ghost.text-3xl {
+        position: relative;
+        z-index: 1;
+        color: transparent; /* Hide the original text */
+    }
+
+    .navbar-start .btn-ghost.text-3xl::before {
+        content: attr(data-content);
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100%;
+        height: 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        background-image: linear-gradient(to right, #FF4C29, #a5adbb);
+    }
+</style>
+
 </head>
 
 <body class="bg-navy h-screen">
-
-    <div class="navbar bg-navy">
-        <div class="flex-1">
-          <a href="dashboard.html" target="_self" class="btn btn-ghost text-xl text-orange hover:bg-navy hover:text-grey">HomeKeep</a>
-        </div>
-        <div class="flex-none">
-        </div>
-        <div class="flex space-x-6">
-            <label class="label">
-                <a href="dashboard.html" target="_self" class="label-text-alt text-base link link-hover">Dashboard</a>
-            </label>
-            <label class="label pr-5">
-                <a href="welcome-screen.html" target="_self" class="label-text-alt text-base font-light link link-hover">Sign Out</a>
-            </label>
-        </div>
-      </div>
+  <!--navbar -->
+  <div class="navbar bg-navy pb-6">
+	<div class="navbar-start">
+		<a href="dashboard.html" target="_self" class="btn btn-ghost text-3xl" data-content="HomeKeep">HomeKeep</a>
+	</div>
+	<div class="navbar-end">
+	  <div class="dropdown relative">
+		<button class="btn btn-ghost" tabindex="0">
+		  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+		  </svg>
+		</button>
+		<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
+		  <li><a href="welcome-screen.html" target="_self" class="label-text-alt no-underline link text-base mt-2">Sign out</a></li>
+		  <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showHelpModal(); return false;">Help</a></li>
+		</ul>
+	  </div>
+	</div>
+  </div>
 
       <div class="container mx-auto px-4 py-1">
         <button onclick="window.location.href = 'add-task-form.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
@@ -345,5 +373,6 @@
         </ul>
       </footer>
 
+<script src="script.js"></script>
 </body>
 </html>

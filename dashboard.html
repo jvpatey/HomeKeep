@@ -29,20 +29,23 @@
 
 <body class="bg-navy min-h-screen flex flex-col">
 
-  <div class="navbar bg-navy fixed top-0 w-full z-10">
-    <div class="flex-1">
-        <a href="dashboard.html" target="_self" class="btn btn-ghost text-2xl bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</a>
+  <!--navbar -->
+  <div class="navbar bg-navy">
+    <div class="navbar-start">
+      <a href="dashboard.html" target="_self" class="btn btn-ghost text-3xl bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</a>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown relative">
+        <button class="btn btn-ghost" tabindex="0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
+          <li><a href="welcome-screen.html" target="_self" class="label-text-alt no-underline link text-base mt-2">Sign out</a></li>
+          <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showHelpModal(); return false;">Help</a></li>
+        </ul>
       </div>
-      <div class="flex-none">
-      </div>
-      <div class="flex space-x-6">
-          <label class="label">
-              <a href="dashboard.html" target="_self" class="label-text-alt text-base link link-hover">Dashboard</a>
-          </label>
-          <label class="label pr-5">
-              <a href="welcome-screen.html" target="_self" class="label-text-alt text-base font-light link link-hover">Sign Out</a>
-          </label>
-      </div>  
     </div>
   </div>
 
@@ -70,7 +73,7 @@
                 <span class="label-text text-base text-beige">Set Notifications?</span>
             </div>
             <div class="mx-auto w-1/2 py-1 text-center">
-                <button type="button" onclick="saveFormData()" class="btn text-dark_smoke bg-gradient-to-r from-orange via-light_orange to-orange hover:bg-gradient-to-r hover:from-orange hover:via-grey hover:to-orange w-full">Submit</button>
+                <button type="button" onclick="saveFormData()" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
             </div>
         </form>
     </div>
@@ -100,7 +103,7 @@
             <span class="label-text text-base text-beige">Set Notifications?</span>
         </div>
           <div class="mx-auto w-3/4 py-1 text-center">
-              <button id="editSubmitBtn" class="btn text-dark_smoke bg-gradient-to-r from-orange via-light_orange to-orange hover:bg-gradient-to-r hover:from-orange hover:via-grey hover:to-orange w-full">Submit</button>
+              <button id="editSubmitBtn" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
           </div>
       </div>
   </div>
