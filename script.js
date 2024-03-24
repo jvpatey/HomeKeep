@@ -231,3 +231,15 @@ function toggleDropdown() {
     var dropdownMenu = document.getElementById("dropdownMenu");
     dropdownMenu.classList.toggle("hidden")
     };
+
+function showCreateAccountModal() {
+    var modal = document.getElementById('createAccountModal');
+    if (modal) {
+        modal.showModal();
+    }
+}
+
+function closeCreateAccountModal() {
+    var modal = document.getElementById('createAccountModal');
+    modal.close();
+}

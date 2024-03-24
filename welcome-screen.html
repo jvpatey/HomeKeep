@@ -40,8 +40,8 @@
           </svg>
         </button>
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
-          <li><a href="sign-in-form.html" target="_self" class="label-text-alt no-underline link text-base mt-2">Sign-in</a></li>
-          <li><a href="create-account-form.html" target="_self" class="label-text-alt no-underline link text-base mt-2">Sign-up</a></li>
+          <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showCreateAccountModal(); return false;">Create an account</a></li>
+          <li><a href="sign-in-form.html" target="_self" class="label-text-alt no-underline link text-base mt-2">Log in</a></li>
           <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showHelpModal(); return false;">Help</a></li>
         </ul>
       </div>
@@ -70,7 +70,7 @@
                 <input type="password" placeholder="password" class="input input-bordered bg-teal" required />
               </div>
                 <div>
-                  <a href="create-account-form.html" target="_self" class="label-text-alt no-underline link text-md label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">New User? Sign-Up</a>
+                  <a href="#" class="label-text-alt no-underline link text-md label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text" onclick="showCreateAccountModal(); return false;">Create an account</a>
                 </div>
               <div class="form-control mt-4">
                 <button class="btn text-orange font-semibold bg-smoke border-orange hover:border-grey hover:bg-smoke hover:text-grey w-full">Login</button>
@@ -107,6 +107,35 @@
           </div>
         </div>
   </div>
+  </dialog>
+
+  <!-- Sign Up Modal -->
+  <dialog id="createAccountModal" class="modal">
+    <div class="modal-box bg-dark_smoke p-1 rounded-md">
+        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="closeCreateAccountModal()">✕</button>
+        <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
+            <form class="card-body">
+                <h1 class="text-center text-2xl mb-1 bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text">Create an Account</h1>
+                <!-- Form Input Fields -->
+                <div class="form-control">
+                    <input type="text" placeholder="First Name" class="input input-bordered bg-smoke" required />
+                </div>
+                <div class="form-control">
+                    <input type="text" placeholder="Last Name" class="input input-bordered bg-smoke" required />
+                </div>
+                <div class="form-control">
+                    <input type="email" placeholder="Email Address" class="input input-bordered bg-smoke" required />
+                </div>
+                <div class="form-control">
+                    <input type="password" placeholder="Password" class="input input-bordered bg-smoke" required />
+                </div>
+                <!-- Buttons -->
+                <div class="mx-auto w-3/4 py-1 text-center">
+                    <button class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
   </dialog>
 
     <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
