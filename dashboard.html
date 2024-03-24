@@ -15,6 +15,7 @@
               colors: {
                 navy: '#082032',
                 smoke: '#2C394B',
+                dark_smoke: '#282e38',
                 teal: '#334756',
                 orange: '#FF4C29',
                 grey: '#a5adbb'
@@ -44,8 +45,38 @@
     </div>
   </div>
 
+  <!-- DaisyUI add-task form modal -->
+  <dialog id="addTaskModal" class="modal">
+    <div class="modal-box bg-dark_smoke p-4 rounded-md">
+        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
+        <form id="addTaskForm" class="w-full max-w-lg">
+            <h1 class="text-center text-xl mb-3 text-beige">Add a Task</h1>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-smoke">
+                <input id="taskName" type="text" class="grow" placeholder="Task Name" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-smoke">
+                <input id="category" type="text" class="grow" placeholder="Category" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-smoke">
+                <input id="startDate" type="text" class="grow" placeholder="Maintenance Start Date" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 bg-smoke">
+                <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
+            </label>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-smoke" placeholder="Maintenance Description"></textarea>
+            <div class="flex items-center gap-2 mb-2 py-2">
+                <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
+                <span class="label-text text-base text-beige">Set Reminder?</span>
+            </div>
+            <div class="mx-auto w-3/4 py-1 text-center">
+                <button type="button" onclick="saveFormData()" class="btn bg-orange border-orange text-navy hover:border-navy hover:text-orange hover:bg-navy w-full">Submit</button>
+            </div>
+        </form>
+    </div>
+  </dialog>
+  
   <div class="flex items-end pt-16 pl-8">
-    <button onclick="window.location.href = 'add-task-form.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
+    <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
     <button onclick="window.location.href = 'dashboard-calendar.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Calendar View</button>
   </div>
 

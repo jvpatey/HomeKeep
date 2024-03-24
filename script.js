@@ -1,3 +1,15 @@
+//Event listener for the "+" button to open the add task modal
+document.addEventListener('DOMContentLoaded', function() {
+    var addTaskButton = document.getElementById('addTaskButton');
+    var addTaskModal = document.getElementById('addTaskModal');
+
+    if (addTaskButton && addTaskModal) {
+        addTaskButton.addEventListener('click', function() {
+            addTaskModal.showModal();
+        });
+    }
+});
+
 // function to save form from "add a task" table
 function saveFormData() {
     var task = document.getElementById("taskName").value;
