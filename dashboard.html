@@ -30,7 +30,7 @@
 
   <div class="navbar bg-navy fixed top-0 w-full z-10">
     <div class="flex-1">
-        <a href="dashboard.html" target="_self" class="btn btn-ghost text-xl text-orange hover:bg-navy hover:text-grey">HomeKeep</a>
+        <a href="dashboard.html" target="_self" class="btn btn-ghost text-2xl bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</a>
       </div>
       <div class="flex-none">
       </div>
@@ -66,7 +66,7 @@
             <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-smoke" placeholder="Maintenance Description"></textarea>
             <div class="flex items-center gap-2 mb-2 py-2">
                 <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
-                <span class="label-text text-base text-beige">Set Reminder?</span>
+                <span class="label-text text-base text-beige">Set Notifications?</span>
             </div>
             <div class="mx-auto w-3/4 py-1 text-center">
                 <button type="button" onclick="saveFormData()" class="btn bg-orange border-orange text-navy hover:border-navy hover:text-orange hover:bg-navy w-full">Submit</button>
@@ -96,7 +96,7 @@
           <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-smoke" placeholder="Maintenace Description"></textarea>
           <div class="flex items-center gap-2 mb-2 py-2">
             <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
-            <span class="label-text text-base text-beige">Set Reminder?</span>
+            <span class="label-text text-base text-beige">Set Notifications?</span>
         </div>
           <div class="mx-auto w-3/4 py-1 text-center">
               <button id="editSubmitBtn" class="btn bg-orange border-orange text-navy hover:bg-navy hover:border-navy hover:text-orange">Submit</button>
@@ -116,14 +116,14 @@
     <div class="px-8" style="height: calc(100vh - 256px); overflow-y: auto;">
       <table class="table bg-smoke" id="taskTable">
         <!-- head -->
-        <thead class="text-orange text-base">
+        <thead class="text-orange text-base font-normal">
           <tr>
-            <th>Task</th>
-            <th>Category</th>
-            <th>Start Date</th>
-            <th>Interval (days)</th>
-            <th>Description</th>
-            <th>Reminder On/Off</th>
+            <th class="font-normal">Task</th>
+            <th class="font-normal">Category</th>
+            <th class="font-normal">Start Date</th>
+            <th class="font-normal">Interval</th>
+            <th class="font-normal">Description</th>
+            <th class="font-normal">Notifications</th>
             <th></th>
           </tr>
         </thead>
