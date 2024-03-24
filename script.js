@@ -243,3 +243,17 @@ function closeCreateAccountModal() {
     var modal = document.getElementById('createAccountModal');
     modal.close();
 }
+
+function showLoginModal() {
+    var loginModal = document.getElementById('loginModal');
+    if (loginModal) {
+        loginModal.showModal();
+    }
+}
+
+function closeLoginModal() {
+    var loginModal = document.getElementById('loginModal');
+    if (loginModal) {
+        loginModal.close();
+    }
+}
