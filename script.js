@@ -218,3 +218,11 @@ function editTask(index) {
     // Redirect back to dashboard after editing
     window.location.href = 'dashboard.html';
 }
+
+// Function to show the help request modal
+function showHelpModal() {
+    var helpModal = document.getElementById('helpRequestModal');
+    if (helpModal) {
+        helpModal.showModal();
+    }
+};
