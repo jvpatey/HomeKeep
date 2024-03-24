@@ -38,27 +38,27 @@
         <div class="w-96 mx-auto bg-smoke p-4 rounded-md">
             <h1 class="text-center text-2xl mb-3 text-beige">Edit a Task</h1>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Task Name" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Category" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
-                <input type="text" class="grow" placeholder="Maintenance Start Date" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 bg-teal">
-                <input type="text" class="grow" placeholder="Maintenance Interval" />
-            </label>
-            <textarea class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-teal" placeholder="Maintenace Description"></textarea>
-            <div class="form-control">
-                <label class="label cursor-pointer">
-                  <span class="label-text text-base text-beige mx-auto">Set Reminder?</span> 
-                  <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey mx-auto checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
-                </label>
-              </div>
+              <input id="taskName" type="text" class="grow" placeholder="Task Name" />
+          </label>
+          <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
+              <input id="category" type="text" class="grow" placeholder="Category" />
+          </label>
+          <label class="input input-bordered flex items-center gap-2 mb-2 bg-teal">
+              <input id="startDate" type="text" class="grow" placeholder="Maintenance Start Date" />
+          </label>
+          <label class="input input-bordered flex items-center gap-2 bg-teal">
+              <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
+          </label>
+          <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-teal" placeholder="Maintenace Description"></textarea>
+          <div class="form-control">
+              <label class="label cursor-pointer">
+                <span class="label-text text-base text-beige mx-auto">Set Reminder?</span> 
+                <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey mx-auto checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
+              </label>
+          </div>
             <div class="mx-auto w-44 py-2">
                 <button onclick="window.location.href = 'dashboard.html';" class="btn bg-orange border-orange text-navy hover:bg-navy hover:border-navy hover:text-orange">Cancel</button>
-                <button class="btn bg-orange border-orange text-navy hover:bg-navy hover:border-navy hover:text-orange">Submit</button>
+                <button id="editSubmitBtn" class="btn bg-orange border-orange text-navy hover:bg-navy hover:border-navy hover:text-orange">Submit</button>
             </div>
         </div>
     </div>
@@ -75,6 +75,7 @@
             </li>
         </ul>
     </footer>
-    
+
+<script src="script.js"></script> 
 </body>
 </html>
