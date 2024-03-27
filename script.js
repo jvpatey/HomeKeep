@@ -1,5 +1,40 @@
+function scheduleNotification(date, message) {
+    var currentDate = new Date();
+    var scheduledDate = new Date(date);
+
+    var timeDifference = scheduledDate.getTime() - currentDate.getTime();
+
+    if (timeDifference > 0) {
+        setTimeout(function() {
+            // Request permission for browser notifications
+            Notification.requestPermission().then(function(permission) {
+                if (permission === 'granted') {
+                    // Create a new notification
+                    var notification = new Notification('Scheduled Notification', {
+                        body: message,
+                        icon: 'https://example.com/icon.png' // URL to an icon for the notification
+                    });
+                } else {
+                    console.log('Notification permission denied');
+                }
+            });
+        }, timeDifference);
+    } else {
+        console.log('Invalid scheduled date');
+    }
+}
+
 document.addEventListener('DOMContentLoaded', function() {
+    // Example usage:
+    var scheduledDate = new Date("03-27-2024T19:53:00"); // Example scheduled date
+    var message = "This is a scheduled notification!";
+    scheduleNotification(scheduledDate, message);
+			
+    var formData = JSON.parse(localStorage.getItem('formData')) || [];
     
+
+
+
     // Event listener for the "+" button to open the add task modal
     var addTaskButton = document.getElementById('addTaskButton');
     var addTaskModal = document.getElementById('addTaskModal');
