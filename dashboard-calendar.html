@@ -26,11 +26,11 @@
         }
       </script>
 <style>
-    /* Add gradient effect to HomeKeep link */
+    /* Add gradient effect to HomeKeep link - temporary CSS */
     .navbar-start .btn-ghost.text-3xl {
         position: relative;
         z-index: 1;
-        color: transparent; /* Hide the original text */
+        color: transparent;
     }
 
     .navbar-start .btn-ghost.text-3xl::before {
@@ -94,41 +94,58 @@
 <div class="antialiased sans-serif bg-navy h-screen">
 	<div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
 		<div class="container mx-auto px-4 py-1">
-			  
-			<!-- <div class="font-bold text-gray-800 text-xl mb-4">
-				Schedule Tasks
-			</div> -->
 
 			<div class="bg-smoke rounded-lg shadow overflow-hidden">
 
 				<div class="flex items-center justify-between py-2 px-6">
 					<div>
-						<span x-text="MONTH_NAMES[month]" class="text-lg font-bold text-orange"></span>
-						<span x-text="year" class="ml-1 text-lg text-orange font-normal"></span>
+						<span x-text="MONTH_NAMES[month]" class="text-2xl font-base text-grey"></span>
+						<span x-text="year" class="ml-1 text-2xl text-orange font-base"></span>
 					</div>
-					<div class="border rounded-lg px-1" style="padding-top: 2px;">
+					<div class="border rounded-lg px-1 ml-auto mr-3 mb-2" style="padding-top: 2px;">
 						<button 
 							type="button"
-							class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center" 
-							:class="{'cursor-not-allowed opacity-25': month == 0 }"
-							:disabled="month == 0 ? true : false"
-							@click="month--; getNoOfDays()">
+							class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
+							@click="prevMonth()">
 							<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
 							</svg>  
+							<span class="text-gray-500 ml-1">Month</span>
 						</button>
 						<div class="border-r inline-flex h-6"></div>		
 						<button 
 							type="button"
-							class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1" 
-							:class="{'cursor-not-allowed opacity-25': month == 11 }"
-							:disabled="month == 11 ? true : false"
-							@click="month++; getNoOfDays()">
+							class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
+							@click="nextMonth()">
 							<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
 								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
 							</svg>									  
 						</button>
 					</div>
+					
+					<div>
+						<div class="border rounded-lg px-1 ml-auto mb-2" style="padding-top: 2px;">
+							<button 
+								type="button"
+								class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
+								@click="prevYear()">
+								<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+								</svg>  
+								<span class="text-gray-500 ml-1">Year</span>
+							</button>
+							<div class="border-r inline-flex h-6"></div>		
+							<button 
+								type="button"
+								class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
+								@click="nextYear()">
+								<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+								</svg>									  
+							</button>
+						</div>
+						
+					</div>					
 				</div>	
 
 				<div class="-mx-1 -mb-1">
@@ -157,11 +174,6 @@
 									class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
 								></div>
 								<div style="height: 80px;" class="overflow-y-auto mt-1">
-									<!-- <div 
-										class="absolute top-0 right-0 mt-2 mr-2 inline-flex items-center justify-center rounded-full text-sm w-6 h-6 bg-gray-700 text-white leading-none"
-										x-show="events.filter(e => e.event_date === new Date(year, month, date).toDateString()).length"
-										x-text="events.filter(e => e.event_date === new Date(year, month, date).toDateString()).length"></div> -->
-
 									<template x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">	
 										<div
 											class="px-2 py-1 rounded-lg mt-1 overflow-hidden border"
@@ -241,7 +253,7 @@
 	<script>
 		const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 		const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
+	
 		function app() {
 			return {
 				month: '',
@@ -249,20 +261,20 @@
 				no_of_days: [],
 				blankdays: [],
 				days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-
+	
 				events: [
 					{
 						event_date: new Date(2020, 3, 1),
 						event_title: "April Fool's Day",
 						event_theme: 'blue'
 					},
-
+	
 					{
 						event_date: new Date(2020, 3, 10),
 						event_title: "Birthday",
 						event_theme: 'red'
 					},
-
+	
 					{
 						event_date: new Date(2020, 3, 16),
 						event_title: "Upcoming Event",
@@ -272,7 +284,7 @@
 				event_title: '',
 				event_date: '',
 				event_theme: 'blue',
-
+	
 				themes: [
 					{
 						value: "blue",
@@ -295,72 +307,115 @@
 						label: "Purple Theme"
 					}
 				],
-
+	
 				openEventModal: false,
-
+	
 				initDate() {
 					let today = new Date();
 					this.month = today.getMonth();
 					this.year = today.getFullYear();
 					this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
 				},
-
+	
 				isToday(date) {
 					const today = new Date();
 					const d = new Date(this.year, this.month, date);
-
+	
 					return today.toDateString() === d.toDateString() ? true : false;
 				},
-
+	
 				showEventModal(date) {
 					// open the modal
 					this.openEventModal = true;
 					this.event_date = new Date(this.year, this.month, date).toDateString();
 				},
-
+	
 				addEvent() {
 					if (this.event_title == '') {
 						return;
 					}
-
+	
 					this.events.push({
 						event_date: this.event_date,
 						event_title: this.event_title,
 						event_theme: this.event_theme
 					});
-
+	
 					console.log(this.events);
-
+	
 					// clear the form data
 					this.event_title = '';
 					this.event_date = '';
 					this.event_theme = 'blue';
-
+	
 					//close the modal
 					this.openEventModal = false;
 				},
-
+	
 				getNoOfDays() {
 					let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-
+	
 					// find where to start calendar day of week
 					let dayOfWeek = new Date(this.year, this.month).getDay();
 					let blankdaysArray = [];
 					for ( var i=1; i <= dayOfWeek; i++) {
 						blankdaysArray.push(i);
 					}
-
+	
 					let daysArray = [];
 					for ( var i=1; i <= daysInMonth; i++) {
 						daysArray.push(i);
 					}
-					
+	
 					this.blankdays = blankdaysArray;
 					this.no_of_days = daysArray;
+				},
+	
+				// Function to navigate to the previous month
+				prevMonth() {
+					this.month--;
+					if (this.month < 0) {
+						this.month = 11;
+						this.year--;
+					}
+					this.getNoOfDays();
+				},
+	
+				// Function to navigate to the next month
+				nextMonth() {
+					this.month++;
+					if (this.month > 11) {
+						this.month = 0;
+						this.year++;
+					}
+					this.getNoOfDays();
+				},
+	
+				// Function to navigate to the previous year
+				prevYear() {
+					this.year--;
+					this.getNoOfDays();
+				},
+	
+				// Function to navigate to the next year
+				nextYear() {
+					this.year++;
+					this.getNoOfDays();
+				},
+	
+				// Function to check if the previous year button should be disabled
+				prevYearDisabled() {
+					return false; // Always allow navigation to previous years
+				},
+	
+				// Function to check if the next year button should be disabled
+				nextYearDisabled() {
+					return false; // Always allow navigation to next years
 				}
 			}
 		}
 	</script>
+
   </div>
 
     <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">

@@ -227,11 +227,13 @@ function showHelpModal() {
     }
 };
 
+// function for drop down menu in navbar
 function toggleDropdown() {
     var dropdownMenu = document.getElementById("dropdownMenu");
     dropdownMenu.classList.toggle("hidden")
     };
 
+//function to show create account modal
 function showCreateAccountModal() {
     var modal = document.getElementById('createAccountModal');
     if (modal) {
@@ -239,11 +241,13 @@ function showCreateAccountModal() {
     }
 }
 
+// function to close create account modal
 function closeCreateAccountModal() {
     var modal = document.getElementById('createAccountModal');
     modal.close();
 }
 
+// function to show login modal
 function showLoginModal() {
     var loginModal = document.getElementById('loginModal');
     if (loginModal) {
@@ -251,6 +255,7 @@ function showLoginModal() {
     }
 }
 
+// function to close login modal
 function closeLoginModal() {
     var loginModal = document.getElementById('loginModal');
     if (loginModal) {
