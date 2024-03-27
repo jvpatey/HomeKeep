@@ -124,8 +124,8 @@
 	<div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
 		<div class="container mx-auto px-4 py-1">
 
+			<!-- buttons for month and year -->
 			<div class="bg-smoke rounded-lg shadow overflow-hidden">
-
 				<div class="flex items-center justify-between py-2 px-6">
 					<div>
 						<span x-text="MONTH_NAMES[month]" class="text-2xl font-base text-grey"></span>
@@ -151,7 +151,6 @@
 							</svg>									  
 						</button>
 					</div>
-					
 					<div>
 						<div class="border rounded-lg px-1 ml-auto mb-2" style="padding-top: 2px;">
 							<button 
@@ -173,7 +172,6 @@
 								</svg>									  
 							</button>
 						</div>
-						
 					</div>					
 				</div>	
 
