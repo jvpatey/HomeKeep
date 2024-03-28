@@ -25,16 +25,8 @@ function scheduleNotification(date, message) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Example usage:
-    var scheduledDate = new Date("03-27-2024T19:53:00"); // Example scheduled date
-    var message = "This is a scheduled notification!";
-    scheduleNotification(scheduledDate, message);
-			
     var formData = JSON.parse(localStorage.getItem('formData')) || [];
     
-
-
-
     // Event listener for the "+" button to open the add task modal
     var addTaskButton = document.getElementById('addTaskButton');
     var addTaskModal = document.getElementById('addTaskModal');

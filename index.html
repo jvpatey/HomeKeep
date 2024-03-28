@@ -57,8 +57,8 @@
             <p class="py-6 pl-2">Get ready to simplify your life and ensure your home is always in tip-top condition</p>
           </div>
           <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-smoke">
-            <form class="card-body">
-              <div class="form-control">
+            <div class="card-body">
+              <!-- <div class="form-control">
                 <label class="label">
                   <span class="label-text">Email</span>
                 </label>
@@ -72,11 +72,11 @@
               </div>
                 <div>
                   <a href="#" class="label-text-alt no-underline link text-md label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text" onclick="showCreateAccountModal(); return false;">Create an account</a>
-                </div>
-              <div class="form-control mt-4">
-                <button class="btn text-orange font-semibold bg-smoke border-orange hover:border-grey hover:bg-smoke hover:text-grey w-full">Login</button>
+                </div> -->
+              <div class="mt-4">
+                <button id="login0" class="btn text-orange font-semibold bg-smoke border-orange hover:border-grey hover:bg-smoke hover:text-grey w-full">Loginz</button>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
@@ -172,6 +172,47 @@
         </ul>
     </footer>
   
-<script src="script.js"></script>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider,  signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
+      authDomain: "homekeep-x.firebaseapp.com",
+      projectId: "homekeep-x",
+      storageBucket: "homekeep-x.appspot.com",
+      messagingSenderId: "142689184811",
+      appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    function signInWithGoogle() {
+      console.log(auth)
+        var provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // Signed in successfully, get user details
+                var user = result.user;
+                console.log("Signed in user:", user);
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error("Google sign-in error:", error);
+            });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("login0").addEventListener("click", signInWithGoogle);
+    });
+  </script>
+  <script src="script.js"></script>
 </body>
 </html>
