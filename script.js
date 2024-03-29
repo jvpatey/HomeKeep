@@ -108,6 +108,7 @@ function openEditTaskModal() {
 };
 
 // function to save form from "add a task" table
+// Function to save form from "add a task" table
 function saveFormData() {
     var task = document.getElementById("taskName").value;
     var category = document.getElementById("category").value;
@@ -115,12 +116,29 @@ function saveFormData() {
     var interval = document.getElementById("interval").value;
     var description = document.getElementById("description").value;
 
+    // Validate the start date format
+    var dateRegex = /^\d{2}-\d{2}-\d{4}$/;
+    if (!dateRegex.test(startDate)) {
+        alert("Please enter the start date in the format MM-DD-YYYY.");
+        return;
+    }
+
     var existingData = JSON.parse(localStorage.getItem('formData')) || [];
 
     existingData.push({ task: task, category: category, startDate: startDate, interval: interval, description: description });
     localStorage.setItem('formData', JSON.stringify(existingData));
 
-    window.location.href = 'dashboard.html';
+    // Determine the destination page based on the current URL
+    var currentPage = window.location.pathname;
+    var destinationPage;
+
+    if (currentPage.includes("dashboard-calendar.html")) {
+        destinationPage = "dashboard-calendar.html";
+    } else {
+        destinationPage = "dashboard.html";
+    }
+
+    window.location.href = destinationPage;
 }
 
 // Function to retrieve the data from storage to display it in the dashboard table
@@ -176,11 +194,22 @@ function addToTable(task, category, startDate, interval, description, index) {
         cell5.textContent = description;
 
         // DaisyUI toggle switch for cell 6
-        var toggleSwitch = document.createElement('input');
-        toggleSwitch.type = 'checkbox';
-        toggleSwitch.classList.add('toggle');
-        cell6.appendChild(toggleSwitch);
-        cell6.classList.add('flex', 'items-center', 'justify-center');
+        var toggleSwitchContainer = document.createElement('div');
+        toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center'); // Removed 'justify-center'
+
+        var toggleSwitchInput = document.createElement('input');
+        toggleSwitchInput.type = 'checkbox';
+        toggleSwitchInput.classList.add('toggle', 'toggle-success');
+        toggleSwitchInput.checked = true;
+
+        var toggleSwitchMark = document.createElement('span');
+        toggleSwitchMark.classList.add('toggle-mark');
+
+        toggleSwitchContainer.appendChild(toggleSwitchInput);
+        toggleSwitchContainer.appendChild(toggleSwitchMark);
+
+        cell6.appendChild(toggleSwitchContainer);
+
 
         // Flex container for icons in cell 7
         var iconsContainer = document.createElement('div');

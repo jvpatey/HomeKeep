@@ -26,28 +26,6 @@
           }
         }
       </script>
-<style>
-    /* Add gradient effect to HomeKeep link - temporary CSS */
-    .navbar-start .btn-ghost.text-3xl {
-        position: relative;
-        z-index: 1;
-        color: transparent;
-    }
-
-    .navbar-start .btn-ghost.text-3xl::before {
-        content: attr(data-content);
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: -1;
-        width: 100%;
-        height: 100%;
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-        background-image: linear-gradient(to right, #FF4C29, #a5adbb);
-    }
-</style>
 
 </head>
 
@@ -73,7 +51,7 @@
   </div>
 
       <div class="container mx-auto px-4 py-1">
-        <button onclick="window.location.href = 'add-task-form.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
+        <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
         <button onclick="window.location.href = 'dashboard.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Table View</button>
       </div>
 
@@ -105,6 +83,36 @@
 		  </div>
 	</div>
 	</dialog>
+
+  <!-- DaisyUI add-task form modal -->
+  <dialog id="addTaskModal" class="modal">
+    <div class="modal-box bg-dark_smoke p-4 rounded-md">
+        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
+        <form id="addTaskForm" class="w-full max-w-lg">
+            <h1 class="text-center text-2xl mb-3 bg-gradient-to-r from-orange to-grey bg-clip-text">Add a Task</h1>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
+                <input id="taskName" type="text" class="grow" placeholder="Task Name" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
+                <input id="category" type="text" class="grow" placeholder="Category" />
+            </label>
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
+                <input id="startDate" type="text" class="grow" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 bg-light_smoke">
+                <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
+            </label>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-light_smoke" placeholder="Maintenance Description"></textarea>
+            <div class="flex items-center gap-2 mb-2 py-2">
+                <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
+                <span class="label-text text-base text-beige">Set Notifications?</span>
+            </div>
+            <div class="mx-auto w-1/2 py-1 text-center">
+                <button type="button" onclick="saveFormData()" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
+            </div>
+        </form>
+    </div>
+  </dialog>
       
 <!-- Sample Calendar UI with TailwindCSS to show layout (no functionality yet)-->
 <div>
@@ -205,17 +213,15 @@
 								<div style="height: 80px;" class="overflow-y-auto mt-1">
 									<template x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">	
 										<div
-											class="px-2 py-1 rounded-lg mt-1 overflow-hidden border"
-											:class="{
-												'border-blue-200 text-blue-800 bg-blue-100': event.event_theme === 'blue',
-												'border-red-200 text-red-800 bg-red-100': event.event_theme === 'red',
-												'border-yellow-200 text-yellow-800 bg-yellow-100': event.event_theme === 'yellow',
-												'border-green-200 text-green-800 bg-green-100': event.event_theme === 'green',
-												'border-purple-200 text-purple-800 bg-purple-100': event.event_theme === 'purple'
-											}"
-										>
+										class="px-2 py-1 rounded-full mt-1 overflow-hidden border"
+										:class="{
+											'border-orange-500 text-orange-800 bg-orange-100': event.event_theme === 'orange'
+										}"
+									>
+										<a @click="showEventModal(date)">
 											<p x-text="event.event_title" class="text-sm truncate leading-tight"></p>
-										</div>
+										</a>
+									</div>
 									</template>
 								</div>
 							</div>
@@ -238,39 +244,36 @@
 
 				<div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8">
 					
-					<h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">Add Task Details</h2>
+					<h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">Task Details</h2>
 				 
 					<div class="mb-4">
 						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Task title</label>
-						<input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" x-model="event_title">
+						<p x-text="selectedEvent.event_title" class="text-gray-700"></p>
 					</div>
 
 					<div class="mb-4">
 						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Start date</label>
-						<input class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500" type="text" x-model="event_date" readonly>
+						<p x-text="selectedEvent.event_date" class="text-gray-700"></p>
 					</div>
 
-					<div class="inline-block w-64 mb-4">
-						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Select a theme</label>
-						<div class="relative">
-							<select @change="event_theme = $event.target.value;" x-model="event_theme" class="block appearance-none w-full bg-gray-200 border-2 border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-500 text-gray-700">
-									<template x-for="(theme, index) in themes">
-										<option :value="theme.value" x-text="theme.label"></option>
-									</template>
-								
-							</select>
-							<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-							<svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
-							</div>
-						</div>
+					<div class="mb-4">
+						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Category</label>
+						<p x-text="selectedEvent.event_category" class="text-gray-700"></p>
 					</div>
- 
+
+					<div class="mb-4">
+						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Interval (days)</label>
+						<p x-text="selectedEvent.event_interval" class="text-gray-700"></p>
+					</div>
+
+					<div class="mb-4">
+						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Description</label>
+						<p x-text="selectedEvent.event_description" class="text-gray-700"></p>
+					</div>
+
 					<div class="mt-8 text-right">
-						<button type="button" class="bg-white hover:bg-gray-100 text-gray-700 font-semibold py-2 px-4 border border-gray-300 rounded-lg shadow-sm mr-2" @click="openEventModal = !openEventModal">
-							Cancel
-						</button>	
-						<button type="button" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm" @click="addEvent()">
-							Save Event
+						<button type="button" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm" @click="openEventModal = !openEventModal">
+							Close
 						</button>	
 					</div>
 				</div>
@@ -289,10 +292,11 @@
 
 			const events = formData.map((element) => {
 				return {
-					// event_date: new Date(2024, 2, 27),
-					event_date: element.startDate,
 					event_title: element.task,
-					event_theme: 'blue'
+					event_category: element.category,
+					event_date: element.startDate,
+					event_interval: element.interval,
+					event_description: element.description
 				}
 			})
 
@@ -304,33 +308,8 @@
 				days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
 				events: events,
-				event_title: '',
-				event_date: '',
-				event_theme: 'blue',
-	
-				themes: [
-					{
-						value: "blue",
-						label: "Blue Theme"
-					},
-					{
-						value: "red",
-						label: "Red Theme"
-					},
-					{
-						value: "yellow",
-						label: "Yellow Theme"
-					},
-					{
-						value: "green",
-						label: "Green Theme"
-					},
-					{
-						value: "purple",
-						label: "Purple Theme"
-					}
-				],
-	
+				selectedEvent: {},
+
 				openEventModal: false,
 	
 				initDate() {
@@ -340,41 +319,16 @@
 					this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
 				},
 	
-				isToday(date) {
-					const today = new Date();
-					const d = new Date(this.year, this.month, date);
-	
-					return today.toDateString() === d.toDateString() ? true : false;
-				},
-	
 				showEventModal(date) {
-					// open the modal
-					this.openEventModal = true;
-					this.event_date = new Date(this.year, this.month, date).toDateString();
-				},
-	
-				addEvent() {
-					if (this.event_title == '') {
-						return;
+					// Find the event for the clicked date
+					const event = this.events.find(e => new Date(e.event_date).toDateString() === new Date(this.year, this.month, date).toDateString());
+					if (event) {
+						// Open the modal and populate with event details
+						this.selectedEvent = event;
+						this.openEventModal = true;
 					}
-	
-					this.events.push({
-						event_date: this.event_date,
-						event_title: this.event_title,
-						event_theme: this.event_theme
-					});
-	
-					console.log(this.events);
-	
-					// clear the form data
-					this.event_title = '';
-					this.event_date = '';
-					this.event_theme = 'blue';
-	
-					//close the modal
-					this.openEventModal = false;
 				},
-	
+				
 				getNoOfDays() {
 					let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
 	
@@ -425,31 +379,20 @@
 					this.year++;
 					this.getNoOfDays();
 				},
-	
-				// Function to check if the previous year button should be disabled
-				prevYearDisabled() {
-					return false; // Always allow navigation to previous years
-				},
-	
-				// Function to check if the next year button should be disabled
-				nextYearDisabled() {
-					return false; // Always allow navigation to next years
-				}
 			}
 		}
 	</script>
-
   </div>
 
-    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
-        <span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
-        </span>
-        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
-            <li>
+	<footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
+		<span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+		</span>
+		<ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+			<li>
 				<a id="helpLink" href="#" class="hover:underline me-4 md:me-6" onclick="showHelpModal(); return false;">Help</a>
-            </li>
-        </ul>
-      </footer>
+			</li>
+		</ul>
+	</footer>
 
 <script src="script.js"></script>
 </body>
