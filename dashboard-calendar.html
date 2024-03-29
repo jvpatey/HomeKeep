@@ -26,6 +26,29 @@
           }
         }
       </script>
+    <style>
+        /* Logo Styles */
+        .logo {
+            font-size: 1.75rem; /* Adjust font size to make it smaller */
+            background-image: linear-gradient(to right, #a5adbb, #FF4C29); /* Apply gradient as background */
+            -webkit-background-clip: text; /* Apply gradient as text color for webkit browsers */
+            background-clip: text; /* Apply gradient as text color */
+            color: transparent; /* Make text transparent */
+            display: inline-block; /* Ensure the logo takes only the necessary space */
+            transition: font-size 0.3s ease, margin-left 0.3s ease, font-weight 0.3s ease; /* Add transition for smoother hover effect */
+            font-weight: bold; /* Set font weight to normal by default */
+            margin-left: 10px; /* Add left margin */
+        }
+
+        /* Hover effect */
+        .logo:hover {
+            font-size: 2.5xl; /* Increase font size on hover */
+            background-image: linear-gradient(to right, #FF4C29, #a5adbb); /* Reverse the gradient on hover */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            font-weight: bold; /* Make the font bold on hover */
+            margin-left: 20px; /* Increase left margin on hover */
+        }
+    </style>
 
 </head>
 
@@ -33,7 +56,9 @@
   <!--navbar -->
   <div class="navbar bg-navy pb-6">
 	<div class="navbar-start">
-		<a href="dashboard.html" target="_self" class="btn btn-ghost text-3xl" data-content="HomeKeep">HomeKeep</a>
+        <a href="dashboard.html" target="_self" class="relative inline-block logo">
+            <span>HomeKeep</span>
+        </a>
 	</div>
 	<div class="navbar-end">
 	  <div class="dropdown relative">
@@ -62,7 +87,7 @@
 		<div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
 			<div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
 			  <form class="card-body">
-				<h1 class="text-center text-2xl mb-1 bg-gradient-to-r from-orange to-grey bg-clip-text">Help Request</h1>
+				<h1 class="text-center text-2xl mb-3 font-light text-orange">Help Request</h1>
 				<div class="form-control">
 				  <input type="text" placeholder="first name" class="input input-bordered bg-light_smoke" required />
 				</div>
@@ -89,7 +114,7 @@
     <div class="modal-box bg-dark_smoke p-4 rounded-md">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
         <form id="addTaskForm" class="w-full max-w-lg">
-            <h1 class="text-center text-2xl mb-3 bg-gradient-to-r from-orange to-grey bg-clip-text">Add a Task</h1>
+            <h1 class="text-center text-2xl mb-3 font-light text-orange">Add a Task</h1>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
                 <input id="taskName" type="text" class="grow" placeholder="Task Name" />
             </label>
@@ -138,7 +163,7 @@
                         <div class="border rounded-lg px-1 ml-auto mr-3 mb-2" style="padding-top: 2px;">
                             <button 
                                 type="button"
-                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
+                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-light_smoke p-1 items-center"
                                 @click="prevMonth()">
                                 <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -148,7 +173,7 @@
                             <div class="border-r inline-flex h-6"></div>        
                             <button 
                                 type="button"
-                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
+                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-light_smoke p-1"
                                 @click="nextMonth()">
                                 <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
@@ -160,7 +185,7 @@
                             <div class="border rounded-lg px-1 ml-auto mb-2" style="padding-top: 2px;">
                                 <button 
                                     type="button"
-                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
+                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-light_smoke p-1 items-center"
                                     @click="prevYear()">
                                     <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -170,7 +195,7 @@
                                 <div class="border-r inline-flex h-6"></div>        
                                 <button 
                                     type="button"
-                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
+                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-light_smoke p-1"
                                     @click="nextYear()">
                                     <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
