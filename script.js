@@ -32,9 +32,6 @@ document.addEventListener('DOMContentLoaded', function() {
 			
     var formData = JSON.parse(localStorage.getItem('formData')) || [];
     
-
-
-
     // Event listener for the "+" button to open the add task modal
     var addTaskButton = document.getElementById('addTaskButton');
     var addTaskModal = document.getElementById('addTaskModal');
@@ -107,7 +104,6 @@ function openEditTaskModal() {
     }
 };
 
-// function to save form from "add a task" table
 // Function to save form from "add a task" table
 function saveFormData() {
     var task = document.getElementById("taskName").value;
@@ -120,6 +116,25 @@ function saveFormData() {
     var dateRegex = /^\d{2}-\d{2}-\d{4}$/;
     if (!dateRegex.test(startDate)) {
         alert("Please enter the start date in the format MM-DD-YYYY.");
+        return;
+    }
+
+    // Extract month, day, and year from the start date
+    var parts = startDate.split('-');
+    var month = parseInt(parts[0], 10);
+    var day = parseInt(parts[1], 10);
+    var year = parseInt(parts[2], 10);
+
+    // Validate month range
+    if (month < 1 || month > 12) {
+        alert("Invalid month. Please enter a month between 01 and 12.");
+        return;
+    }
+
+    // Validate day range based on the month
+    var daysInMonth = new Date(year, month, 0).getDate();
+    if (day < 1 || day > daysInMonth) {
+        alert("Invalid day for the specified month. Please enter a valid day.");
         return;
     }
 

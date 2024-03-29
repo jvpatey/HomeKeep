@@ -52,7 +52,7 @@
 
       <div class="container mx-auto px-4 py-1">
         <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
-        <button onclick="window.location.href = 'dashboard.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Table View</button>
+        <button onclick="window.location.href = 'dashboard.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Table</button>
       </div>
 
   <!-- DaisyUI help request modal -->
@@ -103,10 +103,6 @@
                 <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
             </label>
             <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-light_smoke" placeholder="Maintenance Description"></textarea>
-            <div class="flex items-center gap-2 mb-2 py-2">
-                <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
-                <span class="label-text text-base text-beige">Set Notifications?</span>
-            </div>
             <div class="mx-auto w-1/2 py-1 text-center">
                 <button type="button" onclick="saveFormData()" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
             </div>
@@ -234,47 +230,44 @@
             <!-- Modal -->
             <div style=" background-color: rgba(0, 0, 0, 0.8)" class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full" x-show.transition.opacity="openEventModal">
                 <div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
-                    <div class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer"
-                        x-on:click="openEventModal = !openEventModal">
+                    <div class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer" x-on:click="openEventModal = !openEventModal">
                         <svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path
-                                d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
+                            <path d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
                         </svg>
                     </div>
-
+            
                     <div class="shadow w-full shadow-grey rounded-lg bg-dark_smoke overflow-hidden w-full block p-8">
-                        
+            
                         <h2 class="text-2xl mb-6 text-orange border-b pb-2">Task Details</h2>
-                     
+            
                         <div class="mb-4">
                             <label class="text-orange block mb-1 text-sm tracking-wide">Task title</label>
                             <p x-text="selectedEvent.event_title" class="text-grey"></p>
                         </div>
-
+            
                         <div class="mb-4">
                             <label class="text-orange block mb-1 text-sm tracking-wide">Start date</label>
                             <p x-text="selectedEvent.event_date" class="text-grey"></p>
                         </div>
-
+            
                         <div class="mb-4">
                             <label class="text-orange block mb-1 text-sm tracking-wide">Category</label>
                             <p x-text="selectedEvent.event_category" class="text-grey"></p>
                         </div>
-
+            
                         <div class="mb-4">
                             <label class="text-orange block mb-1 text-sm tracking-wide">Interval (days)</label>
                             <p x-text="selectedEvent.event_interval" class="text-grey"></p>
                         </div>
-
+            
                         <div class="mb-4">
                             <label class="text-orange block mb-1 text-sm tracking-wide">Description</label>
                             <p x-text="selectedEvent.event_description" class="text-grey"></p>
                         </div>
-
+            
                         <div class="mt-8 text-right">
-                            <button type="button" class="bg-dark_smoke border-orange text-orange hover:bg-dark_smoke hover:border-grey hover:text-grey py-2 px-4 border rounded-lg" @click="openEventModal = !openEventModal">
-                                Close
-                            </button>    
+                            <button type="button" @click="deleteTask(selectedEvent)" class="bg-dark_smoke border-orange text-orange hover:bg-dark_smoke hover:border-grey hover:text-grey py-2 px-4 border rounded-lg mr-2">Delete Task</button>
+                            <button type="button" class="bg-dark_smoke border-orange text-orange hover:bg-dark_smoke hover:border-grey hover:text-grey py-2 px-4 border rounded-lg" @click="openEventModal = false">Close</button>
                         </div>
                     </div>
                 </div>
@@ -325,6 +318,32 @@
                         this.openEventModal = true;
                     },
 
+                    // Function to delete task from local storage
+                    deleteTask(task) {
+                        var existingData = JSON.parse(localStorage.getItem('formData')) || [];
+                        
+                        // Find index of task in existingData array
+                        var index = existingData.findIndex(function(item) {
+                            return item.task === task.event_title && item.startDate === task.event_date; // Modify this condition as per your data structure
+                        });
+
+                        // Remove task from existingData array
+                        if (index !== -1) {
+                            existingData.splice(index, 1);
+                        }
+
+                        // Update local storage with modified data
+                        localStorage.setItem('formData', JSON.stringify(existingData));
+
+                        // Update the events array used in the calendar display
+                        // Filter out the deleted task from the events array
+                        this.events = this.events.filter(function(event) {
+                            return !(event.event_title === task.event_title && event.event_date === task.event_date); // Modify this condition as per your data structure
+                        });
+
+                        // Close the task details modal
+                        this.openEventModal = false;
+                    },
 
 					showAddTaskForm(date) {
 						// Open the add task form modal and preload the selected date
