@@ -117,272 +117,286 @@
 <!-- Sample Calendar UI with TailwindCSS to show layout (no functionality yet)-->
 <div>
 
-	<link rel="dns-prefetch" href="//unpkg.com" />
-	<link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
-	<link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
-	<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+    <link rel="dns-prefetch" href="//unpkg.com" />
+    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
 
-	<style>
-		[x-cloak] {
-			display: none;
-		}
-	</style>
+    <style>
+        [x-cloak] {
+            display: none;
+        }
+    </style>
 
-<div class="antialiased sans-serif bg-navy h-screen">
-	<div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
-		<div class="container mx-auto px-4 py-1">
+    <div class="antialiased sans-serif bg-navy h-screen">
+        <div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
+            <div class="container mx-auto px-4 py-1">
 
-			<div class="bg-smoke rounded-lg shadow overflow-hidden">
+                <div class="bg-smoke rounded-lg shadow overflow-hidden">
 
-				<div class="flex items-center justify-between py-2 px-6">
-					<div>
-						<span x-text="MONTH_NAMES[month]" class="text-2xl font-base text-grey"></span>
-						<span x-text="year" class="ml-1 text-2xl text-orange font-base"></span>
-					</div>
-					<div class="border rounded-lg px-1 ml-auto mr-3 mb-2" style="padding-top: 2px;">
-						<button 
-							type="button"
-							class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
-							@click="prevMonth()">
-							<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-							</svg>  
-							<span class="text-gray-500 ml-1">Month</span>
-						</button>
-						<div class="border-r inline-flex h-6"></div>		
-						<button 
-							type="button"
-							class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
-							@click="nextMonth()">
-							<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-								<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-							</svg>									  
-						</button>
-					</div>
-					
-					<div>
-						<div class="border rounded-lg px-1 ml-auto mb-2" style="padding-top: 2px;">
-							<button 
-								type="button"
-								class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
-								@click="prevYear()">
-								<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-								</svg>  
-								<span class="text-gray-500 ml-1">Year</span>
-							</button>
-							<div class="border-r inline-flex h-6"></div>		
-							<button 
-								type="button"
-								class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
-								@click="nextYear()">
-								<svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-									<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-								</svg>									  
-							</button>
-						</div>
-						
-					</div>					
-				</div>	
+                    <div class="flex items-center justify-between py-2 px-6">
+                        <div>
+                            <span x-text="MONTH_NAMES[month]" class="text-2xl font-base text-grey"></span>
+                            <span x-text="year" class="ml-1 text-2xl text-orange font-base"></span>
+                        </div>
+                        <div class="border rounded-lg px-1 ml-auto mr-3 mb-2" style="padding-top: 2px;">
+                            <button 
+                                type="button"
+                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
+                                @click="prevMonth()">
+                                <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                </svg>  
+                                <span class="text-gray-500 ml-1">Month</span>
+                            </button>
+                            <div class="border-r inline-flex h-6"></div>        
+                            <button 
+                                type="button"
+                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
+                                @click="nextMonth()">
+                                <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>                                      
+                            </button>
+                        </div>
+                        
+                        <div>
+                            <div class="border rounded-lg px-1 ml-auto mb-2" style="padding-top: 2px;">
+                                <button 
+                                    type="button"
+                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
+                                    @click="prevYear()">
+                                    <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                                    </svg>  
+                                    <span class="text-gray-500 ml-1">Year</span>
+                                </button>
+                                <div class="border-r inline-flex h-6"></div>        
+                                <button 
+                                    type="button"
+                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-gray-200 p-1"
+                                    @click="nextYear()">
+                                    <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                    </svg>                                      
+                                </button>
+                            </div>
+                            
+                        </div>                      
+                    </div>  
 
-				<div class="-mx-1 -mb-1">
-					<div class="flex flex-wrap" style="margin-bottom: -40px;">
-						<template x-for="(day, index) in DAYS" :key="index">	
-							<div style="width: 14.26%" class="px-2 py-2">
-								<div
-									x-text="day" 
-									class="text-gray-600 text-sm uppercase tracking-wide font-bold text-center"></div>
-							</div>
-						</template>
-					</div>
+                    <div class="-mx-1 -mb-1">
+                        <div class="flex flex-wrap" style="margin-bottom: -40px;">
+                            <template x-for="(day, index) in DAYS" :key="index">  
+                                <div style="width: 14.26%" class="px-2 py-2">
+                                    <div
+                                        x-text="day" 
+                                        class="text-gray-600 text-sm uppercase tracking-wide font-bold text-center"></div>
+                                </div>
+                            </template>
+                        </div>
 
-					<div class="flex flex-wrap border-t border-l">
-						<template x-for="blankday in blankdays">
-							<div 
-								style="width: 14.28%; height: 120px"
-								class="text-center border-r border-b px-4 pt-2"	
-							></div>
-						</template>	
-						<template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">	
-							<div style="width: 14.28%; height: 120px" class="px-4 pt-2 border-r border-b relative">
-								<div
-									@click="showEventModal(date)"
-									x-text="date"
-									class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
-								></div>
-								<div style="height: 80px;" class="overflow-y-auto mt-1">
-									<template x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">	
-										<div
-										class="px-2 py-1 rounded-full mt-1 overflow-hidden border"
-										:class="{
-											'border-orange-500 text-orange-800 bg-orange-100': event.event_theme === 'orange'
-										}"
-									>
-										<a @click="showEventModal(date)">
-											<p x-text="event.event_title" class="text-sm truncate leading-tight"></p>
-										</a>
+                        <div class="flex flex-wrap border-t border-l">
+                            <template x-for="blankday in blankdays">
+                                <div 
+                                    style="width: 14.28%; height: 120px"
+                                    class="text-center border-r border-b px-4 pt-2"    
+                                ></div>
+                            </template>    
+							<template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">  
+								<div style="width: 14.28%; height: 120px" class="px-4 pt-2 border-r border-b relative">
+									<div
+										@click="showAddTaskForm(date)"
+										x-text="date"
+										class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
+									></div>
+									<div style="height: 80px;" class="overflow-y-auto mt-1">
+										<template x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">    
+											<div
+												class="px-2 py-1 rounded-full mt-1 overflow-hidden border"
+												:class="{
+													'border-orange-500 text-orange-800 bg-orange-100': event.event_theme === 'orange'
+												}"
+												@click="showEventModal(event)"
+											>
+												<p x-text="event.event_title" class="text-sm truncate leading-tight"></p>
+											</div>
+										</template>
 									</div>
-									</template>
 								</div>
-							</div>
-						</template>
-					</div>
-				</div>
-			</div>
-		</div>
+							</template>
+							
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-		<!-- Modal -->
-		<div style=" background-color: rgba(0, 0, 0, 0.8)" class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full" x-show.transition.opacity="openEventModal">
-			<div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
-				<div class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer"
-					x-on:click="openEventModal = !openEventModal">
-					<svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-						<path
-							d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
-					</svg>
-				</div>
+            <!-- Modal -->
+            <div style=" background-color: rgba(0, 0, 0, 0.8)" class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full" x-show.transition.opacity="openEventModal">
+                <div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
+                    <div class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer"
+                        x-on:click="openEventModal = !openEventModal">
+                        <svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <path
+                                d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
+                        </svg>
+                    </div>
 
-				<div class="shadow w-full rounded-lg bg-white overflow-hidden w-full block p-8">
-					
-					<h2 class="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">Task Details</h2>
-				 
-					<div class="mb-4">
-						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Task title</label>
-						<p x-text="selectedEvent.event_title" class="text-gray-700"></p>
-					</div>
+                    <div class="shadow w-full shadow-grey rounded-lg bg-dark_smoke overflow-hidden w-full block p-8">
+                        
+                        <h2 class="text-2xl mb-6 text-orange border-b pb-2">Task Details</h2>
+                     
+                        <div class="mb-4">
+                            <label class="text-orange block mb-1 text-sm tracking-wide">Task title</label>
+                            <p x-text="selectedEvent.event_title" class="text-grey"></p>
+                        </div>
 
-					<div class="mb-4">
-						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Start date</label>
-						<p x-text="selectedEvent.event_date" class="text-gray-700"></p>
-					</div>
+                        <div class="mb-4">
+                            <label class="text-orange block mb-1 text-sm tracking-wide">Start date</label>
+                            <p x-text="selectedEvent.event_date" class="text-grey"></p>
+                        </div>
 
-					<div class="mb-4">
-						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Category</label>
-						<p x-text="selectedEvent.event_category" class="text-gray-700"></p>
-					</div>
+                        <div class="mb-4">
+                            <label class="text-orange block mb-1 text-sm tracking-wide">Category</label>
+                            <p x-text="selectedEvent.event_category" class="text-grey"></p>
+                        </div>
 
-					<div class="mb-4">
-						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Interval (days)</label>
-						<p x-text="selectedEvent.event_interval" class="text-gray-700"></p>
-					</div>
+                        <div class="mb-4">
+                            <label class="text-orange block mb-1 text-sm tracking-wide">Interval (days)</label>
+                            <p x-text="selectedEvent.event_interval" class="text-grey"></p>
+                        </div>
 
-					<div class="mb-4">
-						<label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Description</label>
-						<p x-text="selectedEvent.event_description" class="text-gray-700"></p>
-					</div>
+                        <div class="mb-4">
+                            <label class="text-orange block mb-1 text-sm tracking-wide">Description</label>
+                            <p x-text="selectedEvent.event_description" class="text-grey"></p>
+                        </div>
 
-					<div class="mt-8 text-right">
-						<button type="button" class="bg-gray-800 hover:bg-gray-700 text-white font-semibold py-2 px-4 border border-gray-700 rounded-lg shadow-sm" @click="openEventModal = !openEventModal">
-							Close
-						</button>	
-					</div>
-				</div>
-			</div>
-		</div>
-		<!-- /Modal -->
-	</div>
+                        <div class="mt-8 text-right">
+                            <button type="button" class="bg-dark_smoke border-orange text-orange hover:bg-dark_smoke hover:border-grey hover:text-grey py-2 px-4 border rounded-lg" @click="openEventModal = !openEventModal">
+                                Close
+                            </button>    
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Modal -->
+        </div>
 
-	<script>
-		const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-		const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-	
-		function app() {
-			var formData = JSON.parse(localStorage.getItem('formData')) || [];
-			console.log(formData)
+        <script>
+            const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        
+            function app() {
+                var formData = JSON.parse(localStorage.getItem('formData')) || [];
+                console.log(formData)
 
-			const events = formData.map((element) => {
-				return {
-					event_title: element.task,
-					event_category: element.category,
-					event_date: element.startDate,
-					event_interval: element.interval,
-					event_description: element.description
-				}
-			})
+                const events = formData.map((element) => {
+                    return {
+                        event_title: element.task,
+                        event_category: element.category,
+                        event_date: element.startDate,
+                        event_interval: element.interval,
+                        event_description: element.description
+                    }
+                })
 
-			return {
-				month: '',
-				year: '',
-				no_of_days: [],
-				blankdays: [],
-				days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+                return {
+                    month: '',
+                    year: '',
+                    no_of_days: [],
+                    blankdays: [],
+                    days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
 
-				events: events,
-				selectedEvent: {},
+                    events: events,
+                    selectedEvent: {},
 
-				openEventModal: false,
-	
-				initDate() {
-					let today = new Date();
-					this.month = today.getMonth();
-					this.year = today.getFullYear();
-					this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
-				},
-	
-				showEventModal(date) {
-					// Find the event for the clicked date
-					const event = this.events.find(e => new Date(e.event_date).toDateString() === new Date(this.year, this.month, date).toDateString());
-					if (event) {
-						// Open the modal and populate with event details
-						this.selectedEvent = event;
-						this.openEventModal = true;
-					}
-				},
-				
-				getNoOfDays() {
-					let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-	
-					// find where to start calendar day of week
-					let dayOfWeek = new Date(this.year, this.month).getDay();
-					let blankdaysArray = [];
-					for ( var i=1; i <= dayOfWeek; i++) {
-						blankdaysArray.push(i);
-					}
-	
-					let daysArray = [];
-					for ( var i=1; i <= daysInMonth; i++) {
-						daysArray.push(i);
-					}
-	
-					this.blankdays = blankdaysArray;
-					this.no_of_days = daysArray;
-				},
-	
-				// Function to navigate to the previous month
-				prevMonth() {
-					this.month--;
-					if (this.month < 0) {
-						this.month = 11;
-						this.year--;
-					}
-					this.getNoOfDays();
-				},
-	
-				// Function to navigate to the next month
-				nextMonth() {
-					this.month++;
-					if (this.month > 11) {
-						this.month = 0;
-						this.year++;
-					}
-					this.getNoOfDays();
-				},
-	
-				// Function to navigate to the previous year
-				prevYear() {
-					this.year--;
-					this.getNoOfDays();
-				},
-	
-				// Function to navigate to the next year
-				nextYear() {
-					this.year++;
-					this.getNoOfDays();
-				},
-			}
-		}
-	</script>
-  </div>
+                    openEventModal: false,
+        
+                    initDate() {
+                        let today = new Date();
+                        this.month = today.getMonth();
+                        this.year = today.getFullYear();
+                        this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
+                    },
+        
+                    showEventModal(event) {
+                        // Open the modal and populate with event details
+                        this.selectedEvent = event;
+                        this.openEventModal = true;
+                    },
+
+
+					showAddTaskForm(date) {
+						// Open the add task form modal and preload the selected date
+						document.getElementById("startDate").value = this.formatDate(date);
+						document.getElementById("addTaskModal").showModal();
+					},
+
+					formatDate(date) {
+						const d = new Date(this.year, this.month, date);
+						const formattedDate = [
+							(d.getMonth() + 1).toString().padStart(2, '0'),
+							d.getDate().toString().padStart(2, '0'),
+							d.getFullYear().toString()
+						].join('-');
+						return formattedDate;
+					},
+
+                    getNoOfDays() {
+                        let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+        
+                        // find where to start calendar day of week
+                        let dayOfWeek = new Date(this.year, this.month).getDay();
+                        let blankdaysArray = [];
+                        for ( var i=1; i <= dayOfWeek; i++) {
+                            blankdaysArray.push(i);
+                        }
+        
+                        let daysArray = [];
+                        for ( var i=1; i <= daysInMonth; i++) {
+                            daysArray.push(i);
+                        }
+        
+                        this.blankdays = blankdaysArray;
+                        this.no_of_days = daysArray;
+                    },
+        
+                    // Function to navigate to the previous month
+                    prevMonth() {
+                        this.month--;
+                        if (this.month < 0) {
+                            this.month = 11;
+                            this.year--;
+                        }
+                        this.getNoOfDays();
+                    },
+        
+                    // Function to navigate to the next month
+                    nextMonth() {
+                        this.month++;
+                        if (this.month > 11) {
+                            this.month = 0;
+                            this.year++;
+                        }
+                        this.getNoOfDays();
+                    },
+        
+                    // Function to navigate to the previous year
+                    prevYear() {
+                        this.year--;
+                        this.getNoOfDays();
+                    },
+        
+                    // Function to navigate to the next year
+                    nextYear() {
+                        this.year++;
+                        this.getNoOfDays();
+                    },
+                }
+            }
+        </script>
+    </div>
+
 
 	<footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
 		<span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
