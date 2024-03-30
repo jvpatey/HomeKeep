@@ -26,14 +26,38 @@
           }
         }
       </script>
+      <style>
+        /* Logo Styles */
+        .logo {
+            font-size: 1.75rem; /* Adjust font size to make it smaller */
+            background-image: linear-gradient(to right, #a5adbb, #FF4C29); /* Apply gradient as background */
+            -webkit-background-clip: text; /* Apply gradient as text color for webkit browsers */
+            background-clip: text; /* Apply gradient as text color */
+            color: transparent; /* Make text transparent */
+            display: inline-block; /* Ensure the logo takes only the necessary space */
+            transition: font-size 0.3s ease, margin-left 0.3s ease, font-weight 0.3s ease; /* Add transition for smoother hover effect */
+            font-weight: bold; /* Set font weight to normal by default */
+            margin-left: 10px; /* Add left margin */
+        }
+        /* Hover effect */
+        .logo:hover {
+            font-size: 2.5xl; /* Increase font size on hover */
+            background-image: linear-gradient(to right, #FF4C29, #a5adbb); /* Reverse the gradient on hover */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            font-weight: bold; /* Make the font bold on hover */
+            margin-left: 20px; /* Increase left margin on hover */
+        }
+    </style>
 </head>
 
 <body class="bg-navy min-h-screen flex flex-col">
 
   <!--navbar -->
-  <div class="navbar bg-navy">
+  <div class="navbar bg-navy pb-6">
     <div class="navbar-start">
-      <a href="dashboard.html" target="_self" class="btn btn-ghost text-3xl bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</a>
+          <a href="dashboard.html" target="_self" class="relative inline-block logo">
+              <span>HomeKeep</span>
+          </a>
     </div>
     <div class="navbar-end">
       <div class="dropdown relative">
@@ -55,24 +79,20 @@
     <div class="modal-box bg-dark_smoke p-4 rounded-md">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
         <form id="addTaskForm" class="w-full max-w-lg">
-            <h1 class="text-center text-2xl mb-3 bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text">Add a Task</h1>
+            <h1 class="text-center text-2xl mb-3 font-light text-orange">Add a Task</h1>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
                 <input id="taskName" type="text" class="grow" placeholder="Task Name" />
             </label>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
                 <input id="category" type="text" class="grow" placeholder="Category" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="startDate" type="text" class="grow" placeholder="Maintenance Start Date" />
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
+                <input id="startDate" type="text" class="grow" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
             </label>
             <label class="input input-bordered flex items-center gap-2 bg-light_smoke">
                 <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
             </label>
             <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-light_smoke" placeholder="Maintenance Description"></textarea>
-            <div class="flex items-center gap-2 mb-2 py-2">
-                <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
-                <span class="label-text text-base text-beige">Set Notifications?</span>
-            </div>
             <div class="mx-auto w-1/2 py-1 text-center">
                 <button type="button" onclick="saveFormData()" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
             </div>
@@ -85,7 +105,7 @@
   <div class="modal-box bg-dark_smoke p-4 rounded-md">
       <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('editTaskModal').close()">✕</button>
       <div class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
-          <h1 class="text-center text-2xl mb-3 bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text">Edit a Task</h1>
+          <h1 class="text-center text-2xl mb-3 font-light text-orange">Edit a Task</h1>
           <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
               <input id="editTaskName" type="text" class="grow" placeholder="Task Name" />
           </label>
@@ -117,7 +137,7 @@
       <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
           <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
             <form class="card-body">
-              <h1 class="text-center text-2xl mb-1 bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text">Help Request</h1>
+              <h1 class="text-center text-2xl mb-3 font-light text-orange">Help Request</h1>
               <div class="form-control">
                 <input type="text" placeholder="first name" class="input input-bordered bg-light_smoke" required />
               </div>
@@ -142,7 +162,7 @@
   
   <div class="flex items-end pt-16 pl-8">
     <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
-    <button onclick="window.location.href = 'dashboard-calendar.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Calendar View</button>
+    <button onclick="window.location.href = 'dashboard-calendar.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Calendar</button>
   </div>
 
   <main class="flex-grow overflow-y-auto">
