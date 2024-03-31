@@ -1,3 +1,14 @@
+// Function to load modal content
+function loadModals() {
+    // Fetch modal.html content
+    fetch('modal.html')
+        .then(response => response.text())
+        .then(html => {
+            // Append modal content to the body
+            document.body.insertAdjacentHTML('beforeend', html);
+        });
+}
+
 function scheduleNotification(date, message) {
     var currentDate = new Date();
     var scheduledDate = new Date(date);
@@ -25,22 +36,15 @@ function scheduleNotification(date, message) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Example usage:
+    
+    loadModals();
+
+    // Example usage of notifications:
     var scheduledDate = new Date("03-27-2024T19:53:00"); // Example scheduled date
     var message = "This is a scheduled notification!";
     scheduleNotification(scheduledDate, message);
 			
     var formData = JSON.parse(localStorage.getItem('formData')) || [];
-    
-    // Event listener for the "+" button to open the add task modal
-    var addTaskButton = document.getElementById('addTaskButton');
-    var addTaskModal = document.getElementById('addTaskModal');
-
-    if (addTaskButton && addTaskModal) {
-        addTaskButton.addEventListener('click', function() {
-            addTaskModal.showModal();
-        });
-    }
 
 // Event listener for the edit task form
 var editSubmitBtn = document.getElementById('editSubmitBtn');
@@ -303,6 +307,14 @@ function showHelpModal() {
     var helpModal = document.getElementById('helpRequestModal');
     if (helpModal) {
         helpModal.showModal();
+    }
+};
+
+// Function to show the add task modal
+function showAddTaskModal() {
+    var addTaskModal = document.getElementById('addTaskModal');
+    if (addTaskModal) {
+        addTaskModal.showModal();
     }
 };
 

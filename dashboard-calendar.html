@@ -75,64 +75,9 @@
   </div>
 
       <div class="container mx-auto px-4 py-1">
-        <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
+        <button onclick="showAddTaskModal()" id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
         <button onclick="window.location.href = 'dashboard.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Table</button>
       </div>
-
-  <!-- DaisyUI help request modal -->
-  <dialog id="helpRequestModal" class="modal">
-	<div class="modal-box bg-dark_smoke p-1 rounded-md">
-		<button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('helpRequestModal').close()">✕</button>
-		<div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
-			<div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
-			  <form class="card-body">
-				<h1 class="text-center text-2xl mb-3 font-light text-orange">Help Request</h1>
-				<div class="form-control">
-				  <input type="text" placeholder="first name" class="input input-bordered bg-light_smoke" required />
-				</div>
-				<div class="form-control">
-				  <input type="text" placeholder="last name" class="input input-bordered bg-light_smoke" required />
-				</div>
-				<div class="form-control">
-				  <input type="email" placeholder="email" class="input input-bordered bg-light_smoke" required />
-				</div>
-				<div class="form-control">
-				  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-light_smoke" placeholder="message"></textarea>
-				</div>
-				<div class="mx-auto w-3/4 py-1 text-center">
-				  <button class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
-				</div>
-			  </form>
-			</div>
-		  </div>
-	</div>
-	</dialog>
-
-  <!-- DaisyUI add-task form modal -->
-  <dialog id="addTaskModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-4 rounded-md">
-        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
-        <form id="addTaskForm" class="w-full max-w-lg">
-            <h1 class="text-center text-2xl mb-3 font-light text-orange">Add a Task</h1>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="taskName" type="text" class="grow" placeholder="Task Name" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="category" type="text" class="grow" placeholder="Category" />
-            </label>
-              <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="startDate" type="text" class="grow" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 bg-light_smoke">
-                <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
-            </label>
-            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-light_smoke" placeholder="Maintenance Description"></textarea>
-            <div class="mx-auto w-1/2 py-1 text-center">
-                <button type="button" onclick="saveFormData()" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
-            </div>
-        </form>
-    </div>
-  </dialog>
       
 <!-- Sample Calendar UI with TailwindCSS to show layout (no functionality yet)-->
 <div>
