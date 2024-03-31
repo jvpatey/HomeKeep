@@ -1,0 +1,21 @@
+/* Logo Styles */
+.logo {
+    font-size: 1.75rem; /* Adjust font size to make it smaller */
+    background-image: linear-gradient(to right, #a5adbb, #FF4C29); /* Apply gradient as background */
+    -webkit-background-clip: text; /* Apply gradient as text color for webkit browsers */
+    background-clip: text; /* Apply gradient as text color */
+    color: transparent; /* Make text transparent */
+    display: inline-block; /* Ensure the logo takes only the necessary space */
+    transition: font-size 0.3s ease, margin-left 0.3s ease, font-weight 0.3s ease; /* Add transition for smoother hover effect */
+    font-weight: bold; /* Set font weight to normal by default */
+    margin-left: 10px; /* Add left margin */
+}
+
+/* Hover effect */
+.logo:hover {
+    font-size: 2.5xl; /* Increase font size on hover */
+    background-image: linear-gradient(to right, #FF4C29, #a5adbb); /* Reverse the gradient on hover */
+    cursor: pointer; /* Change cursor to pointer on hover */
+    font-weight: bold; /* Make the font bold on hover */
+    margin-left: 20px; /* Increase left margin on hover */
+}
