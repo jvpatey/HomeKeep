@@ -1,24 +1,24 @@
 <!-- DaisyUI add-task form modal -->
 <dialog id="addTaskModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-4 rounded-md">
+    <div class="modal-box bg-dark_smoke p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
-        <form id="addTaskForm" class="w-full max-w-lg">
-            <h1 class="text-center text-2xl mb-3 font-light text-orange">Add a Task</h1>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="taskName" type="text" class="grow" placeholder="Task Name" />
+        <form id="addTaskForm" class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Add a Task</h1>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey text-orange">
+                <input id="taskName" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Task Name" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="category" type="text" class="grow" placeholder="Category" />
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                <input id="category" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Category" />
             </label>
-              <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="startDate" type="text" class="grow" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                <input id="startDate" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
             </label>
-            <label class="input input-bordered flex items-center gap-2 bg-light_smoke">
-                <input id="interval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
+            <label class="input input-bordered flex items-center gap-2 bg-grey">
+                <input id="interval" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Interval (days)" />
             </label>
-            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-light_smoke" placeholder="Maintenance Description"></textarea>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-grey gap-2 text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center">
-                <button type="button" onclick="saveFormData()" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
+                <button type="button" onclick="saveFormData()" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
             </div>
         </form>
     </div>
@@ -26,29 +26,25 @@
 
   <!-- DaisyUI edit-task form modal -->
 <dialog id="editTaskModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-4 rounded-md">
+    <div class="modal-box bg-dark_smoke p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('editTaskModal').close()">✕</button>
         <div class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
-            <h1 class="text-center text-2xl mb-3 font-light text-orange">Edit a Task</h1>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="editTaskName" type="text" class="grow" placeholder="Task Name" />
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Edit a Task</h1>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                <input id="editTaskName" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Task Name" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="editCategory" type="text" class="grow" placeholder="Category" />
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                <input id="editCategory" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Category" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-light_smoke">
-                <input id="editStartDate" type="text" class="grow" placeholder="Maintenance Start Date" />
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                <input id="editStartDate" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Start Date" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 bg-light_smoke">
-                <input id="editInterval" type="text" class="grow" placeholder="Maintenance Interval (days)" />
+            <label class="input input-bordered flex items-center gap-2 bg-grey">
+                <input id="editInterval" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Interval (days)" />
             </label>
-            <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered gap-2 bg-light_smoke" placeholder="Maintenace Description"></textarea>
-            <div class="flex items-center gap-2 mb-2 py-2">
-              <input type="checkbox" checked="checked" class="checkbox bg-grey border-grey checked:border-grey [--chkbg:theme(colors.grey)] [--chkfg:green]" />
-              <span class="label-text text-base text-beige">Set Notifications?</span>
-          </div>
-            <div class="mx-auto w-3/4 py-1 text-center">
-                <button id="editSubmitBtn" class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
+            <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-dark_smoke placeholder-dark_smoke gap-2 bg-grey" placeholder="Maintenace Description"></textarea>
+            <div class="mx-auto w-1/2 py-1 text-center mt-2">
+                <button id="editSubmitBtn" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
             </div>
         </div>
     </div>
@@ -56,26 +52,26 @@
 
   <!-- DaisyUI help request modal -->
 <dialog id="helpRequestModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-1 rounded-md">
+    <div class="modal-box bg-dark_smoke p-1 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('helpRequestModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
-            <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
+        <div class="w-full max-w-lg bg-dark_smoke rounded-md">
+            <div class="w-full max-w-lg bg-dark_smoke rounded-md">
               <form class="card-body">
-                <h1 class="text-center text-2xl mb-3 font-light text-orange">Help Request</h1>
+                <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Help Request</h1>
                 <div class="form-control">
-                  <input type="text" placeholder="first name" class="input input-bordered bg-light_smoke" required />
+                  <input type="text" placeholder="first name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                 </div>
                 <div class="form-control">
-                  <input type="text" placeholder="last name" class="input input-bordered bg-light_smoke" required />
+                  <input type="text" placeholder="last name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                 </div>
                 <div class="form-control">
-                  <input type="email" placeholder="email" class="input input-bordered bg-light_smoke" required />
+                  <input type="email" placeholder="email" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                 </div>
                 <div class="form-control">
-                  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-light_smoke" placeholder="message"></textarea>
+                  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-grey text-dark_smoke placeholder-dark_smoke" placeholder="message"></textarea>
                 </div>
-                <div class="mx-auto w-3/4 py-1 text-center">
-                  <button class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Submit</button>
+                <div class="mx-auto w-1/2 py-1 text-center mt-2">
+                  <button class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
                 </div>
               </form>
             </div>
@@ -89,23 +85,23 @@
             <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="closeCreateAccountModal()">✕</button>
             <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
                 <form class="card-body">
-                    <h1 class="text-center text-2xl mb-3 font-light text-orange">Create an Account</h1>
+                    <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Create an Account</h1>
                     <!-- Form Input Fields -->
                     <div class="form-control">
-                        <input type="text" placeholder="First Name" class="input input-bordered bg-light_smoke" required />
+                        <input type="text" placeholder="First Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                     </div>
                     <div class="form-control">
-                        <input type="text" placeholder="Last Name" class="input input-bordered bg-light_smoke" required />
+                        <input type="text" placeholder="Last Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                     </div>
                     <div class="form-control">
-                        <input type="email" placeholder="Email Address" class="input input-bordered bg-light_smoke" required />
+                        <input type="email" placeholder="Email Address" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                     </div>
                     <div class="form-control">
-                        <input type="password" placeholder="Password" class="input input-bordered bg-light_smoke" required />
+                        <input type="password" placeholder="Password" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                     </div>
                     <!-- Buttons -->
-                    <div class="mx-auto w-3/4 py-1 text-center">
-                        <button class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Create Account</button>
+                    <div class="mx-auto w-1/2 py-1 text-center mt-2">
+                        <button class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Create Account</button>
                     </div>
                 </form>
             </div>
@@ -118,17 +114,17 @@
             <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="closeLoginModal()">✕</button>
             <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
                 <form class="card-body">
-                    <h1 class="text-center text-2xl mb-3 font-light text-orange">Sign In</h1>
+                    <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Sign In</h1>
                     <!-- Form Input Fields -->
                     <div class="form-control">
-                        <input type="email" placeholder="Email" class="input input-bordered bg-light_smoke" required />
+                        <input type="email" placeholder="Email" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                     </div>
                     <div class="form-control">
-                        <input type="password" placeholder="Password" class="input input-bordered bg-light_smoke" required />
+                        <input type="password" placeholder="Password" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                     </div>
                     <!-- Buttons -->
-                    <div class="mx-auto w-3/4 py-1 text-center">
-                        <button class="btn text-orange font-semibold bg-dark_smoke border-orange hover:border-grey hover:bg-dark_smoke hover:text-grey w-full">Sign in</button>
+                    <div class="mx-auto w-1/2 py-1 text-center mt-2">
+                        <button class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Sign in</button>
                     </div>
                 </form>
             </div>
