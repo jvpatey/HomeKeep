@@ -84,24 +84,24 @@
     <div class="modal-box bg-dark_smoke p-1 rounded-md">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="closeCreateAccountModal()">✕</button>
         <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
-            <form class="card-body">
+            <form id="signupForm" class="card-body">
                 <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Create an Account</h1>
                 <!-- Form Input Fields -->
                 <div class="form-control">
-                    <input type="text" placeholder="First Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="firstName" type="text" placeholder="First Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                 </div>
                 <div class="form-control">
-                    <input type="text" placeholder="Last Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="lastName" type="text" placeholder="Last Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                 </div>
                 <div class="form-control">
-                    <input type="email" placeholder="Email Address" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="signupEmail" type="email" placeholder="Email Address" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                 </div>
                 <div class="form-control">
-                    <input type="password" placeholder="Password" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="signupPassword" type="password" placeholder="Password" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
                 </div>
                 <!-- Buttons -->
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                    <button class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Create Account</button>
+                    <button type="submit" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Create Account</button>
                 </div>
             </form>
         </div>
@@ -130,3 +130,4 @@
         </div>
     </div>
 </dialog>
+

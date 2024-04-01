@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeKeep - Welcome</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                navy: '#082032',
+                smoke: '#2C394B',
+                dark_smoke: '#282e38',
+                light_smoke: '#3f4959',
+                teal: '#334756',
+                orange: '#FF4C29',
+                light_orange: '#d2691e',
+                grey: '#a5adbb'
+              }
+            }
+          }
+        }
+      </script>
+</head>
+
+<body class="bg-navy h-screen">
+  <!--navbar -->
+  <div class="navbar bg-navy">
+    <div class="navbar-start">
+      <a href="welcome-screen.html" target="_self" class="btn btn-ghost text-3xl bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</a>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown relative">
+        <button class="btn btn-ghost" tabindex="0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
+            <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showCreateAccountModal(); return false;"><i class="fa-solid fa-user-plus"></i>Create an account</a></li>
+            <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showLoginModal(); return false;"><i class="fa-solid fa-user mr-2"></i>Sign-in</a></li>
+            <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showHelpModal(); return false;"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+      <div class="hero min-h-screen bg-navy">
+        <div class="hero-content flex-col lg:flex-row-reverse">
+          <div class="text-center lg:text-left">
+            <h1 class="inline text-5xl font-bold pl-2">Welcome to</h1>
+            <h1 class="inline text-5xl font-bold pl-2 bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">HomeKeep</h1>
+            <p class="py-6 pl-2">Get ready to simplify your life and ensure your home is always in tip-top condition</p>
+          </div>
+          <div class="card shrink-0 w-full max-w-sm shadow-2xl bg-smoke">
+            <div class="card-body">
+                <h1 class="text-center p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Sign In</h1>
+                <div class="form-control">
+                    <input id="email" type="email" placeholder="email" class="input input-bordered bg-teal" required />
+                  </div>
+                  <div class="form-control">
+                    <input id="password" type="password" placeholder="password" class="input input-bordered bg-teal" required />
+                  </div>
+              <!-- <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Email</span>
+                </label>
+                <input type="email" placeholder="email" class="input input-bordered bg-teal" required />
+              </div>
+              <div class="form-control">
+                <label class="label">
+                  <span class="label-text">Password</span>
+                </label>
+                <input type="password" placeholder="password" class="input input-bordered bg-teal" required />
+              </div>
+                <div>
+                  <a href="#" class="label-text-alt no-underline link text-md label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text" onclick="showCreateAccountModal(); return false;">Create an account</a>
+                </div> -->
+                <div class="flex justify-center mx-auto w-2/5 py-1 text-center mt-1">
+                    <button id="loginEmailPassword" class="mr-2 btn text-orange font-semibold bg-smoke border-orange hover:border-grey hover:bg-smoke hover:text-grey w-full">Sign In</button>
+                    <button id="login0" class="ml-2 btn text-smoke font-semibold bg-white border-white hover:border-grey hover:bg-smoke hover:text-grey w-full">Sign in with Google</button>
+                  </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
+        <span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+        </span>
+        <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+          <li>
+            <a id="helpLink" href="#" class="label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text" onclick="showHelpModal(); return false;">Help</a>
+        </li>
+        </ul>
+    </footer>
+  
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
+      authDomain: "homekeep-x.firebaseapp.com",
+      projectId: "homekeep-x",
+      storageBucket: "homekeep-x.appspot.com",
+      messagingSenderId: "142689184811",
+      appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    function signInWithGoogle() {
+      console.log(auth)
+        var provider = new GoogleAuthProvider();
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                // Signed in successfully, get user details
+                var user = result.user;
+                console.log("Signed in user:", user);
+                // Redirect to dashboard.html after successful authentication
+                window.location.href = "dashboard.html";
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error("Google sign-in error:", error);
+            });
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+    // Sign-in event listener
+    document.getElementById("loginEmailPassword").addEventListener("click", function(event) {
+        event.preventDefault(); // Prevent default form submission
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        signInWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed in
+                const user = userCredential.user;
+                console.log("Signed in user:", user);
+                // Redirect to dashboard.html after successful authentication
+                window.location.href = "dashboard.html";
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error("Error:", error);
+                // Display error message using alert
+                alert("Incorrect email or password. Please try again.");
+            });
+    });
+
+    // Sign-up event listener (if needed)
+    const signupForm = document.getElementById("signupForm");
+    if (signupForm) {
+        signupForm.addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent default form submission
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+            
+            createUserWithEmailAndPassword(auth, email, password)
+            .then((userCredential) => {
+                // Signed up successfully
+                const user = userCredential.user;
+                console.log("User created:", user);
+                // Optionally, you can redirect to another page
+                // window.location.href = "dashboard.html";
+                // Close the modal
+                closeCreateAccountModal();
+            })
+            .catch((error) => {
+                // Handle errors
+                console.error("Error creating user:", error);
+                // Display an alert with the error message
+                alert(error.message);
+            });
+        });
+    }
+});
+    document.addEventListener("DOMContentLoaded", function() {
+        document.getElementById("login0").addEventListener("click", signInWithGoogle);
+    });
+  </script>
+  <script src="script.js"></script>
+</body>
+</html>

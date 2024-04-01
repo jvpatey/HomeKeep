@@ -45,7 +45,7 @@
           </svg>
         </button>
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
-          <li><a href="welcome-screen.html" target="_self" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
+          <li><a href="#" onclick="signOut(); return false;" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
           <li><a href="#" class="label-text-alt no-underline link text-base mt-2" onclick="showHelpModal(); return false;"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
         </ul>
       </div>
@@ -93,5 +93,42 @@
   </footer>
 
   <script src="script.js"></script>
-  </body>
+
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAuth, signOut } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
+      authDomain: "homekeep-x.firebaseapp.com",
+      projectId: "homekeep-x",
+      storageBucket: "homekeep-x.appspot.com",
+      messagingSenderId: "142689184811",
+      appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
+    };
+
+ // Initialize Firebase
+ const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+
+  // Define signOut function in the global scope
+  window.signOut = function() {
+      console.log('Attempting sign out...');
+      auth.signOut().then(() => {
+          // Sign-out successful.
+          console.log('User signed out');
+          // Redirect to the home page or wherever you want after sign-out
+          window.location.href = "index.html";
+      }).catch((error) => {
+          // An error happened.
+          console.error("Sign out error:", error);
+      });
+  }
+</script>
+  </script>
+</body>
 </html>
