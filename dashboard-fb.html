@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeKeep - Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                navy: '#082032',
+                smoke: '#2C394B',
+                dark_smoke: '#282e38',
+                light_smoke: '#3f4959',
+                teal: '#334756',
+                orange: '#FF4C29',
+                light_orange: '#d2691e',
+                grey: '#a5adbb'
+              }
+            }
+          }
+        }
+      </script>
+</head>
+
+<body class="bg-navy min-h-screen flex flex-col">
+
+  <!--navbar -->
+  <div class="navbar bg-navy pb-6">
+    <div class="navbar-start">
+          <a href="dashboard-fb.html" target="_self" class="relative inline-block logo">
+              <span>HomeKeep</span>
+          </a>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown relative">
+        <button class="btn btn-ghost" tabindex="0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
+          <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
+          <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base mt-2"></i>Help</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- DaisyUI add-task form modal -->
+<dialog id="addTaskModal" class="modal">
+    <div class="modal-box bg-dark_smoke p-4 rounded-lg">
+        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
+        <form id="addTaskForm" class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Add a Task</h1>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey text-orange">
+                <input id="taskName" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Task Name" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                <input id="category" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Category" />
+            </label>
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                <input id="startDate" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 bg-grey">
+                <input id="interval" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Interval (days)" />
+            </label>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-grey gap-2 text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Description"></textarea>
+            <div class="mx-auto w-1/2 py-1 text-center">
+                <button id="submitTaskButton" type="button" onclick="saveFormData()" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
+            </div>
+        </form>
+    </div>
+</dialog>
+
+<!-- DaisyUI edit-task form modal -->
+<dialog id="editTaskModal" class="modal">
+  <div class="modal-box bg-dark_smoke p-4 rounded-lg">
+      <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('editTaskModal').close()">✕</button>
+      <div class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
+          <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Edit a Task</h1>
+          <form id="editTaskForm" class="card-body">
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                  <input id="editTaskName" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Task Name" />
+              </label>
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                  <input id="editCategory" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Category" />
+              </label>
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
+                  <input id="editStartDate" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Start Date" />
+              </label>
+              <label class="input input-bordered flex items-center gap-2 bg-grey">
+                  <input id="editInterval" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Interval (days)" />
+              </label>
+              <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-dark_smoke placeholder-dark_smoke gap-2 bg-grey" placeholder="Maintenace Description"></textarea>
+              <div class="mx-auto w-1/2 py-1 text-center mt-2">
+                  <button id="editSubmitBtn" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</dialog>
+
+
+<!-- DaisyUI help request modal -->
+<dialog id="helpRequestModal" class="modal">
+    <div class="modal-box bg-dark_smoke p-1 rounded-lg">
+        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('helpRequestModal').close()">✕</button>
+        <div class="w-full max-w-lg bg-dark_smoke rounded-md">
+            <div class="w-full max-w-lg bg-dark_smoke rounded-md">
+              <form class="card-body">
+                <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Help Request</h1>
+                <div class="form-control">
+                  <input type="text" placeholder="first name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                </div>
+                <div class="form-control">
+                  <input type="text" placeholder="last name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                </div>
+                <div class="form-control">
+                  <input type="email" placeholder="email" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                </div>
+                <div class="form-control">
+                  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-grey text-dark_smoke placeholder-dark_smoke" placeholder="message"></textarea>
+                </div>
+                <div class="mx-auto w-1/2 py-1 text-center mt-2">
+                  <button class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+    </div>
+</dialog>
+  
+  <div class="flex items-end pt-16 pl-8">
+    <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
+    <button onclick="window.location.href = 'dashboard-calendar-fb.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Calendar</button>
+  </div>
+
+  <main class="flex-grow overflow-y-auto">
+    <!-- Table with sample data -->
+    <div class="px-8" style="height: calc(100vh - 256px); overflow-y: auto;">
+      <table class="table bg-smoke" id="taskTable">
+        <!-- head -->
+        <thead class="text-orange text-base font-normal">
+          <tr>
+            <th class="font-normal">Task</th>
+            <th class="font-normal">Category</th>
+            <th class="font-normal">Start Date</th>
+            <th class="font-normal">Interval</th>
+            <th class="font-normal">Description</th>
+            <th class="font-normal">Notifications</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="taskTableBody">
+          <!-- empty row -->
+          <tr class="empty-row">
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <footer class="fixed bottom-0 left-0 z-0 w-full p-4 bg-navy border-navy border-navy shadow md:flex md:items-center md:justify-between md:p-6">
+    <span class="text-sm text-grey sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+    </span>
+    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+      <li>
+        <a id="helpFooterLink" href="#" class="hover:underline me-4 md:me-6">Help</a>
+    </li>
+    </ul>
+  </footer>
+
+<script type="module">
+
+// Import Firebase and Firestore
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
+import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
+
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
+  authDomain: "homekeep-x.firebaseapp.com",
+  projectId: "homekeep-x",
+  storageBucket: "homekeep-x.appspot.com",
+  messagingSenderId: "142689184811",
+  appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
+};
+
+// Initialize Firebase
+const firebaseApp = initializeApp(firebaseConfig);
+
+// Get a reference to the Firestore service
+const firestore = getFirestore(firebaseApp);
+const auth = getAuth(firebaseApp);
+
+
+// Function to save task data to Firestore
+async function saveFormData() {
+    var taskName = document.getElementById('taskName').value;
+    var category = document.getElementById('category').value;
+    var startDate = document.getElementById('startDate').value;
+    var interval = document.getElementById('interval').value;
+    var description = document.getElementById('description').value;
+
+    // Validate the start date format
+    var datePattern = /^\d{2}-\d{2}-\d{4}$/;
+    if (!datePattern.test(startDate)) {
+        // Display an alert if the start date format is incorrect
+        alert("Please enter the start date in the format MM-DD-YYYY.");
+        return; // Prevent further execution of the function
+    }
+
+    // Extract month, day, and year from the input
+    var [month, day, year] = startDate.split('-').map(Number);
+
+    // Validate month, day, and year
+    if (month < 1 || month > 12) {
+        alert("Please enter a valid month (1-12).");
+        return;
+    }
+    if (day < 1 || day > 31) {
+        alert("Please enter a valid day (1-31).");
+        return;
+    }
+
+    if (year < 1900 || year > 2100) {
+        alert("Please enter a valid year (1900-2100).");
+        return;
+    }
+
+    try {
+        // Add a new document with a generated ID
+        await addDoc(collection(firestore, "tasks"), {
+            taskName: taskName,
+            category: category,
+            startDate: startDate,
+            interval: interval,
+            description: description
+        });
+        console.log("Document successfully written!");
+        // Reset the form after successful submission
+        document.getElementById('addTaskForm').reset();
+        // Close the modal
+        document.getElementById('addTaskModal').close();
+        // Display updated tasks
+        displayTasks();
+    } catch (error) {
+        console.error("Error writing document: ", error);
+    }
+}
+
+// Add event listener to the submit button
+document.getElementById('submitTaskButton').addEventListener('click', function() {
+    saveFormData();
+});
+
+// Function to populate the edit task modal with data from the corresponding row
+function populateEditTaskModal(taskData) {
+    var editTaskForm = document.getElementById('editTaskForm');
+    editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
+    editTaskForm.querySelector('#editCategory').value = taskData.category;
+    editTaskForm.querySelector('#editStartDate').value = taskData.startDate;
+    editTaskForm.querySelector('#editInterval').value = taskData.interval;
+    editTaskForm.querySelector('#editDescription').value = taskData.description;
+}
+
+// Function to update task data in Firestore and the table
+async function updateTask(taskData, docRef, row) {
+    try {
+        // Update document in Firestore
+        await updateDoc(docRef, taskData);
+        // Update row in table
+        row.children[0].textContent = taskData.taskName;
+        row.children[1].textContent = taskData.category;
+        row.children[2].textContent = taskData.startDate;
+        row.children[3].textContent = taskData.interval;
+        row.children[4].textContent = taskData.description;
+    } catch (error) {
+        console.error("Error updating document: ", error);
+    }
+}
+
+async function displayTasks() {
+    try {
+        const taskTableBody = document.getElementById('taskTableBody');
+
+        // Clear existing table rows
+        taskTableBody.innerHTML = '';
+
+        // Fetch tasks from Firestore
+        const querySnapshot = await getDocs(collection(firestore, "tasks"));
+
+        querySnapshot.forEach((doc) => {
+            var task = doc.data();
+            var row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${task.taskName}</td>
+                <td>${task.category}</td>
+                <td>${task.startDate}</td>
+                <td>${task.interval}</td>
+                <td>${task.description}</td>
+                <td></td>
+                <td></td>
+            `;
+
+            // DaisyUI toggle switch for cell 6
+            var toggleSwitchContainer = document.createElement('div');
+            toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center'); // Removed 'justify-center'
+
+            var toggleSwitchInput = document.createElement('input');
+            toggleSwitchInput.type = 'checkbox';
+            toggleSwitchInput.classList.add('toggle', 'toggle-success');
+            toggleSwitchInput.checked = true;
+
+            var toggleSwitchMark = document.createElement('span');
+            toggleSwitchMark.classList.add('toggle-mark');
+
+            toggleSwitchContainer.appendChild(toggleSwitchInput);
+            toggleSwitchContainer.appendChild(toggleSwitchMark);
+
+            row.children[5].appendChild(toggleSwitchContainer);
+
+            // Flex container for icons in cell 7
+            var iconsContainer = document.createElement('div');
+            iconsContainer.classList.add('flex', 'items-center');
+
+            // Anchor for pencil icon
+            var editLink = document.createElement('a');
+            editLink.href = '#';
+            editLink.style.marginRight = '8px';
+            iconsContainer.appendChild(editLink);
+
+            // Font Awesome pencil icon
+            var pencilIcon = document.createElement('i');
+            pencilIcon.className = 'fas fa-pencil-alt';
+            pencilIcon.classList.add('hover:text-orange');
+            editLink.appendChild(pencilIcon);
+
+            // Font Awesome garbage can icon
+            var garbageIcon = document.createElement('i');
+            garbageIcon.className = 'fas fa-trash-alt';
+            garbageIcon.classList.add('hover:text-orange');
+            garbageIcon.addEventListener('click', async () => {
+                try {
+                    // Delete document from Firestore
+                    await deleteDoc(doc.ref);
+                    // Remove row from table
+                    taskTableBody.removeChild(row);
+                } catch (error) {
+                    console.error("Error deleting document: ", error);
+                }
+            });
+
+            iconsContainer.appendChild(garbageIcon);
+            row.children[6].appendChild(iconsContainer);
+
+            // Add event listener to the pencil icon
+            pencilIcon.addEventListener('click', async () => {
+                var taskData = {
+                    taskName: row.children[0].textContent,
+                    category: row.children[1].textContent,
+                    startDate: row.children[2].textContent,
+                    interval: row.children[3].textContent,
+                    description: row.children[4].textContent
+                };
+                // Populate the edit task modal with data from the corresponding row
+                populateEditTaskModal(taskData);
+                // Show the edit task modal
+                document.getElementById('editTaskModal').showModal();
+
+              // Add event listener to the submit button on the edit task form
+              var editTaskForm = document.getElementById('editTaskForm');
+              editTaskForm.addEventListener('submit', async (e) => {
+                  e.preventDefault(); // Prevent form submission
+
+                  // Retrieve form fields' values from the edit task form
+                  var editedTaskData = {
+                      taskName: editTaskForm.querySelector('#editTaskName').value,
+                      category: editTaskForm.querySelector('#editCategory').value,
+                      startDate: editTaskForm.querySelector('#editStartDate').value,
+                      interval: editTaskForm.querySelector('#editInterval').value,
+                      description: editTaskForm.querySelector('#editDescription').value
+                  };
+
+                  // Update task data in Firestore and the table
+                  await updateTask(editedTaskData, doc.ref, row);
+
+                  // Close the edit task modal
+                  document.getElementById('editTaskModal').close();
+              });
+            });
+
+            taskTableBody.appendChild(row);
+        });
+    } catch (error) {
+        console.error("Error fetching tasks: ", error);
+    }
+  }
+
+// Call displayTasks() to initially display tasks when the page loads
+displayTasks();
+
+// Function for toggling the dropdown menu in the navbar
+function toggleDropdown() {
+    var dropdownMenu = document.getElementById("dropdownMenu");
+    dropdownMenu.classList.toggle("hidden");
+}
+
+// Function to show the add task modal
+function showAddTaskModal() {
+    var addTaskModal = document.getElementById('addTaskModal');
+    if (addTaskModal) {
+        addTaskModal.showModal();
+    }
+};
+
+// Add event listener to the plus button
+document.getElementById('addTaskButton').addEventListener('click', function() {
+    showAddTaskModal();
+});
+
+    // Function to show the help request modal
+    function showHelpModal() {
+    var helpRequestModal = document.getElementById('helpRequestModal');
+    if (helpRequestModal) {
+        helpRequestModal.showModal();
+    }
+}
+    // Add event listener to the Help link in the navbar
+    document.addEventListener('DOMContentLoaded', function() {
+    var helpLink = document.getElementById('helpLink');
+    if (helpLink) {
+        helpLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            showHelpModal();
+        });
+    }
+});
+
+// Add event listener to the Help link in the footer
+document.addEventListener('DOMContentLoaded', function() {
+    var helpFooterLink = document.getElementById('helpFooterLink');
+    if (helpFooterLink) {
+        helpFooterLink.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            showHelpModal();
+        });
+    }
+});
+
+// Function to sign out the user
+function signOutUser() {
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    window.location.href = "index-fb.html"; // Redirect to index-fb.html
+  }).catch((error) => {
+    // An error happened.
+    console.error("Error signing out: ", error);
+  });
+}
+
+// Add event listener to the sign out link
+document.getElementById('signOutLink').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent default link behavior
+  signOutUser(); // Call sign out function
+});
+
+</script>
+  </body>
+</html>
