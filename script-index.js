@@ -91,8 +91,6 @@ document.getElementById('forgotPasswordLink').addEventListener('click', function
     }
 });
 
-
-
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("loginGoogleBtn").addEventListener("click", signInWithGoogle);
 });
