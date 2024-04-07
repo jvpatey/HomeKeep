@@ -31,6 +31,7 @@
 <body class="bg-navy min-h-screen flex flex-col">
 
   <!--navbar -->
+
   <div class="navbar bg-navy pb-6">
     <div class="navbar-start">
           <a href="dashboard.html" target="_self" class="relative inline-block logo">
@@ -44,7 +45,9 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
+
         <!-- Dropdown list -->
+
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
           <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
           <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base mt-2"></i>Help</a></li>
@@ -54,13 +57,16 @@
   </div>
 
   <!-- Buttons above table -->
+
   <div class="flex items-end pt-16 pl-8">
     <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
     <button onclick="window.location.href = 'dashboard-calendar.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Calendar</button>
   </div>
 
   <main class="flex-grow overflow-y-auto">
+
     <!-- Table with sample data -->
+
     <div class="px-8" style="height: calc(100vh - 256px); overflow-y: auto;">
       <table class="table bg-smoke" id="taskTable">
         <thead class="text-orange text-base font-normal">
@@ -84,6 +90,7 @@
   </main>
 
   <!-- Footer -->
+  
   <footer class="fixed bottom-0 left-0 z-0 w-full p-4 bg-navy border-navy border-navy shadow md:flex md:items-center md:justify-between md:p-6">
     <span class="text-sm text-grey sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
     </span>
