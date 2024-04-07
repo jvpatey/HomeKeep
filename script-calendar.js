@@ -26,17 +26,12 @@ console.log(auth.currentUser);
 // Handle authentication state changes
 auth.onAuthStateChanged(user => {
     if (user) {
-        // User is signed in.
         console.log("User is logged in:", user);
-        // Call renderCalendar and pass the user object
         renderCalendar(user);
     } else {
-        // No user is signed in.
         console.log("No user logged in.");
-        // Perform any necessary actions for when no user is logged in
     }
 });
-
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
@@ -48,7 +43,7 @@ async function saveFormData(user) {
     var interval = document.getElementById('interval').value.trim();
     var description = document.getElementById('description').value;
 
-    // Validate interval using a regular expression
+    // Validate interval field
     var intervalRegex = /^\d+$/;
     if (!intervalRegex.test(interval)) {
         alert("Interval must be a positive integer.");
@@ -69,7 +64,7 @@ async function saveFormData(user) {
     // Reset the form after successful submission
     document.getElementById('addTaskForm').reset();
     document.getElementById('addTaskModal').close();
-    displayTasks(user); // Pass the user object to displayTasks
+    displayTasks(user);
 }
 
 // function to add task data to Firestore
@@ -132,15 +127,12 @@ async function addTasksWithIntervalToFirestore(startDate, taskName, category, de
 document.addEventListener('click', function(event) {
     if (event.target && event.target.id === 'submitTaskButton') {
         if (auth.currentUser) {
-            // Pass the user object to saveFormData
             saveFormData(auth.currentUser);
         } else {
             console.error("No user logged in.");
-            // Handle the case when no user is logged in
         }
     }
 });
-
 
 async function displayTasks(user) {
     try {
@@ -158,8 +150,6 @@ async function displayTasks(user) {
 
         // Create a set to store dates for which tasks have already been added
         const addedDates = new Set();
-
-        // Clear existing events before adding new ones
         const eventContainers = document.querySelectorAll('.event-container');
         eventContainers.forEach(container => container.innerHTML = '');
 
@@ -195,23 +185,24 @@ async function displayTasks(user) {
                             eventBlock.textContent = task.taskName;
                             eventBlock.title = task.taskName;
                             eventBlock.dataset.taskId = doc.id;
+                            eventBlock.dataset.category = task.category;
+                            eventBlock.dataset.startDate = task.startDate;
+                            eventBlock.dataset.interval = task.interval;
+                            eventBlock.dataset.description = task.description;
                             eventContainer.appendChild(eventBlock);
 
-                            // Add the date to the set of added dates
                             addedDates.add(formattedDate);
                         }
                     }
-
-                    // Increment next occurrence date by the interval
                     nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
                 }
             }
         });
+
     } catch (error) {
         console.error("Error fetching tasks: ", error);
     }
 }
-
 
 /* ------ Calendar functionality ------ */
 
@@ -307,8 +298,6 @@ const renderCalendar = (user) => {
     }
 };
                     
-                              
-
 //event listeners for calendar buttons
 
 document.getElementById('prevMonth').addEventListener('click', () => {
@@ -318,7 +307,6 @@ document.getElementById('prevMonth').addEventListener('click', () => {
         currentYear -= 1;
     }
     renderCalendar();
-    // Call displayTasks only if auth.currentUser is defined
     if (auth.currentUser) {
         displayTasks(auth.currentUser);
     }
@@ -331,7 +319,6 @@ document.getElementById('nextMonth').addEventListener('click', () => {
         currentYear += 1;
     }
     renderCalendar();
-    // Call displayTasks only if auth.currentUser is defined
     if (auth.currentUser) {
         displayTasks(auth.currentUser);
     }
@@ -342,17 +329,14 @@ document.getElementById('currentMonthButton').addEventListener('click', () => {
     currentMonth = now.getMonth();
     currentYear = now.getFullYear();
     renderCalendar();
-    // Call displayTasks only if auth.currentUser is defined
     if (auth.currentUser) {
         displayTasks(auth.currentUser);
     }
 });
 
-
-
 renderCalendar();
 
-// Function to display task details in a modal
+// function to populate the task details modal
 function showTaskDetailsModal(taskData) {
     document.getElementById('taskDetailsName').textContent = taskData.taskName;
     document.getElementById('taskDetailsCategory').textContent = taskData.category;
@@ -366,22 +350,20 @@ function showTaskDetailsModal(taskData) {
     }
 }
 
-// Add event listener to the task blocks to show task details
+// event listener to show task details modal when task is clicked in calendar
 document.addEventListener('click', function(event) {
-if (event.target.classList.contains('event-block')) {
-    const taskId = event.target.dataset.taskId;
-    const taskRef = doc(firestore, "tasks", taskId);
-    getDoc(taskRef).then((docSnapshot) => {
-        if (docSnapshot.exists()) {
-            const taskData = docSnapshot.data();
-            showTaskDetailsModal(taskData);
-        } else {
-            console.log("No such document!");
-        }
-    }).catch((error) => {
-        console.log("Error getting document:", error);
-    });
-}
+    if (event.target.classList.contains('event-block')) {
+        // Get the task data from the clicked element
+        const taskData = {
+            taskName: event.target.textContent,
+            category: event.target.dataset.category,
+            startDate: event.target.dataset.startDate,
+            interval: event.target.dataset.interval,
+            description: event.target.dataset.description
+        };
+        // Show task details modal with the task data
+        showTaskDetailsModal(taskData);
+    }
 });
 
 /* -------- Modal and HTML javascript ------- */
@@ -414,10 +396,9 @@ fetch('modals.html')
 // Function to initialize modals
 function initializeModals() {
     var addTaskModal = document.getElementById('addTaskModal');
-    var editTaskModal = document.getElementById('editTaskModal');
     var helpModal = document.getElementById('helpModal');
 
-    if (addTaskModal && editTaskModal && helpModal) {
+    if (addTaskModal && helpModal) {
         document.getElementById('addTaskButton').addEventListener('click', function() {
             addTaskModal.showModal();
             document.getElementById('submitTaskButton').addEventListener('click', function() {
