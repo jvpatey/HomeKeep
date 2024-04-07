@@ -20,11 +20,27 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
+// Check authentication status
+console.log(auth.currentUser);
+
+// Handle authentication state changes
+auth.onAuthStateChanged(user => {
+    if (user) {
+        // User is signed in.
+        console.log("User is logged in:", user);
+        // Call any necessary functions here
+        displayTasks(user); // Example: Call function to display tasks
+    } else {
+        // No user is signed in.
+        console.log("No user logged in.");
+        // Perform any necessary actions for when no user is logged in
+    }
+});
+
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
-// function to save add task data
-async function saveFormData() {
-
+/// function to save add task data
+async function saveFormData(user) {
     var taskName = document.getElementById('taskName').value;
     var category = document.getElementById('category').value;
     var startDate = document.getElementById('startDate').value;
@@ -47,41 +63,30 @@ async function saveFormData() {
     }
 
     // Add the task to Firestore
-    await addTaskToFirestore(startDate, taskName, category, description, interval);
+    await addTaskToFirestore(user, startDate, taskName, category, description, interval);
 
     // Reset the form after successful submission
     document.getElementById('addTaskForm').reset();
     document.getElementById('addTaskModal').close();
-    displayTasks();
-    }
-
-// function to add task data to Firestore
-async function addTaskToFirestore(startDate, taskName, category, description, interval) {
-    
-    try {
-        // Check if the task already exists in Firestore
-        const querySnapshot = await getDocs(collection(firestore, "tasks"));
-        const existingTasks = querySnapshot.docs.map(doc => doc.data().taskName);
-        if (existingTasks.includes(taskName)) {
-            console.log("Task already exists in Firestore.");
-            return;
-        }
-
-    // Add the task to Firestore
-    await addDoc(collection(firestore, "tasks"), {
-        taskName: taskName,
-        category: category,
-        startDate: startDate,
-        interval: interval,
-        description: description
-    });
-
-    console.log("Document successfully written!");
-        } catch (error) {
-            console.error("Error writing document: ", error);
-         }
+    displayTasks(user); // Pass the user object to displayTasks
 }
 
+// function to add task data to Firestore
+async function addTaskToFirestore(user, startDate, taskName, category, description, interval) {
+    try {
+        // Add the task to Firestore under the user's ID
+        await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
+            taskName: taskName,
+            category: category,
+            startDate: startDate,
+            interval: interval,
+            description: description
+        });
+        console.log("Document successfully written!");
+    } catch (error) {
+        console.error("Error writing document: ", error);
+    }
+}
 
 async function addTasksWithIntervalToFirestore(startDate, taskName, category, description, interval) {
     
@@ -125,35 +130,21 @@ async function addTasksWithIntervalToFirestore(startDate, taskName, category, de
 // Event listener for submit button on add task form
 document.addEventListener('click', function(event) {
     if (event.target && event.target.id === 'submitTaskButton') {
-        saveFormData();
-        }
-    });
-
-// Function to update task data in Firestore and the table
-async function updateTask(taskData, docRef, row) {
-    try {
-        // Update document in Firestore
-        await updateDoc(docRef, taskData);
-        // Update row in table
-        row.children[0].textContent = taskData.taskName;
-        row.children[1].textContent = taskData.category;
-        row.children[2].textContent = taskData.startDate;
-        row.children[3].textContent = taskData.interval;
-        row.children[4].textContent = taskData.description;
-    } catch (error) {
-        console.error("Error updating document: ", error);
+        // Pass the user object to saveFormData
+        saveFormData(auth.currentUser);
     }
-}
+});
 
 // function that displays the tasks in the calendar view
-async function displayTasks() {
+async function displayTasks(user) {
 try {
     const currentDate = new Date();
     const currentYear = currentDate.getFullYear();
     const currentMonth = currentDate.getMonth();
 
-    const querySnapshot = await getDocs(collection(firestore, "tasks"));
-    
+    // Fetch task data associated with the logged-in user
+    const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
+
     // Create a set to store dates for which tasks have already been added
     const addedDates = new Set();
 

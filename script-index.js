@@ -18,6 +18,23 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Check authentication status
+console.log(auth.currentUser);
+
+// Handle authentication state changes
+auth.onAuthStateChanged(user => {
+    if (user) {
+        // User is signed in.
+        console.log("User is logged in:", user);
+        // Call any necessary functions here
+        displayTasks(); // Example: Call function to display tasks
+    } else {
+        // No user is signed in.
+        console.log("No user logged in.");
+        // Perform any necessary actions for when no user is logged in
+    }
+});
+
 /* -----Firebase Auth----- */
 
 // Sign in with google auth

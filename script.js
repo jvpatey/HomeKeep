@@ -20,25 +20,52 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
+// Check authentication status
+console.log(auth.currentUser);
+
+// Handle authentication state changes
+auth.onAuthStateChanged(user => {
+    if (user) {
+        // User is signed in.
+        console.log("User is logged in:", user);
+        // Call any necessary functions here
+        displayTasks(); // Example: Call function to display tasks
+    } else {
+        // No user is signed in.
+        console.log("No user logged in.");
+        // Perform any necessary actions for when no user is logged in
+    }
+});
+
+
 /* ------ Functions to handle form data and table data ------- */
 
 // Function to save task data to Firestore
 async function saveFormData() {
-    var taskName = document.getElementById('taskName').value;
-    var category = document.getElementById('category').value;
-    var startDate = document.getElementById('startDate').value;
-    var interval = document.getElementById('interval').value;
-    var description = document.getElementById('description').value;
+    // Get the currently logged-in user
+    const user = auth.currentUser;
+
+    if (!user) {
+        console.error("No user logged in.");
+        return;
+    }
+
+    // Extract form data
+    const taskName = document.getElementById('taskName').value;
+    const category = document.getElementById('category').value;
+    const startDate = document.getElementById('startDate').value;
+    const interval = document.getElementById('interval').value;
+    const description = document.getElementById('description').value;
 
     // Validate the start date format
-    var datePattern = /^\d{2}-\d{2}-\d{4}$/;
+    const datePattern = /^\d{2}-\d{2}-\d{4}$/;
     if (!datePattern.test(startDate)) {
         alert("Please enter the start date in the format MM-DD-YYYY.");
         return;
     }
 
     // Extract month, day, and year from the input
-    var [month, day, year] = startDate.split('-').map(Number);
+    const [month, day, year] = startDate.split('-').map(Number);
     if (month < 1 || month > 12) {
         alert("Please enter a valid month (1-12).");
         return;
@@ -47,15 +74,14 @@ async function saveFormData() {
         alert("Please enter a valid day (1-31).");
         return;
     }
-
     if (year < 1900 || year > 2100) {
         alert("Please enter a valid year (1900-2100).");
         return;
     }
 
     try {
-        // Add a new document with a generated ID
-        await addDoc(collection(firestore, "tasks"), {
+        // Add a new document with a generated ID and user's authentication information
+        await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
             startDate: startDate,
@@ -63,13 +89,16 @@ async function saveFormData() {
             description: description
         });
         console.log("Document successfully written!");
+        // Reset form and close modal
         document.getElementById('addTaskForm').reset();
         document.getElementById('addTaskModal').close();
+        // Refresh task display
         displayTasks();
     } catch (error) {
         console.error("Error writing document: ", error);
     }
 }
+
 
 // Add event listener for submit button on add task form
 document.addEventListener('click', function(event) {
@@ -103,13 +132,25 @@ async function updateTask(taskData, docRef, row) {
     }
 }
 
+// Function to fetch and display task data from Firestore
 async function displayTasks() {
+    
+    // Get the currently logged-in user
+    const user = auth.currentUser;
+
+    if (!user) {
+        console.error("No user logged in.");
+        return;
+    }
+
     try {
         const taskTableBody = document.getElementById('taskTableBody');
         // Clear existing table rows
         taskTableBody.innerHTML = '';
 
-        const querySnapshot = await getDocs(collection(firestore, "tasks"));
+        // Fetch task data associated with the logged-in user
+        const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
+
         if (querySnapshot.empty) {
             // Append a row with the message "No tasks entered yet"
             const emptyRow = document.createElement('tr');
@@ -118,8 +159,8 @@ async function displayTasks() {
         } else {
             // Append each task as a row to the table
             querySnapshot.forEach((doc) => {
-                var task = doc.data();
-                var row = document.createElement('tr');
+                const task = doc.data();
+                const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${task.taskName}</td>
                     <td>${task.category}</td>
@@ -131,15 +172,15 @@ async function displayTasks() {
                 `;
 
                 // DaisyUI toggle switch for cell 6
-                var toggleSwitchContainer = document.createElement('div');
+                const toggleSwitchContainer = document.createElement('div');
                 toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center'); // Removed 'justify-center'
 
-                var toggleSwitchInput = document.createElement('input');
+                const toggleSwitchInput = document.createElement('input');
                 toggleSwitchInput.type = 'checkbox';
                 toggleSwitchInput.classList.add('toggle', 'toggle-success');
                 toggleSwitchInput.checked = true;
 
-                var toggleSwitchMark = document.createElement('span');
+                const toggleSwitchMark = document.createElement('span');
                 toggleSwitchMark.classList.add('toggle-mark');
 
                 toggleSwitchContainer.appendChild(toggleSwitchInput);
@@ -148,23 +189,23 @@ async function displayTasks() {
                 row.children[5].appendChild(toggleSwitchContainer);
 
                 // Flex container for icons in cell 7
-                var iconsContainer = document.createElement('div');
+                const iconsContainer = document.createElement('div');
                 iconsContainer.classList.add('flex', 'items-center');
 
                 // Anchor for pencil icon
-                var editLink = document.createElement('a');
+                const editLink = document.createElement('a');
                 editLink.href = '#';
                 editLink.style.marginRight = '8px';
                 iconsContainer.appendChild(editLink);
 
                 // Font Awesome pencil icon
-                var pencilIcon = document.createElement('i');
+                const pencilIcon = document.createElement('i');
                 pencilIcon.className = 'fas fa-pencil-alt';
                 pencilIcon.classList.add('hover:text-orange');
                 editLink.appendChild(pencilIcon);
 
                 // Font Awesome garbage can icon
-                var garbageIcon = document.createElement('i');
+                const garbageIcon = document.createElement('i');
                 garbageIcon.className = 'fas fa-trash-alt';
                 garbageIcon.classList.add('hover:text-orange');
                 garbageIcon.addEventListener('click', async () => {
@@ -183,7 +224,7 @@ async function displayTasks() {
 
                 // Add event listener to the pencil icon
                 pencilIcon.addEventListener('click', async () => {
-                    var taskData = {
+                    const taskData = {
                         taskName: row.children[0].textContent,
                         category: row.children[1].textContent,
                         startDate: row.children[2].textContent,
@@ -195,11 +236,11 @@ async function displayTasks() {
                     document.getElementById('editTaskModal').showModal();
 
                     // Add event listener to the submit button on the edit task form
-                    var editTaskForm = document.getElementById('editTaskForm');
+                    const editTaskForm = document.getElementById('editTaskForm');
                     editTaskForm.addEventListener('submit', async (e) => {
                         e.preventDefault();
 
-                        var editedTaskData = {
+                        const editedTaskData = {
                             taskName: editTaskForm.querySelector('#editTaskName').value,
                             category: editTaskForm.querySelector('#editCategory').value,
                             startDate: editTaskForm.querySelector('#editStartDate').value,
@@ -324,4 +365,3 @@ document.getElementById('signOutLink').addEventListener('click', function(event)
     event.preventDefault();
     signOutUser();
 });
-
