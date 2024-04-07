@@ -28,14 +28,15 @@ auth.onAuthStateChanged(user => {
     if (user) {
         // User is signed in.
         console.log("User is logged in:", user);
-        // Call any necessary functions here
-        displayTasks(user); // Example: Call function to display tasks
+        // Call renderCalendar and pass the user object
+        renderCalendar(user);
     } else {
         // No user is signed in.
         console.log("No user logged in.");
         // Perform any necessary actions for when no user is logged in
     }
 });
+
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
@@ -130,76 +131,87 @@ async function addTasksWithIntervalToFirestore(startDate, taskName, category, de
 // Event listener for submit button on add task form
 document.addEventListener('click', function(event) {
     if (event.target && event.target.id === 'submitTaskButton') {
-        // Pass the user object to saveFormData
-        saveFormData(auth.currentUser);
+        if (auth.currentUser) {
+            // Pass the user object to saveFormData
+            saveFormData(auth.currentUser);
+        } else {
+            console.error("No user logged in.");
+            // Handle the case when no user is logged in
+        }
     }
 });
 
-// function that displays the tasks in the calendar view
+
 async function displayTasks(user) {
-try {
-    const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth();
+    try {
+        if (!user) {
+            console.error("User is undefined");
+            return;
+        }
 
-    // Fetch task data associated with the logged-in user
-    const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
+        const currentDate = new Date();
+        const currentYear = currentDate.getFullYear();
+        const currentMonth = currentDate.getMonth();
 
-    // Create a set to store dates for which tasks have already been added
-    const addedDates = new Set();
+        // Fetch task data associated with the logged-in user
+        const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
 
-    // Clear existing events before adding new ones
-    const eventContainers = document.querySelectorAll('.event-container');
-    eventContainers.forEach(container => container.innerHTML = '');
+        // Create a set to store dates for which tasks have already been added
+        const addedDates = new Set();
 
-    querySnapshot.forEach((doc) => {
-        const task = doc.data();
-        console.log("Task data:", task);
+        // Clear existing events before adding new ones
+        const eventContainers = document.querySelectorAll('.event-container');
+        eventContainers.forEach(container => container.innerHTML = '');
 
-        const startDateParts = task.startDate.split('-');
-        const startMonth = parseInt(startDateParts[0]) - 1;
-        const startDay = parseInt(startDateParts[1]);
-        const interval = parseInt(task.interval);
+        querySnapshot.forEach((doc) => {
+            const task = doc.data();
+            console.log("Task data:", task);
 
-        // Only display tasks if they belong to the current year and have a valid interval
-        if (currentYear === parseInt(startDateParts[2]) && !isNaN(interval) && interval > 0) {
-            let nextOccurrenceDate = new Date(currentYear, startMonth, startDay);
-            while (nextOccurrenceDate.getMonth() <= currentMonth) {
+            const startDateParts = task.startDate.split('-');
+            const startMonth = parseInt(startDateParts[0]) - 1;
+            const startDay = parseInt(startDateParts[1]);
+            const interval = parseInt(task.interval);
 
-                // Check if the task for this date has already been added
-                const formattedDate = nextOccurrenceDate.toISOString().slice(0, 10);
-                if (!addedDates.has(formattedDate)) {
-                    const cell = document.querySelector(`#calendar .date-block[data-day="${nextOccurrenceDate.getDate()}"]`);
-                    if (cell) {
-                        let eventContainer = cell.querySelector('.event-container');
-                        if (!eventContainer) {
-                            eventContainer = document.createElement('div');
-                            eventContainer.classList.add('event-container');
-                            eventContainer.classList.add('relative');
-                            cell.appendChild(eventContainer);
+            // Only display tasks if they belong to the current year and have a valid interval
+            if (currentYear === parseInt(startDateParts[2]) && !isNaN(interval) && interval > 0) {
+                let nextOccurrenceDate = new Date(currentYear, startMonth, startDay);
+                while (nextOccurrenceDate.getMonth() <= currentMonth) {
+
+                    // Check if the task for this date has already been added
+                    const formattedDate = nextOccurrenceDate.toISOString().slice(0, 10);
+                    if (!addedDates.has(formattedDate)) {
+                        const cell = document.querySelector(`#calendar .date-block[data-day="${nextOccurrenceDate.getDate()}"]`);
+                        if (cell) {
+                            let eventContainer = cell.querySelector('.event-container');
+                            if (!eventContainer) {
+                                eventContainer = document.createElement('div');
+                                eventContainer.classList.add('event-container');
+                                eventContainer.classList.add('relative');
+                                cell.appendChild(eventContainer);
+                            }
+
+                            const eventBlock = document.createElement('div');
+                            eventBlock.classList.add('event-block', 'rounded-lg', 'bg-orange', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'text-navy', 'overflow-hidden');
+                            eventBlock.textContent = task.taskName;
+                            eventBlock.title = task.taskName;
+                            eventBlock.dataset.taskId = doc.id;
+                            eventContainer.appendChild(eventBlock);
+
+                            // Add the date to the set of added dates
+                            addedDates.add(formattedDate);
                         }
-
-                        const eventBlock = document.createElement('div');
-                        eventBlock.classList.add('event-block', 'rounded-lg', 'bg-orange', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'text-navy', 'overflow-hidden');
-                        eventBlock.textContent = task.taskName;
-                        eventBlock.title = task.taskName;
-                        eventBlock.dataset.taskId = doc.id;
-                        eventContainer.appendChild(eventBlock);
-
-                        // Add the date to the set of added dates
-                        addedDates.add(formattedDate);
                     }
-                }
 
-                // Increment next occurrence date by the interval
-                nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
+                    // Increment next occurrence date by the interval
+                    nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
                 }
             }
-         });
-         } catch (error) {
-            console.error("Error fetching tasks: ", error);
+        });
+    } catch (error) {
+        console.error("Error fetching tasks: ", error);
     }
 }
+
 
 /* ------ Calendar functionality ------ */
 
@@ -261,10 +273,15 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"];
 
                     
-const renderCalendar = () => {
+const renderCalendar = (user) => {
     const calendarGrid = document.getElementById('calendar');
-
+    // Display the current month and year
     document.getElementById('currentMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+
+    // Function to generate date string in "MM-DD-YYYY" format
+    const getDateString = (day, month, year) => {
+        return `${month + 1}-${day}-${year}`;
+    };
 
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
     const startingDay = firstDayOfMonth.getDay();
@@ -273,18 +290,24 @@ const renderCalendar = () => {
     // Clear the calendar grid before rendering the new month
     calendarGrid.innerHTML = '';
 
+    // Add empty date blocks for days before the start of the month
     for (let i = 0; i < startingDay; i++) {
         calendarGrid.innerHTML += `<div class="date-block h-16"></div>`;
     }
 
+    // Add date blocks for each day of the month
     for (let i = 1; i <= daysInMonth; i++) {
-        // Construct the date string in "MM-DD-YYYY" format
-        const dateString = `${currentMonth + 1}-${i}-${currentYear}`;
-
+        const dateString = getDateString(i, currentMonth, currentYear);
         calendarGrid.innerHTML += `<div class="date-block border h-16 text-center text-grey border-grey rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
     }
-    displayTasks();
+
+    // Call displayTasks only if user object is defined
+    if (user) {
+        displayTasks(user);
+    }
 };
+                    
+                              
 
 //event listeners for calendar buttons
 
@@ -295,6 +318,10 @@ document.getElementById('prevMonth').addEventListener('click', () => {
         currentYear -= 1;
     }
     renderCalendar();
+    // Call displayTasks only if auth.currentUser is defined
+    if (auth.currentUser) {
+        displayTasks(auth.currentUser);
+    }
 });
 
 document.getElementById('nextMonth').addEventListener('click', () => {
@@ -304,6 +331,10 @@ document.getElementById('nextMonth').addEventListener('click', () => {
         currentYear += 1;
     }
     renderCalendar();
+    // Call displayTasks only if auth.currentUser is defined
+    if (auth.currentUser) {
+        displayTasks(auth.currentUser);
+    }
 });
 
 document.getElementById('currentMonthButton').addEventListener('click', () => {
@@ -311,7 +342,13 @@ document.getElementById('currentMonthButton').addEventListener('click', () => {
     currentMonth = now.getMonth();
     currentYear = now.getFullYear();
     renderCalendar();
+    // Call displayTasks only if auth.currentUser is defined
+    if (auth.currentUser) {
+        displayTasks(auth.currentUser);
+    }
 });
+
+
 
 renderCalendar();
 
