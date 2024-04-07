@@ -2,7 +2,7 @@
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-
+import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
 // Firebase Config
 const firebaseConfig = {
@@ -70,6 +70,28 @@ document.getElementById("loginEmailPassword").addEventListener("click", function
         });
     })
 });
+
+// Function to handle forgot password link click
+document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
+    event.preventDefault();
+    
+    // Prompt user to enter their email
+    const email = prompt("Please enter your email address to reset your password:");
+    
+    if (email) {
+        // Send password reset email
+        sendPasswordResetEmail(auth, email) // Use sendPasswordResetEmail from firebase/auth
+            .then(() => {
+                alert("Password reset email sent. Please check your email inbox.");
+            })
+            .catch((error) => {
+                console.error("Error sending password reset email:", error);
+                alert("Error sending password reset email. Please try again later.");
+            });
+    }
+});
+
+
 
 document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("loginGoogleBtn").addEventListener("click", signInWithGoogle);
