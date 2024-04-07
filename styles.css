@@ -36,4 +36,10 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-size: 14px;
+}
+
+.event-container {
+    max-height: 60px; /* Set maximum height for the event container */
+    overflow-y: auto; /* Enable vertical scrolling */
 }

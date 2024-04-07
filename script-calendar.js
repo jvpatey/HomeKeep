@@ -153,11 +153,22 @@ async function displayTasks(user, year, month) {
             }
         });
 
+        // Timeout to recalculate the scrollbar after a short delay
+        setTimeout(() => {
+            const eventContainers = document.querySelectorAll('.event-container');
+            eventContainers.forEach(container => {
+                if (container.scrollHeight > 60) {
+                    container.style.overflowY = 'auto'; // Enable scrollbar
+                } else {
+                    container.style.overflowY = 'hidden'; // Hide scrollbar
+                }
+            });
+        }, 100);
+
     } catch (error) {
         console.error("Error fetching tasks: ", error);
     }
 }
-
 
 /* ------ Calendar functionality ------ */
 
@@ -319,6 +330,12 @@ document.addEventListener('click', function(event) {
         showTaskDetailsModal(taskData);
     }
 });
+
+if (eventContainer.scrollHeight > 80) {
+    eventContainer.style.overflowY = 'auto'; // Enable scrollbar
+} else {
+    eventContainer.style.overflowY = 'hidden'; // Hide scrollbar
+}
 
 /* -------- Modal and HTML javascript ------- */
 
