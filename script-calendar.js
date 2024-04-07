@@ -27,7 +27,7 @@ console.log(auth.currentUser);
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("User is logged in:", user);
-        renderCalendar(user);
+        displayTasks(user, currentYear, currentMonth);
     } else {
         console.log("No user logged in.");
     }
@@ -35,7 +35,6 @@ auth.onAuthStateChanged(user => {
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
-/// function to save add task data
 async function saveFormData(user) {
     var taskName = document.getElementById('taskName').value;
     var category = document.getElementById('category').value;
@@ -58,70 +57,32 @@ async function saveFormData(user) {
         return;
     }
 
-    // Add the task to Firestore
-    await addTaskToFirestore(user, startDate, taskName, category, description, interval);
-
-    // Reset the form after successful submission
-    document.getElementById('addTaskForm').reset();
-    document.getElementById('addTaskModal').close();
-    displayTasks(user);
-}
-
-// function to add task data to Firestore
-async function addTaskToFirestore(user, startDate, taskName, category, description, interval) {
     try {
-        // Add the task to Firestore under the user's ID
+        // Convert start date to timestamp
+        const startDateTimestamp = new Date(startDate).getTime();
+
+        // Add the task to Firestore with start date as timestamp
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
-            startDate: startDate,
-            interval: interval,
-            description: description
-        });
-        console.log("Document successfully written!");
-    } catch (error) {
-        console.error("Error writing document: ", error);
-    }
-}
-
-async function addTasksWithIntervalToFirestore(startDate, taskName, category, description, interval) {
-    
-    try {
-        const MAX_OCCURRENCES = 10;
-
-        // Take month, day, and year from the start date
-        var [startMonth, startDay, startYear] = startDate.split('-').map(Number);
-        var start = new Date(startYear, startMonth - 1, startDay);
-
-        // Add the initial task to Firestore
-        await addDoc(collection(firestore, "tasks"), {
-            taskName: taskName,
-            category: category,
-            startDate: startDate,
+            startDate: startDateTimestamp,
             interval: interval,
             description: description
         });
 
         console.log("Document successfully written!");
 
-        // Add subsequent tasks to Firestore at specified intervals
-        for (var i = 1; i <= MAX_OCCURRENCES; i++) {
-            var next = new Date(start.getTime() + i * interval * 24 * 60 * 60 * 1000);
-            var nextDate = next.toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: 'numeric' });
+        // Reset the form after successful submission
+        document.getElementById('addTaskForm').reset();
+        document.getElementById('addTaskModal').close();
 
-            // Add the next occurrence task to Firestore
-            await addDoc(collection(firestore, "tasks"), {
-                taskName: taskName,
-                category: category,
-                startDate: nextDate,
-                interval: interval,
-                description: description
-            });
-        }
+        // Update the calendar display
+        renderCalendar(user);
     } catch (error) {
         console.error("Error writing document: ", error);
     }
 }
+
 
 // Event listener for submit button on add task form
 document.addEventListener('click', function(event) {
@@ -134,22 +95,20 @@ document.addEventListener('click', function(event) {
     }
 });
 
-async function displayTasks(user) {
+async function displayTasks(user, year, month) {
     try {
         if (!user) {
             console.error("User is undefined");
             return;
         }
 
-        const currentDate = new Date();
-        const currentYear = currentDate.getFullYear();
-        const currentMonth = currentDate.getMonth();
+        console.log("Year:", year);
+        console.log("Month:", month);
 
         // Fetch task data associated with the logged-in user
         const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
 
-        // Create a set to store dates for which tasks have already been added
-        const addedDates = new Set();
+        // Clear the calendar of existing tasks
         const eventContainers = document.querySelectorAll('.event-container');
         eventContainers.forEach(container => container.innerHTML = '');
 
@@ -157,45 +116,40 @@ async function displayTasks(user) {
             const task = doc.data();
             console.log("Task data:", task);
 
-            const startDateParts = task.startDate.split('-');
-            const startMonth = parseInt(startDateParts[0]) - 1;
-            const startDay = parseInt(startDateParts[1]);
+            const startDateTimestamp = new Date(task.startDate).getTime();
             const interval = parseInt(task.interval);
 
-            // Only display tasks if they belong to the current year and have a valid interval
-            if (currentYear === parseInt(startDateParts[2]) && !isNaN(interval) && interval > 0) {
-                let nextOccurrenceDate = new Date(currentYear, startMonth, startDay);
-                while (nextOccurrenceDate.getMonth() <= currentMonth) {
-
-                    // Check if the task for this date has already been added
+            // Calculate the next occurrence date
+            let nextOccurrenceDate = new Date(startDateTimestamp);
+            while (nextOccurrenceDate <= new Date(year, month + 1, 0)) {
+                if (nextOccurrenceDate.getFullYear() === year && nextOccurrenceDate.getMonth() === month) {
                     const formattedDate = nextOccurrenceDate.toISOString().slice(0, 10);
-                    if (!addedDates.has(formattedDate)) {
-                        const cell = document.querySelector(`#calendar .date-block[data-day="${nextOccurrenceDate.getDate()}"]`);
-                        if (cell) {
-                            let eventContainer = cell.querySelector('.event-container');
-                            if (!eventContainer) {
-                                eventContainer = document.createElement('div');
-                                eventContainer.classList.add('event-container');
-                                eventContainer.classList.add('relative');
-                                cell.appendChild(eventContainer);
-                            }
-
-                            const eventBlock = document.createElement('div');
-                            eventBlock.classList.add('event-block', 'rounded-lg', 'bg-orange', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'text-navy', 'overflow-hidden');
-                            eventBlock.textContent = task.taskName;
-                            eventBlock.title = task.taskName;
-                            eventBlock.dataset.taskId = doc.id;
-                            eventBlock.dataset.category = task.category;
-                            eventBlock.dataset.startDate = task.startDate;
-                            eventBlock.dataset.interval = task.interval;
-                            eventBlock.dataset.description = task.description;
-                            eventContainer.appendChild(eventBlock);
-
-                            addedDates.add(formattedDate);
+                    const dayOfMonth = nextOccurrenceDate.getDate();
+                    const cell = document.querySelector(`#calendar .date-block[data-day="${dayOfMonth}"]`);
+                    if (cell) {
+                        let eventContainer = cell.querySelector('.event-container');
+                        if (!eventContainer) {
+                            eventContainer = document.createElement('div');
+                            eventContainer.classList.add('event-container');
+                            eventContainer.classList.add('relative');
+                            cell.appendChild(eventContainer);
                         }
+
+                        const eventBlock = document.createElement('div');
+                        eventBlock.classList.add('event-block', 'rounded-lg', 'bg-orange', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'text-navy', 'overflow-hidden');
+                        eventBlock.textContent = task.taskName;
+                        eventBlock.title = task.taskName;
+                        eventBlock.dataset.taskId = doc.id;
+                        eventBlock.dataset.category = task.category;
+                        eventBlock.dataset.startDate = task.startDate;
+                        eventBlock.dataset.interval = task.interval;
+                        eventBlock.dataset.description = task.description;
+                        eventContainer.appendChild(eventBlock);
                     }
-                    nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
                 }
+
+                // Move to the next occurrence date
+                nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
             }
         });
 
@@ -203,6 +157,7 @@ async function displayTasks(user) {
         console.error("Error fetching tasks: ", error);
     }
 }
+
 
 /* ------ Calendar functionality ------ */
 
@@ -278,7 +233,6 @@ const renderCalendar = (user) => {
     const startingDay = firstDayOfMonth.getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
-    // Clear the calendar grid before rendering the new month
     calendarGrid.innerHTML = '';
 
     // Add empty date blocks for days before the start of the month
@@ -294,7 +248,7 @@ const renderCalendar = (user) => {
 
     // Call displayTasks only if user object is defined
     if (user) {
-        displayTasks(user);
+        displayTasks(user, currentYear, currentMonth);
     }
 };
                     
@@ -308,7 +262,7 @@ document.getElementById('prevMonth').addEventListener('click', () => {
     }
     renderCalendar();
     if (auth.currentUser) {
-        displayTasks(auth.currentUser);
+        displayTasks(auth.currentUser, currentYear, currentMonth);
     }
 });
 
@@ -320,7 +274,7 @@ document.getElementById('nextMonth').addEventListener('click', () => {
     }
     renderCalendar();
     if (auth.currentUser) {
-        displayTasks(auth.currentUser);
+        displayTasks(auth.currentUser, currentYear, currentMonth);
     }
 });
 
@@ -330,7 +284,7 @@ document.getElementById('currentMonthButton').addEventListener('click', () => {
     currentYear = now.getFullYear();
     renderCalendar();
     if (auth.currentUser) {
-        displayTasks(auth.currentUser);
+        displayTasks(auth.currentUser, currentYear, currentMonth);
     }
 });
 
