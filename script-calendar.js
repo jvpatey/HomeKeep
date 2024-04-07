@@ -49,9 +49,7 @@ async function saveFormData(user) {
         return;
     }
 
-    // Parse interval to integer
     interval = parseInt(interval);
-
     if (interval < 0 || interval > 365) {
         alert("Interval must be between 0 and 365.");
         return;
@@ -61,11 +59,14 @@ async function saveFormData(user) {
         // Convert start date to timestamp
         const startDateTimestamp = new Date(startDate).getTime();
 
-        // Add the task to Firestore with start date as timestamp
+        // Format start date as "MM-DD-YYYY"
+        const formattedStartDate = formatDate(new Date(startDateTimestamp));
+
+        // Add the task to Firestore with formatted start date
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
-            startDate: startDateTimestamp,
+            startDate: formattedStartDate,
             interval: interval,
             description: description
         });
@@ -82,7 +83,6 @@ async function saveFormData(user) {
         console.error("Error writing document: ", error);
     }
 }
-
 
 // Event listener for submit button on add task form
 document.addEventListener('click', function(event) {
@@ -163,26 +163,26 @@ async function displayTasks(user, year, month) {
 
 // Function to show the add-task-form modal and preload the clicked date into the start date field
 function showAddTaskFormModal(clickedDate) {
-var addTaskModal = document.getElementById('addTaskModal');
-if (addTaskModal) {
-    addTaskModal.showModal();
-    
-    var startDateInput = document.getElementById('startDate');
-    if (startDateInput) {
-        // Format the clicked date as MM-DD-YYYY
-        var formattedDate = formatDate(clickedDate);
-        startDateInput.value = formattedDate;
+    var addTaskModal = document.getElementById('addTaskModal');
+    if (addTaskModal) {
+        addTaskModal.showModal();
+        
+        var startDateInput = document.getElementById('startDate');
+        if (startDateInput) {
+            // Format the clicked date and set it as the value of the start date input
+            startDateInput.value = formatDate(clickedDate.getTime());
+        }
     }
-}
 };
 
-// Function to format date as MM-DD-YYYY
-function formatDate(date) {
-    var day = date.getDate();
-    var month = date.getMonth() + 1;
-    var year = date.getFullYear();
-    return (month < 10 ? '0' : '') + month + '-' + (day < 10 ? '0' : '') + day + '-' + year;
-    }
+// Function to format timestamp as MM-DD-YYYY
+function formatDate(timestamp) {
+    const date = new Date(timestamp);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    return `${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}-${year}`;
+}
 
 // Add event listener to bring up add task form to the date blocks
 document.getElementById('calendar').addEventListener('click', function(event) {
