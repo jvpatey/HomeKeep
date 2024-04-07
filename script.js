@@ -312,7 +312,7 @@ document.addEventListener('DOMContentLoaded', function() {
 function signOutUser() {
     signOut(auth)
         .then(() => {
-            window.location.href = "index-fb.html";
+            window.location.href = "index.html";
         })
         .catch((error) => {
             console.error("Error signing out: ", error);

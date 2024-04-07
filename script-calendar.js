@@ -436,7 +436,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // Function to sign out the user
 function signOutUser() {
     signOut(auth).then(() => {
-    window.location.href = "index-fb.html";
+    window.location.href = "index.html";
     }).catch((error) => {
     console.error("Error signing out: ", error);
     });

@@ -28,7 +28,7 @@ function signInWithGoogle() {
         .then((result) => {
             var user = result.user;
             console.log("Signed in user:", user);
-            window.location.href = "dashboard-fb.html";
+            window.location.href = "dashboard.html";
         })
         .catch((error) => {
             console.error("Google sign-in error:", error);
@@ -45,7 +45,7 @@ document.getElementById("loginEmailPassword").addEventListener("click", function
         .then((userCredential) => {
             const user = userCredential.user;
             console.log("Signed in user:", user);
-            window.location.href = "dashboard-fb.html";
+            window.location.href = "dashboard.html";
         })
         .catch((error) => {
             console.error("Error:", error);
