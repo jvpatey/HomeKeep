@@ -410,8 +410,6 @@ function initializeModals() {
             event.preventDefault();
             helpModal.showModal();
         });
-    } else {
-        console.error("One or more modals not found in the loaded content.");
     }
 }
 

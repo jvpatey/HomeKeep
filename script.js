@@ -139,7 +139,6 @@ async function displayTasks() {
     const user = auth.currentUser;
 
     if (!user) {
-        console.error("No user logged in.");
         return;
     }
 
@@ -309,9 +308,7 @@ function initializeModals() {
             event.preventDefault();
             helpModal.showModal();
         });
-    } else {
-        console.error("One or more modals not found in the loaded content.");
-    }
+    } 
 }
 
 // Function to show the add task modal
