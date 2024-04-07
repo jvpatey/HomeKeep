@@ -27,686 +27,93 @@
           }
         }
       </script>
+      <style>
+        .date-block {
+            min-height: 6rem;
+            min-width: 6rem;
+            border: 1px solid #ccc;
+            text-align: center;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+        }
+        .event-block {
+            margin: 2px;
+            max-width: calc(100% - 4px);
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+      </style>
 </head>
 
 <body class="bg-navy h-screen">
+
   <!--navbar -->
+
   <div class="navbar bg-navy pb-6">
-	<div class="navbar-start">
-        <a href="dashboard-fb.html" target="_self" class="relative inline-block logo">
-            <span>HomeKeep</span>
-        </a>
-	</div>
-	<div class="navbar-end">
-	  <div class="dropdown relative">
-		<button class="btn btn-ghost" tabindex="0">
-		  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-			<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-		  </svg>
-		</button>
-		<ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
-            <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
-            <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
-		</ul>
-	  </div>
-	</div>
+    <div class="navbar-start">
+          <a href="dashboard-fb.html" target="_self" class="relative inline-block logo">
+              <span>HomeKeep</span>
+          </a>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown relative">
+      <button class="btn btn-ghost" tabindex="0">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+        </svg>
+      </button>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
+        <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
+        <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
+      </ul>
+      </div>
+    </div>
   </div>
 
-      <div class="container mx-auto px-4 py-1">
-        <button onclick="showAddTaskModal()" id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
-        <button onclick="window.location.href = 'dashboard-fb.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Table</button>
-      </div>
+  <!-- Buttons above calendar -->
 
-  <!-- DaisyUI add-task form modal -->
-  <dialog id="addTaskModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-4 rounded-lg">
-        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
-        <form id="addTaskForm" class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
-            <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Add a Task</h1>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey text-orange">
-                <input id="taskName" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Task Name" />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
-                <input id="category" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Category" />
-            </label>
-              <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
-                <input id="startDate" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
-            </label>
-            <label class="input input-bordered flex items-center gap-2 bg-grey">
-                <input id="interval" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Interval (days)" />
-            </label>
-            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-grey gap-2 text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Description"></textarea>
-            <div class="mx-auto w-1/2 py-1 text-center">
-                <button id="submitTaskButton" type="button" onclick="saveFormData()" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
-            </div>
-        </form>
-    </div>
-</dialog>
-
-<!-- DaisyUI help request modal -->
-<dialog id="helpRequestModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-1 rounded-lg">
-        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('helpRequestModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-dark_smoke rounded-md">
-            <div class="w-full max-w-lg bg-dark_smoke rounded-md">
-              <form class="card-body">
-                <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Help Request</h1>
-                <div class="form-control">
-                  <input type="text" placeholder="first name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
-                </div>
-                <div class="form-control">
-                  <input type="text" placeholder="last name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
-                </div>
-                <div class="form-control">
-                  <input type="email" placeholder="email" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
-                </div>
-                <div class="form-control">
-                  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-grey text-dark_smoke placeholder-dark_smoke" placeholder="message"></textarea>
-                </div>
-                <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                  <button class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
-                </div>
-              </form>
-            </div>
-          </div>
-    </div>
-</dialog>
+  <div class="container mx-auto py-1">
+    <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
+    <button onclick="window.location.href = 'dashboard-fb.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Table</button>
+  </div>
       
-<!-- Sample Calendar UI with TailwindCSS to show layout (no functionality yet)-->
-<div>
+  <!-- Calendar HTML -->
 
-    <link rel="dns-prefetch" href="//unpkg.com" />
-    <link rel="dns-prefetch" href="//cdn.jsdelivr.net" />
-    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css">
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
+  <main id="calendar-container" class="container bg-smoke rounded-lg mx-auto px-4 py-8">
+      <!-- Calendar Header -->
+      <div class="flex justify-between items-center mb-4">
+          <!-- Previous month button -->
+          <button id="prevMonth" class="btn btn-outline btn-sm border-grey text-grey hover:border-orange hover:text-orange hover:bg-smoke">
+              <i class="fa-solid fa-backward"></i>
+          </button>
+          <!-- Current month button and text -->
+          <div class="text-center">
+              <h1 class="text-3xl font-normal text-orange" id="currentMonth">April 2024</h1>
+              <button id="currentMonthButton" class="btn btn-primary font-normal btn-xs mt-2 border-grey bg-smoke text-grey hover:border-orange hover:text-orange hover:bg-smoke"><i class="fa-solid fa-house"></i> Current Month</button>
+          </div>
+          <!-- Next month button -->
+          <button id="nextMonth" class="btn btn-outline btn-xs btn-sm border-grey text-grey hover:border-orange hover:text-orange hover:bg-smoke">
+              <i class="fa-solid fa-forward"></i>
+          </button>
+      </div>
+      <!-- Calendar grid to be filled dynamically-->
+      <div id="calendar" class="grid grid-cols-7 gap-2 rounded-lg p-4">
+      </div>
+  </main>
 
-    <style>
-        [x-cloak] {
-            display: none;
-        }
-    </style>
-
-    <div class="antialiased sans-serif bg-navy h-screen">
-        <div x-data="app()" x-init="[initDate(), getNoOfDays()]" x-cloak>
-            <div class="container mx-auto px-4 py-1">
-
-                <div class="bg-smoke rounded-lg shadow overflow-hidden">
-
-                    <div class="flex items-center justify-between py-2 px-6">
-                        <div>
-                            <span x-text="MONTH_NAMES[month]" class="text-2xl font-base text-grey"></span>
-                            <span x-text="year" class="ml-1 text-2xl text-orange font-base"></span>
-                        </div>
-                        <div class="border rounded-lg px-1 ml-auto mr-3 mb-2" style="padding-top: 2px;">
-                            <button 
-                                type="button"
-                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-light_smoke p-1 items-center"
-                                @click="prevMonth()">
-                                <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                </svg>  
-                                <span class="text-gray-500 ml-1">Month</span>
-                            </button>
-                            <div class="border-r inline-flex h-6"></div>        
-                            <button 
-                                type="button"
-                                class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-light_smoke p-1"
-                                @click="nextMonth()">
-                                <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                </svg>                                      
-                            </button>
-                        </div>
-                        
-                        <div>
-                            <div class="border rounded-lg px-1 ml-auto mb-2" style="padding-top: 2px;">
-                                <button 
-                                    type="button"
-                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-light_smoke p-1 items-center"
-                                    @click="prevYear()">
-                                    <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                                    </svg>  
-                                    <span class="text-gray-500 ml-1">Year</span>
-                                </button>
-                                <div class="border-r inline-flex h-6"></div>        
-                                <button 
-                                    type="button"
-                                    class="leading-none rounded-lg transition ease-in-out duration-100 inline-flex items-center cursor-pointer hover:bg-light_smoke p-1"
-                                    @click="nextYear()">
-                                    <svg class="h-6 w-6 text-gray-500 inline-flex leading-none"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                                    </svg>                                      
-                                </button>
-                            </div>
-                            
-                        </div>                      
-                    </div>  
-
-                    <div class="-mx-1 -mb-1">
-                        <div class="flex flex-wrap" style="margin-bottom: -40px;">
-                            <template x-for="(day, index) in DAYS" :key="index">  
-                                <div style="width: 14.26%" class="px-2 py-2">
-                                    <div
-                                        x-text="day" 
-                                        class="text-gray-600 text-sm uppercase tracking-wide font-bold text-center"></div>
-                                </div>
-                            </template>
-                        </div>
-
-                        <div class="flex flex-wrap border-t border-l">
-                            <template x-for="blankday in blankdays">
-                                <div 
-                                    style="width: 14.28%; height: 120px"
-                                    class="text-center border-r border-b px-4 pt-2"    
-                                ></div>
-                            </template>    
-							<template x-for="(date, dateIndex) in no_of_days" :key="dateIndex">  
-                                <div style="width: 14.28%; height: 120px" class="px-4 pt-2 border-r border-b relative">
-                                    <div
-                                        @click="showAddTaskModal(date)"
-                                        x-text="date"
-                                        class="inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100"
-                                    ></div>
-                                    <div style="height: 80px;" class="overflow-y-auto mt-1">
-										<template x-for="event in events.filter(e => new Date(e.event_date).toDateString() ===  new Date(year, month, date).toDateString() )">    
-											<div
-												class="px-2 py-1 rounded-full mt-1 overflow-hidden border"
-												:class="{
-													'border-orange-500 text-orange-800 bg-orange-100': event.event_theme === 'orange'
-												}"
-												@click="showEventModal(event)"
-											>
-												<p x-text="event.event_title" class="text-sm truncate leading-tight"></p>
-											</div>
-										</template>
-									</div>
-								</div>
-							</template>
-							
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Modal -->
-            <div style=" background-color: rgba(0, 0, 0, 0.8)" class="fixed z-40 top-0 right-0 left-0 bottom-0 h-full w-full" x-show.transition.opacity="openEventModal">
-                <div class="p-4 max-w-xl mx-auto relative absolute left-0 right-0 overflow-hidden mt-24">
-                    <div class="shadow absolute right-0 top-0 w-10 h-10 rounded-full bg-white text-gray-500 hover:text-gray-800 inline-flex items-center justify-center cursor-pointer" x-on:click="openEventModal = !openEventModal">
-                        <svg class="fill-current w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                            <path d="M16.192 6.344L11.949 10.586 7.707 6.344 6.293 7.758 10.535 12 6.293 16.242 7.707 17.656 11.949 13.414 16.192 17.656 17.606 16.242 13.364 12 17.606 7.758z" />
-                        </svg>
-                    </div>
-            
-                    <div class="shadow w-full shadow-grey rounded-lg bg-dark_smoke overflow-hidden w-full block p-8">
-            
-                        <h2 class="text-2xl mb-6 text-orange border-b pb-2">Task Details</h2>
-            
-                        <div class="mb-4">
-                            <label class="text-orange block mb-1 text-sm tracking-wide">Task title</label>
-                            <p x-text="selectedEvent.event_title" class="text-grey"></p>
-                        </div>
-            
-                        <div class="mb-4">
-                            <label class="text-orange block mb-1 text-sm tracking-wide">Start date</label>
-                            <p x-text="selectedEvent.event_date" class="text-grey"></p>
-                        </div>
-            
-                        <div class="mb-4">
-                            <label class="text-orange block mb-1 text-sm tracking-wide">Category</label>
-                            <p x-text="selectedEvent.event_category" class="text-grey"></p>
-                        </div>
-            
-                        <div class="mb-4">
-                            <label class="text-orange block mb-1 text-sm tracking-wide">Interval (days)</label>
-                            <p x-text="selectedEvent.event_interval" class="text-grey"></p>
-                        </div>
-            
-                        <div class="mb-4">
-                            <label class="text-orange block mb-1 text-sm tracking-wide">Description</label>
-                            <p x-text="selectedEvent.event_description" class="text-grey"></p>
-                        </div>
-            
-                        <div class="mt-8 text-right">
-                            <button type="button" @click="deleteTask(selectedEvent)" class="bg-dark_smoke border-orange text-orange hover:bg-dark_smoke hover:border-grey hover:text-grey py-2 px-4 border rounded-lg mr-2">Delete Task</button>
-                            <button type="button" class="bg-dark_smoke border-orange text-orange hover:bg-dark_smoke hover:border-grey hover:text-grey py-2 px-4 border rounded-lg" @click="openEventModal = false">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Modal -->
-        </div>
-    </div>
-
+  <!-- Footer -->
 
 	<footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
 		<span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
 		</span>
 		<ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
-			<li>
+			<li>  
 				<a id="helpFooterLink" href="#" class="hover:underline me-4 md:me-6">Help</a>
-			</li>
+			</li> 
 		</ul>
 	</footer>
 
-<script type="module">
-
-    // Import Firebase and Firestore
-    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
-    import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
-    import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
-
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-        apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
-        authDomain: "homekeep-x.firebaseapp.com",
-        projectId: "homekeep-x",
-        storageBucket: "homekeep-x.appspot.com",
-        messagingSenderId: "142689184811",
-        appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
-    };
-    
-    // Initialize Firebase
-    const firebaseApp = initializeApp(firebaseConfig);
-    
-    // Get a reference to the Firestore service
-    const firestore = getFirestore(firebaseApp);
-    const auth = getAuth(firebaseApp);
-    
-    // Function to save task data to Firestore
-    async function saveFormData() {
-        var taskName = document.getElementById('taskName').value;
-        var category = document.getElementById('category').value;
-        var startDate = document.getElementById('startDate').value;
-        var interval = document.getElementById('interval').value;
-        var description = document.getElementById('description').value;
-
-    // Validate the start date format
-    var datePattern = /^\d{2}-\d{2}-\d{4}$/;
-    if (!datePattern.test(startDate)) {
-        // Display an alert if the start date format is incorrect
-        alert("Please enter the start date in the format MM-DD-YYYY.");
-        return; // Prevent further execution of the function
-    }
-
-    // Extract month, day, and year from the input
-    var [month, day, year] = startDate.split('-').map(Number);
-
-    // Validate month, day, and year
-    if (month < 1 || month > 12) {
-        alert("Please enter a valid month (1-12).");
-        return;
-    }
-    if (day < 1 || day > 31) {
-        alert("Please enter a valid day (1-31).");
-        return;
-    }
-
-    if (year < 1900 || year > 2100) {
-        alert("Please enter a valid year (1900-2100).");
-        return;
-    }
-    
-        try {
-            // Add a new document with a generated ID
-            await addDoc(collection(firestore, "tasks"), {
-                taskName: taskName,
-                category: category,
-                startDate: startDate,
-                interval: interval,
-                description: description
-            });
-            console.log("Document successfully written!");
-            // Reset the form after successful submission
-            document.getElementById('addTaskForm').reset();
-            // Close the modal
-            document.getElementById('addTaskModal').close();
-            // Display updated tasks
-            displayTasks();
-        } catch (error) {
-            console.error("Error writing document: ", error);
-        }
-    }
-    
-    // Add event listener to the submit button
-    document.getElementById('submitTaskButton').addEventListener('click', function() {
-        saveFormData();
-    });
-    
-    // Function to populate the edit task modal with data from the corresponding row
-    function populateEditTaskModal(taskData) {
-        var editTaskForm = document.getElementById('editTaskForm');
-        editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
-        editTaskForm.querySelector('#editCategory').value = taskData.category;
-        editTaskForm.querySelector('#editStartDate').value = taskData.startDate;
-        editTaskForm.querySelector('#editInterval').value = taskData.interval;
-        editTaskForm.querySelector('#editDescription').value = taskData.description;
-    }
-    
-    // Function to update task data in Firestore and the table
-    async function updateTask(taskData, docRef, row) {
-        try {
-            // Update document in Firestore
-            await updateDoc(docRef, taskData);
-            // Update row in table
-            row.children[0].textContent = taskData.taskName;
-            row.children[1].textContent = taskData.category;
-            row.children[2].textContent = taskData.startDate;
-            row.children[3].textContent = taskData.interval;
-            row.children[4].textContent = taskData.description;
-        } catch (error) {
-            console.error("Error updating document: ", error);
-        }
-    }
-    
-    async function displayTasks() {
-        try {
-            const taskTableBody = document.getElementById('taskTableBody');
-    
-            // Clear existing table rows
-            // taskTableBody.innerHTML = '';
-    
-            // Fetch tasks from Firestore
-            const querySnapshot = await getDocs(collection(firestore, "tasks"));
-    
-            querySnapshot.forEach((doc) => {
-                var task = doc.data();
-                var row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${task.taskName}</td>
-                    <td>${task.category}</td>
-                    <td>${task.startDate}</td>
-                    <td>${task.interval}</td>
-                    <td>${task.description}</td>
-                    <td></td>
-                    <td></td>
-                `;
-    
-                // DaisyUI toggle switch for cell 6
-                var toggleSwitchContainer = document.createElement('div');
-                toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center'); // Removed 'justify-center'
-    
-                var toggleSwitchInput = document.createElement('input');
-                toggleSwitchInput.type = 'checkbox';
-                toggleSwitchInput.classList.add('toggle', 'toggle-success');
-                toggleSwitchInput.checked = true;
-    
-                var toggleSwitchMark = document.createElement('span');
-                toggleSwitchMark.classList.add('toggle-mark');
-    
-                toggleSwitchContainer.appendChild(toggleSwitchInput);
-                toggleSwitchContainer.appendChild(toggleSwitchMark);
-    
-                row.children[5].appendChild(toggleSwitchContainer);
-    
-                // Flex container for icons in cell 7
-                var iconsContainer = document.createElement('div');
-                iconsContainer.classList.add('flex', 'items-center');
-    
-                // Anchor for pencil icon
-                var editLink = document.createElement('a');
-                editLink.href = '#';
-                editLink.style.marginRight = '8px';
-                iconsContainer.appendChild(editLink);
-    
-                // Font Awesome pencil icon
-                var pencilIcon = document.createElement('i');
-                pencilIcon.className = 'fas fa-pencil-alt';
-                pencilIcon.classList.add('hover:text-orange');
-                editLink.appendChild(pencilIcon);
-    
-                // Font Awesome garbage can icon
-                var garbageIcon = document.createElement('i');
-                garbageIcon.className = 'fas fa-trash-alt';
-                garbageIcon.classList.add('hover:text-orange');
-                garbageIcon.addEventListener('click', async () => {
-                    try {
-                        // Delete document from Firestore
-                        await deleteDoc(doc.ref);
-                        // Remove row from table
-                        taskTableBody.removeChild(row);
-                    } catch (error) {
-                        console.error("Error deleting document: ", error);
-                    }
-                });
-    
-                iconsContainer.appendChild(garbageIcon);
-                row.children[6].appendChild(iconsContainer);
-    
-                // Add event listener to the pencil icon
-                pencilIcon.addEventListener('click', async () => {
-                    var taskData = {
-                        taskName: row.children[0].textContent,
-                        category: row.children[1].textContent,
-                        startDate: row.children[2].textContent,
-                        interval: row.children[3].textContent,
-                        description: row.children[4].textContent
-                    };
-                    // Populate the edit task modal with data from the corresponding row
-                    populateEditTaskModal(taskData);
-                    // Show the edit task modal
-                    document.getElementById('editTaskModal').showModal();
-    
-                  // Add event listener to the submit button on the edit task form
-                  var editTaskForm = document.getElementById('editTaskForm');
-                  editTaskForm.addEventListener('submit', async (e) => {
-                      e.preventDefault(); // Prevent form submission
-    
-                      // Retrieve form fields' values from the edit task form
-                      var editedTaskData = {
-                          taskName: editTaskForm.querySelector('#editTaskName').value,
-                          category: editTaskForm.querySelector('#editCategory').value,
-                          startDate: editTaskForm.querySelector('#editStartDate').value,
-                          interval: editTaskForm.querySelector('#editInterval').value,
-                          description: editTaskForm.querySelector('#editDescription').value
-                      };
-    
-                      // Update task data in Firestore and the table
-                      await updateTask(editedTaskData, doc.ref, row);
-    
-                      // Close the edit task modal
-                      document.getElementById('editTaskModal').close();
-                  });
-                });
-    
-                taskTableBody.appendChild(row);
-            });
-        } catch (error) {
-            console.error("Error fetching tasks: ", error);
-        }
-    }
-    
-    // function for drop down menu in navbar
-    function toggleDropdown() {
-        var dropdownMenu = document.getElementById("dropdownMenu");
-        dropdownMenu.classList.toggle("hidden")
-    };
-    
-    // Function to show the add task modal
-    function showAddTaskModal() {
-        var addTaskModal = document.getElementById('addTaskModal');
-        if (addTaskModal) {
-            addTaskModal.showModal();
-        }
-    };
-
-    // Function to show the help request modal
-    function showHelpModal() {
-    var helpRequestModal = document.getElementById('helpRequestModal');
-    if (helpRequestModal) {
-        helpRequestModal.showModal();
-    }
-}
-        // Add event listener to the Help link in the navbar
-        document.addEventListener('DOMContentLoaded', function() {
-        var helpLink = document.getElementById('helpLink');
-        if (helpLink) {
-            helpLink.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior
-                showHelpModal();
-            });
-        }
-    });
-
-    // Add event listener to the Help link in the footer
-    document.addEventListener('DOMContentLoaded', function() {
-        var helpFooterLink = document.getElementById('helpFooterLink');
-        if (helpFooterLink) {
-            helpFooterLink.addEventListener('click', function(event) {
-                event.preventDefault(); // Prevent default link behavior
-                showHelpModal();
-            });
-        }
-    });
-    
-    // Add event listener to the plus button
-    document.getElementById('addTaskButton').addEventListener('click', function() {
-        showAddTaskModal();
-    });
-
-    // Function to sign out the user
-function signOutUser() {
-  signOut(auth).then(() => {
-    // Sign-out successful.
-    window.location.href = "index-fb.html"; // Redirect to index-fb.html
-  }).catch((error) => {
-    // An error happened.
-    console.error("Error signing out: ", error);
-  });
-}
-
-// Add event listener to the sign out link
-document.getElementById('signOutLink').addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent default link behavior
-  signOutUser(); // Call sign out function
-});
-    
-    // Call displayTasks() to initially display tasks when the page loads
-    displayTasks();
-
-</script>
-<script>
-       const MONTH_NAMES = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-    const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
-    function app(getDocs) {
-        return {
-            month: '',
-            year: '',
-            no_of_days: [],
-            blankdays: [],
-            days: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-            events: [], // Initialize with an empty array
-
-            selectedEvent: {},
-            openEventModal: false,
-
-            initDate() {
-                let today = new Date();
-                this.month = today.getMonth();
-                this.year = today.getFullYear();
-            },
-
-            showEventModal(event) {
-                // Open the modal and populate with event details
-                this.selectedEvent = event;
-                this.openEventModal = true;
-            },
-
-            async displayTasks() {
-                try {
-                    // Fetch tasks from Firestore
-                    const querySnapshot = await getDocs(collection(firestore, "tasks"));
-
-                    querySnapshot.forEach((doc) => {
-                        var task = doc.data();
-                        this.events.push({
-                            event_title: task.taskName,
-                            event_category: task.category,
-                            event_date: task.startDate,
-                            event_interval: task.interval,
-                            event_description: task.description
-                        });
-                    });
-                } catch (error) {
-                    console.error("Error fetching tasks: ", error);
-                }
-            },
-
-            getNoOfDays() {
-                let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
-
-                // find where to start calendar day of week
-                let dayOfWeek = new Date(this.year, this.month).getDay();
-                let blankdaysArray = [];
-                for ( var i=1; i <= dayOfWeek; i++) {
-                    blankdaysArray.push(i);
-                }
-
-                let daysArray = [];
-                for ( var i=1; i <= daysInMonth; i++) {
-                    daysArray.push(i);
-                }
-
-                this.blankdays = blankdaysArray;
-                this.no_of_days = daysArray;
-            },
-
-            // Function to navigate to the previous month
-            prevMonth() {
-                this.month--;
-                if (this.month < 0) {
-                    this.month = 11;
-                    this.year--;
-                }
-                this.getNoOfDays();
-            },
-
-            // Function to navigate to the next month
-            nextMonth() {
-                this.month++;
-                if (this.month > 11) {
-                    this.month = 0;
-                    this.year++;
-                }
-                this.getNoOfDays();
-            },
-
-            // Function to navigate to the previous year
-            prevYear() {
-                this.year--;
-                this.getNoOfDays();
-            },
-
-            // Function to navigate to the next year
-            nextYear() {
-                this.year++;
-                this.getNoOfDays();
-            },
-
-            showAddTaskModal(selectedDate) {
-            // Open the add task modal
-            document.getElementById('addTaskModal').showModal();
-
-            // Populate the start date field with the selected date
-            let startDateInput = document.getElementById('startDate');
-            let formattedDate = this.formatDate(selectedDate);
-            startDateInput.value = formattedDate;
-            },
-
-            formatDate(date) {
-            // Format the date as MM-DD-YYYY
-            let month = (this.month + 1).toString().padStart(2, '0');
-            let day = date.toString().padStart(2, '0');
-            return `${month}-${day}-${this.year}`;
-            },
-        }
-    }
-    
-    // Initialize the calendar
-    const calendarApp = app(getDocs);
-    calendarApp.initDate();
-    calendarApp.displayTasks();
-</script>
-</body>
+  <script src="script-calendar.js" type="module"></script>
+  </body>
 </html>
