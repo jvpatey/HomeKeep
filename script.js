@@ -133,11 +133,9 @@ async function updateTask(taskData, docRef, row) {
 }
 
 // Function to fetch and display task data from Firestore
-async function displayTasks() {
-    
+async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
     // Get the currently logged-in user
     const user = auth.currentUser;
-
     if (!user) {
         return;
     }
@@ -156,9 +154,21 @@ async function displayTasks() {
             emptyRow.innerHTML = '<td colspan="7" class="text-center py-4 text-grey">No tasks entered yet</td>';
             taskTableBody.appendChild(emptyRow);
         } else {
-            // Append each task as a row to the table
+            // Convert querySnapshot to an array of tasks
+            const tasks = [];
             querySnapshot.forEach((doc) => {
-                const task = doc.data();
+                tasks.push({ id: doc.id, ...doc.data() });
+            });
+
+            // Sort tasks by name and start date
+            if (sortByTaskName) {
+                tasks.sort((a, b) => a.taskName.localeCompare(b.taskName));
+            } else if (sortByStartDate) {
+                tasks.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+            }
+
+            // Append each task as a row to the table
+            tasks.forEach(task => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
                     <td>${task.taskName}</td>
@@ -342,6 +352,34 @@ document.getElementById('helpLink').addEventListener('click', showHelpModal);
 
 document.addEventListener('DOMContentLoaded', function() {
     loadModals();
+});
+
+// Add event listener to task name header to sort tasks when clicked
+document.getElementById('taskNameHeader').addEventListener('click', () => {
+    const sortButton = document.getElementById('sortTasksButton');
+    const isDescending = sortButton.innerHTML === '▼';
+
+    if (isDescending) {
+        sortButton.innerHTML = '▲';
+    } else {
+        sortButton.innerHTML = '▼';
+    }
+
+    displayTasks(!isDescending);
+});
+
+// Add event listener to start date header to sort tasks by start date when clicked
+document.getElementById('startDateHeader').addEventListener('click', () => {
+    const sortButton = document.getElementById('sortTasksByStartDateButton');
+    const isDescending = sortButton.innerHTML === '▼';
+
+    if (isDescending) {
+        sortButton.innerHTML = '▲';
+    } else {
+        sortButton.innerHTML = '▼';
+    }
+
+    displayTasks(false, !isDescending);
 });
 
 /* ---- Firbase Auth Sign Out JS ----- */
