@@ -25,7 +25,6 @@ console.log(auth.currentUser);
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("User is logged in:", user);
-        displayTasks();
     } else {
         console.log("No user logged in.");
     }
@@ -117,9 +116,6 @@ function initializeModals() {
     var createAccountModal = document.getElementById('createAccountModal');
     var helpModal = document.getElementById('helpRequestModal');
     var signupForm = document.getElementById('signupForm');
-
-    console.log("Create Account Modal:", createAccountModal);
-    console.log("Signup Form:", signupForm);
 
     if (createAccountModal && helpModal && signupForm) {
         document.getElementById('createAccountLink').addEventListener('click', function() {
