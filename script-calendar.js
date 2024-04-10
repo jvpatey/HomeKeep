@@ -331,12 +331,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-if (eventContainer.scrollHeight > 80) {
-    eventContainer.style.overflowY = 'auto'; // Enable scrollbar
-} else {
-    eventContainer.style.overflowY = 'hidden'; // Hide scrollbar
-}
-
 /* -------- Modal and HTML javascript ------- */
 
 // function for drop down menu in navbar
