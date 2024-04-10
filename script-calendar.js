@@ -76,8 +76,6 @@ async function saveFormData(user) {
         // Reset the form after successful submission
         document.getElementById('addTaskForm').reset();
         document.getElementById('addTaskModal').close();
-
-        // Update the calendar display
         renderCalendar(user);
     } catch (error) {
         console.error("Error writing document: ", error);
@@ -95,6 +93,7 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// function to display tasks to calendar that are stored in firestore
 async function displayTasks(user, year, month) {
     try {
         if (!user) {
@@ -136,7 +135,7 @@ async function displayTasks(user, year, month) {
                         }
 
                         const eventBlock = document.createElement('div');
-                        eventBlock.classList.add('event-block', 'rounded-lg', 'bg-orange', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'text-navy', 'overflow-hidden');
+                        eventBlock.classList.add('event-block', 'font-bold', 'rounded-lg', 'bg-orange', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-smoke', 'overflow-hidden', 'hover:bg-grey', 'hover:text-smoke');
                         eventBlock.textContent = task.taskName;
                         eventBlock.title = task.taskName;
                         eventBlock.dataset.taskId = doc.id;
@@ -153,14 +152,14 @@ async function displayTasks(user, year, month) {
             }
         });
 
-        // Timeout to recalculate the scrollbar after a short delay
+        // Add scrollbar to date block if needed
         setTimeout(() => {
             const eventContainers = document.querySelectorAll('.event-container');
             eventContainers.forEach(container => {
                 if (container.scrollHeight > 60) {
-                    container.style.overflowY = 'auto'; // Enable scrollbar
+                    container.style.overflowY = 'auto';
                 } else {
-                    container.style.overflowY = 'hidden'; // Hide scrollbar
+                    container.style.overflowY = 'hidden';
                 }
             });
         }, 100);
@@ -180,13 +179,13 @@ function showAddTaskFormModal(clickedDate) {
         
         var startDateInput = document.getElementById('startDate');
         if (startDateInput) {
-            // Format the clicked date and set it as the value of the start date input
+            // Format the clicked date and set it as the value of the start date input on form
             startDateInput.value = formatDate(clickedDate.getTime());
         }
     }
 };
 
-// Function to format timestamp as MM-DD-YYYY
+// Function to format date as MM-DD-YYYY
 function formatDate(timestamp) {
     const date = new Date(timestamp);
     const day = date.getDate();
@@ -195,7 +194,7 @@ function formatDate(timestamp) {
     return `${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}-${year}`;
 }
 
-// Add event listener to bring up add task form to the date blocks
+// Add event listener to bring up add task form to the date blocks when clicked
 document.getElementById('calendar').addEventListener('click', function(event) {
     if (event.target.classList.contains('date-block') || event.target.parentElement.classList.contains('date-block')) {
         // Get the clicked date string from the dataset
@@ -332,12 +331,6 @@ document.addEventListener('click', function(event) {
 });
 
 /* -------- Modal and HTML javascript ------- */
-
-// function for drop down menu in navbar
-function toggleDropdown() {
-    var dropdownMenu = document.getElementById("dropdownMenu");
-    dropdownMenu.classList.toggle("hidden")
-};
 
 // Function to load modal content from modals.html
 function loadModals() {

@@ -26,23 +26,17 @@ console.log(auth.currentUser);
 // Handle authentication state changes
 auth.onAuthStateChanged(user => {
     if (user) {
-        // User is signed in.
         console.log("User is logged in:", user);
-        // Call any necessary functions here
-        displayTasks(); // Example: Call function to display tasks
+        displayTasks();
     } else {
-        // No user is signed in.
         console.log("No user logged in.");
-        // Perform any necessary actions for when no user is logged in
     }
 });
-
 
 /* ------ Functions to handle form data and table data ------- */
 
 // Function to save task data to Firestore
 async function saveFormData() {
-    // Get the currently logged-in user
     const user = auth.currentUser;
 
     if (!user) {
@@ -64,7 +58,7 @@ async function saveFormData() {
         return;
     }
 
-    // Extract month, day, and year from the input
+    // Take month, day, and year from the input
     const [month, day, year] = startDate.split('-').map(Number);
     if (month < 1 || month > 12) {
         alert("Please enter a valid month (1-12).");
@@ -92,13 +86,11 @@ async function saveFormData() {
         // Reset form and close modal
         document.getElementById('addTaskForm').reset();
         document.getElementById('addTaskModal').close();
-        // Refresh task display
         displayTasks();
     } catch (error) {
         console.error("Error writing document: ", error);
     }
 }
-
 
 // Add event listener for submit button on add task form
 document.addEventListener('click', function(event) {
@@ -180,9 +172,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     <td></td>
                 `;
 
-                // DaisyUI toggle switch for cell 6
+                // DaisyUI toggle switch for cell 5
                 const toggleSwitchContainer = document.createElement('div');
-                toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center'); // Removed 'justify-center'
+                toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center');
 
                 const toggleSwitchInput = document.createElement('input');
                 toggleSwitchInput.type = 'checkbox';
@@ -197,7 +189,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
 
                 row.children[5].appendChild(toggleSwitchContainer);
 
-                // Flex container for icons in cell 7
+                // Flex container for icons in cell 6
                 const iconsContainer = document.createElement('div');
                 iconsContainer.classList.add('flex', 'items-center');
 
@@ -233,7 +225,6 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 iconsContainer.appendChild(garbageIcon);
                 row.children[6].appendChild(iconsContainer);
 
-
                 // Add event listener to the pencil icon
                 pencilIcon.addEventListener('click', async () => {
                     const taskData = {
@@ -261,6 +252,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                         };
 
                         // Update task data in Firestore and the table
+                        const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
                         await updateTask(editedTaskData, docRef, row);
                         document.getElementById('editTaskModal').close();
                     });
@@ -277,12 +269,6 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
 displayTasks();
 
 /* -------- Functions to handle modal functionality ------- */
-
-// Function for toggling the dropdown menu in the navbar
-function toggleDropdown() {
-    var dropdownMenu = document.getElementById("dropdownMenu");
-    dropdownMenu.classList.toggle("hidden");
-}
 
 // Function to load modal content from modals.html
 function loadModals() {
@@ -329,14 +315,6 @@ function showAddTaskModal() {
     var addTaskModal = document.getElementById('addTaskModal');
     if (addTaskModal) {
         addTaskModal.showModal();
-    }
-}
-
-// Function to show the edit task modal
-function showEditTaskModal() {
-    var editTaskModal = document.getElementById('editTaskModal');
-    if (editTaskModal) {
-        editTaskModal.showModal();
     }
 }
 
