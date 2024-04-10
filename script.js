@@ -2,7 +2,7 @@
 
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
-import { getFirestore, collection, addDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
+import { getFirestore, collection, doc, addDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
 // Firbase config
@@ -219,8 +219,10 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 garbageIcon.classList.add('hover:text-orange');
                 garbageIcon.addEventListener('click', async () => {
                     try {
+                        // Capture the doc reference for deletion
+                        const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
                         // Delete document from Firestore
-                        await deleteDoc(doc.ref);
+                        await deleteDoc(docRef);
                         // Remove row from table
                         taskTableBody.removeChild(row);
                     } catch (error) {
@@ -230,6 +232,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
 
                 iconsContainer.appendChild(garbageIcon);
                 row.children[6].appendChild(iconsContainer);
+
 
                 // Add event listener to the pencil icon
                 pencilIcon.addEventListener('click', async () => {
@@ -258,7 +261,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                         };
 
                         // Update task data in Firestore and the table
-                        await updateTask(editedTaskData, doc.ref, row);
+                        await updateTask(editedTaskData, docRef, row);
                         document.getElementById('editTaskModal').close();
                     });
                 });
