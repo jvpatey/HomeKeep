@@ -24,14 +24,10 @@ console.log(auth.currentUser);
 // Handle authentication state changes
 auth.onAuthStateChanged(user => {
     if (user) {
-        // User is signed in.
         console.log("User is logged in:", user);
-        // Call any necessary functions here
-        displayTasks(); // Example: Call function to display tasks
+        displayTasks();
     } else {
-        // No user is signed in.
         console.log("No user logged in.");
-        // Perform any necessary actions for when no user is logged in
     }
 });
 
@@ -80,7 +76,7 @@ document.getElementById('forgotPasswordLink').addEventListener('click', function
     
     if (email) {
         // Send password reset email
-        sendPasswordResetEmail(auth, email) // Use sendPasswordResetEmail from firebase/auth
+        sendPasswordResetEmail(auth, email)
             .then(() => {
                 alert("Password reset email sent. Please check your email inbox.");
             })
