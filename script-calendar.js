@@ -135,7 +135,7 @@ async function displayTasks(user, year, month) {
                         }
 
                         const eventBlock = document.createElement('div');
-                        eventBlock.classList.add('event-block', 'font-bold', 'rounded-lg', 'bg-orange', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-smoke', 'overflow-hidden', 'hover:bg-grey', 'hover:text-smoke');
+                        eventBlock.classList.add('event-block', 'rounded-lg', 'bg-marine', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-charcoal', 'overflow-hidden', 'hover:bg-charcoal', 'hover:text-marine');
                         eventBlock.textContent = task.taskName;
                         eventBlock.title = task.taskName;
                         eventBlock.dataset.taskId = doc.id;
@@ -253,7 +253,7 @@ const renderCalendar = (user) => {
     // Add date blocks for each day of the month
     for (let i = 1; i <= daysInMonth; i++) {
         const dateString = getDateString(i, currentMonth, currentYear);
-        calendarGrid.innerHTML += `<div class="date-block border h-16 text-center text-grey border-grey rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
+        calendarGrid.innerHTML += `<div class="date-block border h-16 text-center text-clean border-clean rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
     }
 
     // Call displayTasks only if user object is defined

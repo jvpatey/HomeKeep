@@ -2,25 +2,25 @@
  
  <!-- DaisyUI add-task form modal -->
  <dialog id="addTaskModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-4 rounded-lg">
+    <div class="modal-box bg-clean p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
-        <form id="addTaskForm" class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
-            <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Add a Task</h1>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey text-orange">
-                <input id="taskName" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Task Name" />
+        <form id="addTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Add a Task</h1>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
+                <input id="taskName" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
-                <input id="category" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Category" />
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
+                <input id="category" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Category" />
             </label>
-              <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
-                <input id="startDate" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
+              <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
+                <input id="startDate" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Start Date (MM-DD-YYYY)" pattern="\d{2}-\d{2}-\d{4}" required />
             </label>
-            <label class="input input-bordered flex items-center gap-2 bg-grey">
-                <input id="interval" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Interval (days)" />
+            <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine">
+                <input id="interval" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
             </label>
-            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-grey gap-2 text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Description"></textarea>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-clean gap-2 text-charcoal border-marine placeholder-charcoal" placeholder="Maintenance Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center">
-                <button id="submitTaskButton" type="button" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
+                <button id="submitTaskButton" type="button" class="btn text-charcoal font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
             </div>
         </form>
     </div>
@@ -28,26 +28,26 @@
 
 <!-- DaisyUI help request modal -->
 <dialog id="helpRequestModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-1 rounded-lg">
+    <div class="modal-box bg-forest p-1 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('helpRequestModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-dark_smoke rounded-md">
-            <div class="w-full max-w-lg bg-dark_smoke rounded-md">
+        <div class="w-full max-w-lg bg-forest rounded-md">
+            <div class="w-full max-w-lg bg-forest rounded-md">
               <form class="card-body">
-                <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Help Request</h1>
+                <h1 class="text-left p-2 text-2xl mb-5 font-light text-clean border-b border-clean">Help Request</h1>
                 <div class="form-control">
-                  <input type="text" placeholder="first name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                  <input type="text" placeholder="first name" class="input input-bordered bg-clean text-forest placeholder-forest" required />
                 </div>
                 <div class="form-control">
-                  <input type="text" placeholder="last name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                  <input type="text" placeholder="last name" class="input input-bordered bg-clean text-forest placeholder-forest" required />
                 </div>
                 <div class="form-control">
-                  <input type="email" placeholder="email" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                  <input type="email" placeholder="email" class="input input-bordered bg-clean text-forest placeholder-forest" required />
                 </div>
                 <div class="form-control">
-                  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-grey text-dark_smoke placeholder-dark_smoke" placeholder="message"></textarea>
+                  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-clean text-forest placeholder-forest" placeholder="message"></textarea>
                 </div>
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                  <button class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
+                  <button class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
                 </div>
               </form>
             </div>
@@ -57,30 +57,30 @@
 
 <!-- DaisyUI task details modal -->
 <dialog id="taskDetailsModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-4 rounded-lg">
-        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2 p-2" onclick="document.getElementById('taskDetailsModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-dark_smoke rounded-md p-4">
-            <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Task Details</h1>
+    <div class="modal-box bg-clean p-4 rounded-lg">
+        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('taskDetailsModal').close()">✕</button>
+        <div class="w-full max-w-lg bg-clean rounded-md p-4">
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Task Details</h1>
             <div class="flex flex-col gap-4 mb-4">
                 <div>
-                    <span class="text-sm font-semibold text-orange">Task Name:</span>
-                    <p id="taskDetailsName" class="text-base text-grey"></p>
+                    <span class="text-md font-semibold text-marine">Task Name:</span>
+                    <p id="taskDetailsName" class="text-base text-charcoal"></p>
                 </div>
                 <div>
-                    <span class="text-sm font-semibold text-orange">Category:</span>
-                    <p id="taskDetailsCategory" class="text-base text-grey"></p>
+                    <span class="text-md font-semibold text-marine">Category:</span>
+                    <p id="taskDetailsCategory" class="text-base text-charcoal"></p>
                 </div>
                 <div>
-                    <span class="text-sm font-semibold text-orange">Start Date:</span>
-                    <p id="taskDetailsStartDate" class="text-base text-grey"></p>
+                    <span class="text-md font-semibold text-marine">Start Date:</span>
+                    <p id="taskDetailsStartDate" class="text-base text-charcoal"></p>
                 </div>
                 <div>
-                    <span class="text-sm font-semibold text-orange">Maintenance Interval:</span>
-                    <p id="taskDetailsInterval" class="text-base text-grey"></p>
+                    <span class="text-md font-semibold text-marine">Maintenance Interval:</span>
+                    <p id="taskDetailsInterval" class="text-base text-charcoal"></p>
                 </div>
                 <div>
-                    <span class="text-sm font-semibold text-orange">Description:</span>
-                    <p id="taskDetailsDescription" class="text-base text-grey"></p>
+                    <span class="text-md font-semibold text-marine">Description:</span>
+                    <p id="taskDetailsDescription" class="text-base text-charcoal"></p>
                 </div>
             </div>
         </div>
@@ -89,55 +89,53 @@
 
 <!-- DaisyUI edit-task form modal -->
 <dialog id="editTaskModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-4 rounded-lg">
+    <div class="modal-box bg-clean p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('editTaskModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-dark_smoke p-4 rounded-md">
-            <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Edit a Task</h1>
-            <form id="editTaskForm" class="card-body">
-                <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
-                    <input id="editTaskName" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Task Name" />
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Edit a Task</h1>
+            <form id="editTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
+                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
+                    <input id="editTaskName" type="text" class="grow text-charcoal placeholder-forest" placeholder="Task Name" />
                 </label>
-                <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
-                    <input id="editCategory" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Category" />
+                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
+                    <input id="editCategory" type="text" class="grow text-forest placeholder-forest" placeholder="Category" />
                 </label>
-                <label class="input input-bordered flex items-center gap-2 mb-2 bg-grey">
-                    <input id="editStartDate" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Start Date" />
+                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
+                    <input id="editStartDate" type="text" class="grow text-forest placeholder-forest" placeholder="Maintenance Start Date" />
                 </label>
-                <label class="input input-bordered flex items-center gap-2 bg-grey">
-                    <input id="editInterval" type="text" class="grow text-dark_smoke placeholder-dark_smoke" placeholder="Maintenance Interval (days)" />
+                <label class="input input-bordered flex items-center gap-2 bg-clean border-marine">
+                    <input id="editInterval" type="text" class="grow text-forest placeholder-forest" placeholder="Maintenance Interval (days)" />
                 </label>
-                <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-dark_smoke placeholder-dark_smoke gap-2 bg-grey" placeholder="Maintenace Description"></textarea>
+                <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-forest placeholder-forest gap-2 bg-clean border-marine" placeholder="Maintenace Description"></textarea>
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                    <button id="editSubmitBtn" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Submit</button>
+                    <button id="editSubmitBtn" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
                 </div>
             </form>
-        </div>
     </div>
   </dialog>
 
 <!-- DaisyUI create account Modal -->
 <dialog id="createAccountModal" class="modal">
-    <div class="modal-box bg-dark_smoke p-1 rounded-md">
+    <div class="modal-box bg-clean p-1 rounded-md">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('createAccountModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-dark_smoke p-1 rounded-md">
+        <div class="w-full max-w-lg bg-clean p-1 rounded-md">
             <form id="signupForm" class="card-body">
-                <h1 class="text-left p-2 text-2xl mb-5 font-light text-grey border-b border-light_smoke">Create an Account</h1>
+                <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Create an Account</h1>
                 <!-- Form Input Fields -->
                 <div class="form-control">
-                    <input id="firstName" type="text" placeholder="First Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="firstName" type="text" placeholder="First Name" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
                 </div>
                 <div class="form-control">
-                    <input id="lastName" type="text" placeholder="Last Name" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="lastName" type="text" placeholder="Last Name" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
                 </div>
                 <div class="form-control">
-                    <input id="signupEmail" type="email" placeholder="Email Address" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="signupEmail" type="email" placeholder="Email Address" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
                 </div>
                 <div class="form-control">
-                    <input id="signupPassword" type="password" placeholder="Password" class="input input-bordered bg-grey text-dark_smoke placeholder-dark_smoke" required />
+                    <input id="signupPassword" type="password" placeholder="Password" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
                 </div>
                 <!-- Buttons -->
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                    <button type="submit" class="btn text-grey font-semibold bg-dark_smoke border-grey hover:border-orange hover:bg-dark_smoke hover:text-orange w-full">Create Account</button>
+                    <button type="submit" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Create Account</button>
                 </div>
             </form>
         </div>

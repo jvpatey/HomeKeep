@@ -14,14 +14,12 @@
           theme: {
             extend: {
               colors: {
-                navy: '#082032',
-                smoke: '#2C394B',
-                dark_smoke: '#282e38',
-                light_smoke: '#3f4959',
-                teal: '#334756',
-                orange: '#FF4C29',
-                light_orange: '#d2691e',
-                grey: '#a5adbb'
+                clean: '#E7DFDD',
+                feather: '#77C9D4',
+                marine: '#57BC90',
+                forest: '#015249',
+                grey: '#9099A2',
+                charcoal: '#3C3C3C'
               }
             }
           }
@@ -29,11 +27,11 @@
       </script>
 </head>
 
-<body class="bg-navy h-screen">
+<body class="bg-clean h-screen">
 
   <!--navbar -->
 
-  <div class="navbar bg-navy">
+  <div class="navbar bg-clean">
     <div class="navbar-start">
     </div>
     <div class="navbar-end">
@@ -47,7 +45,6 @@
         <!-- Dropdown menu -->
 
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
-            <li><a href="#" class="label-text-alt no-underline link text-base mt-2" id="createAccountLink"><i class="fa-solid fa-user-plus"></i>Create an account</a></li>
             <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
         </ul>
       </div>
@@ -56,32 +53,35 @@
 
       <!-- DaisyUI Hero for main content -->
 
-      <div class="hero min-h-screen bg-navy">
+      <div class="hero min-h-screen bg-clean">
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center lg:text-left">
-                <h1 class="inline text-5xl font-bold ml-8">Welcome to</h1>
-                <h1 class="inline text-7xl ml-2 font-bold bg-gradient-to-r from-orange to-grey text-transparent bg-clip-text">HomeKeep</h1>
+                <h1 class="inline text-5xl font-bold ml-8 text-forest">Welcome to</h1>
+                <h1 class="inline text-7xl ml-2 font-bold bg-gradient-to-r from-marine to-feather text-transparent bg-clip-text">HomeKeep</h1>
                 <div class="max-w-[calc(100%-4rem)] mx-auto">
-                    <p class="py-6 text-xl">Effortlessly schedule maintenance tasks, receive notifications, and ensure your home is always in top condition with our intuitive app. Start simplifying your life today!"</p>
+                    <p class="py-6 text-xl text-forest">Effortlessly schedule maintenance tasks, receive notifications, and ensure your home is always in top condition with our intuitive app. Start simplifying your life today!"</p>
                 </div>
             </div>
 
           <!-- Card containing login methods -->
 
-          <div class="card shrink-0 w-full max-w-md shadow-2xl bg-smoke h-auto lg:h-full">
+          <div class="card shrink-0 w-full max-w-md shadow-2xl bg-marine h-auto lg:h-full">
             <div class="card-body">
-                <h1 class="text-center p-2 text-3xl mb-5 font-base text-grey border-b border-light_smoke">Sign In</h1>
+                <h1 class="text-center p-2 text-3xl mb-5 font-base text-clean border-b border-clean">Sign In</h1>
                 <div class="form-control">
-                    <input id="email" type="email" placeholder="email" class="input input-bordered bg-teal" required />
+                    <input id="email" type="email" placeholder="email" class="input input-bordered bg-clean placeholder-forest" required />
                   </div>
                   <div class="form-control">
-                    <input id="password" type="password" placeholder="password" class="input input-bordered bg-teal" required />
-                    <a href="#" class="font-base text-grey mt-2 ml-1 text-sm hover:text-orange" id="forgotPasswordLink">Forgot Password?</a>
+                    <input id="password" type="password" placeholder="password" class="input input-bordered bg-clean placeholder-forest" required />
+                    <a href="#" class="font-base text-forest mt-2 ml-1 text-sm hover:text-clean" id="forgotPasswordLink">Forgot Password?</a>
                   </div>
-                <div class="flex justify-center mx-auto w-2/5 py-1 text-center mt-2">
-                    <button id="loginEmailPassword" class="mr-2 btn text-orange font-semibold bg-smoke border-orange hover:border-grey hover:bg-smoke hover:text-grey w-full">Sign In</button>
-                    <button id="loginGoogleBtn" class="ml-2 btn text-white font-semibold bg-smoke border-white hover:border-grey hover:bg-smoke hover:text-grey w-full">Sign in with Google</button>
-                  </div>
+                <div class="flex justify-center mx-auto w-2/5 py-1 text-center m-2">
+                    <button id="loginEmailPassword" class="mr-2 btn text-clean font-semibold bg-forest border-forest hover:border-clean hover:bg-clean hover:text-forest w-full">Sign In</button>
+                    <button id="loginGoogleBtn" class="ml-2 btn text-forest font-semibold bg-clean border-clean hover:border-forest hover:bg-forest hover:text-clean w-full">Sign in with Google</button>
+                </div>
+                <div class="border-t border-clean p-3 text-center">
+                  <a href="#" class="font-base text-forest text-md hover:text-clean" id="createAccountLink"><strong>New user?</strong> Create an account</a>
+                </div>
             </div>
           </div>
         </div>
@@ -89,12 +89,12 @@
 
     <!-- Foooter -->
     
-    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-white border-t border-gray-200 shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
-        <span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+    <footer class="fixed bottom-0 left-0 z-20 w-full p-4 bg-clean border-t border-clean shadow md:flex md:items-center md:justify-between md:p-6">
+        <span class="text-md font-normal text-charcoal sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
         </span>
         <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
           <li>
-            <a id="helpFooterLink" href="#" class="label-text-alt no-underline link text-md hover:bg-gradient-to-r hover:from-grey hover:to-orange hover:text-transparent hover:bg-clip-text">Help</a>
+            <a id="helpFooterLink" href="#" class="no-underline link text-md text-charcoal hover:text-feather">Help</a>
         </li>
         </ul>
     </footer>

@@ -1,7 +1,7 @@
 /* Logo Styles */
 .logo {
     font-size: 1.75rem;
-    background-image: linear-gradient(to right, #a5adbb, #FF4C29);
+    background-image: linear-gradient(to right, #57BC90, #77C9D4);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -14,7 +14,7 @@
 /* Hover effect for logo */
 .logo:hover {
     font-size: 2.5xl;
-    background-image: linear-gradient(to right, #FF4C29, #a5adbb);
+    background-image: linear-gradient(to right, #77C9D4, #57BC90);
     cursor: pointer;
     font-weight: bold;
     margin-left: 20px;
@@ -42,4 +42,9 @@
 .event-container {
     max-height: 60px; 
     overflow-y: auto; 
+}
+
+table {
+    border-collapse: collapse;
+    border: none;
 }

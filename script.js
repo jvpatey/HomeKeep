@@ -143,7 +143,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
         if (querySnapshot.empty) {
             // Append a row with the message "No tasks entered yet"
             const emptyRow = document.createElement('tr');
-            emptyRow.innerHTML = '<td colspan="7" class="text-center py-4 text-grey">No tasks entered yet</td>';
+            emptyRow.innerHTML = '<td colspan="7" class="text-center py-4">No tasks entered yet</td>';
             taskTableBody.appendChild(emptyRow);
         } else {
             // Convert querySnapshot to an array of tasks

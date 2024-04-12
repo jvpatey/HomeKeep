@@ -14,14 +14,12 @@
           theme: {
             extend: {
               colors: {
-                navy: '#082032',
-                smoke: '#2C394B',
-                dark_smoke: '#282e38',
-				        light_smoke: '#3f4959',
-                teal: '#334756',
-                orange: '#FF4C29',
-                light_orange: '#d2691e',
-                grey: '#a5adbb'
+                clean: '#E7DFDD',
+                feather: '#77C9D4',
+                marine: '#57BC90',
+                forest: '#015249',
+                grey: '#9099A2',
+                charcoal: '#3C3C3C'
               }
             }
           }
@@ -29,11 +27,11 @@
       </script>
 </head>
 
-<body class="bg-navy h-screen">
+<body class="bg-clean h-screen">
 
   <!--navbar -->
 
-  <div class="navbar bg-navy pb-6">
+  <div class="navbar bg-clean pb-6">
     <div class="navbar-start">
           <a href="dashboard.html" target="_self" class="relative inline-block logo">
               <span>HomeKeep</span>
@@ -46,9 +44,9 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
         </svg>
       </button>
-      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-dark_smoke rounded-box w-52 right-0">
-        <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
-        <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base mt-2"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
+      <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-marine rounded-box w-52 right-0">
+        <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
+        <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
       </ul>
       </div>
     </div>
@@ -57,26 +55,27 @@
   <!-- Buttons above calendar -->
 
   <div class="container mx-auto py-1">
-    <button id="addTaskButton" class="btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">+</button>
-    <button onclick="window.location.href = 'dashboard.html';" class=" btn border-orange bg-navy text-orange text-sm m-2 hover:border-grey hover:text-grey hover:bg-navy">Table</button>
+    <button onclick="window.location.href = 'dashboard.html';" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">Table</button>
+    <button id="addTaskButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">+</button>
+    <button id="testButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">N</button>
   </div>
       
   <!-- Calendar HTML -->
 
-  <main id="calendar-container" class="container bg-smoke rounded-lg mx-auto px-4 py-4">
+  <main id="calendar-container" class="container bg-grey rounded-lg mx-auto px-4 py-4">
       <!-- Calendar Header -->
       <div class="flex justify-between items-center mb-4">
           <!-- Previous month button -->
-          <button id="prevMonth" class="btn btn-outline btn-sm border-grey text-grey hover:border-orange hover:text-orange hover:bg-smoke">
+          <button id="prevMonth" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean">
               <i class="fa-solid fa-backward"></i>
           </button>
           <!-- Current month button and text -->
           <div class="text-center">
-              <h1 class="text-3xl font-normal text-orange" id="currentMonth">April 2024</h1>
-              <button id="currentMonthButton" class="btn btn-primary font-normal btn-xs mt-2 border-grey bg-smoke text-grey hover:border-orange hover:text-orange hover:bg-smoke"><i class="fa-solid fa-house"></i> Current Month</button>
+              <h1 class="text-3xl font-normal text-clean mb-2" id="currentMonth">April 2024</h1>
+              <button id="currentMonthButton" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean"><i class="fa-solid fa-house"></i></button>
           </div>
           <!-- Next month button -->
-          <button id="nextMonth" class="btn btn-outline btn-xs btn-sm border-grey text-grey hover:border-orange hover:text-orange hover:bg-smoke">
+          <button id="nextMonth" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean">
               <i class="fa-solid fa-forward"></i>
           </button>
       </div>
@@ -87,12 +86,12 @@
 
   <!-- Footer -->
 
-	<footer class="relative bottom-0 left-0 z-20 w-full p-4 bg-navy border-t border-navy shadow md:flex md:items-center md:justify-between md:p-6 dark:bg-navy dark:border-navy">
-		<span class="text-sm text-terracotta sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
+	<footer class="relative bottom-0 left-0 z-20 w-full p-4 bg-clean shadow md:flex md:items-center md:justify-between md:p-6 border-none">
+		<span class="text-sm text-charcoal sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
 		</span>
-		<ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
+		<ul class="flex flex-wrap items-center mt-3 text-sm font-medium ">
 			<li>  
-				<a id="helpFooterLink" href="#" class="hover:underline me-4 md:me-6">Help</a>
+				<a id="helpFooterLink" href="#" class="hover:underline text-charcoal hover:underline">Help</a>
 			</li> 
 		</ul>
 	</footer>
