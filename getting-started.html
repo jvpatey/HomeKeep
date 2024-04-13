@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomeKeep - Getting started</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+    <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+          theme: {
+            extend: {
+              colors: {
+                clean: '#E7DFDD',
+                paper:'#E9E9E9',
+                feather: '#77C9D4',
+                marine: '#57BC90',
+                forest: '#015249',
+                grey: '#9099A2',
+                charcoal: '#3C3C3C'
+              }
+            }
+          }
+        }
+      </script>
+</head>
+
+<body class="bg-clean min-h-screen flex flex-col">
+
+  <!--navbar -->
+
+  <div class="navbar bg-clean pb-6">
+    <div class="navbar-start">
+          <a href="dashboard.html" target="_self" class="relative inline-block logo">
+              <span>HomeKeep</span>
+          </a>
+    </div>
+    <div class="navbar-end">
+      <div class="dropdown relative">
+        <button class="btn btn-ghost" tabindex="0">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+
+        <!-- Dropdown list -->
+
+        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-marine rounded-box w-52 right-0">
+            <li><a href="about.html" id="tutorialLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-question"></i>About</a></li>
+            <li><a href="dashboard.html" id="dashboardLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-gauge"></i>Dashboard</a></li>
+            <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="max-w-6xl mx-auto mt-10 rounded-lg p-2">
+    <div class="card shadow-xl bg-paper w-full h-full" style="width: 800px;">
+      <div class="card-header text-center bg-paper font-bold text-marine text-3xl py-4">
+        Getting Started
+      </div>
+      <div class="card-body">
+        <div class="collapse collapse-plus bg-clean">
+          <input type="radio" name="my-accordion-3" defaultChecked /> 
+          <div class="collapse-title text-charcoal text-xl font-medium">
+            1. Welcome Page
+          </div>
+          <div class="collapse-content text-charcoal"> 
+            <p>- Users are greeted with a welcome page upon visiting HomeKeep for the first time.</p>
+            <p>- The welcome page introduces HomeKeep as an app for effortless home maintenance.</p>
+            <p>- The first step for users is to create a user account.</p>
+          </div>
+        </div>
+        <div class="collapse collapse-plus bg-clean">
+          <input type="radio" name="my-accordion-3" defaultChecked /> 
+          <div class="collapse-title text-charcoal text-xl font-medium">
+            2. User Authentication
+          </div>
+          <div class="collapse-content text-charcoal"> 
+            <p>- HomeKeep supports two authentication methods: username/password and Google sign-in.</p>
+            <p>- User accounts are essential for a personalized experience and linking maintenance tasks to each user.</p>
+          </div>
+        </div>
+        <div class="collapse collapse-plus bg-clean">
+          <input type="radio" name="my-accordion-3" defaultChecked /> 
+          <div class="collapse-title text-charcoal text-xl font-medium">
+            3. Dashboard
+          </div>
+          <div class="collapse-content text-charcoal"> 
+            <p>- After authentication, users are directed to the dashboard.</p>
+            <p>- The dashboard provides a table view of all maintenance tasks linked to the user's account.</p>
+            <p>- Users can easily add new maintenance tasks to the database and table.</p>
+            <p>- Each task includes details such as name, category, start date, interval, and description.</p>
+            <p>- Edit and delete functionality are available for users to manage their tasks effectively.</p>
+          </div>
+        </div>
+        <div class="collapse collapse-plus bg-clean">
+          <input type="radio" name="my-accordion-3" defaultChecked /> 
+          <div class="collapse-title text-charcoal text-xl font-medium">
+            4. Calendar View
+          </div>
+          <div class="collapse-content text-charcoal"> 
+            <p>- HomeKeep offers a calendar view in addition to the table dashboard.</p>
+            <p>- Users can view their scheduled maintenance tasks on a calendar.</p>
+            <p>- Tasks can be added directly to the calendar by clicking on the date or using the "add task" button.</p>
+            <p>- Data between the table and calendar views are synchronized to ensure consistency.</p>
+            <p>- Users can navigate through following months to see scheduled maintenance based on intervals provided.</p>
+          </div>
+        </div>
+        <div class="collapse collapse-plus bg-clean">
+          <input type="radio" name="my-accordion-3" defaultChecked /> 
+          <div class="collapse-title text-charcoal text-xl font-medium">
+            5. Notifications
+          </div>
+          <div class="collapse-content text-charcoal"> 
+            <p>- Users have the option to toggle notifications for maintenance tasks.</p>
+            <p>- Toggle switches are available in the table view, allowing users to customize their notification preferences.</p>
+            <p>- Notifications are sent via the cloud on the day the task is due, providing users with timely reminders.</p>
+          </div>
+        </div>
+        <div class="collapse collapse-plus bg-clean">
+          <input type="radio" name="my-accordion-3" defaultChecked /> 
+          <div class="collapse-title text-charcoal text-xl font-medium">
+            6. Getting Help
+          </div>
+          <div class="collapse-content text-charcoal"> 
+            <p>- HomeKeep includes a help request feature to assist users with any questions or issues.</p>
+            <p>- Chat windows are accessible on most pages, allowing users to send help messages.</p>
+            <p>- Responses to help requests are provided as soon as possible to ensure a seamless user experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Footer -->
+  
+  <footer class="relative bottom-0 left-0 z-0 w-full bg-clean border-t border-clean shadow md:flex md:items-center md:justify-between md:p-6">
+      <span class="text-md font-normal text-charcoal sm:text-center">© 2024 All Rights Reserved.
+      </span>
+  </footer>
+
+  </body>
+</html>
