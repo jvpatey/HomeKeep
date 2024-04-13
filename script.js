@@ -95,8 +95,15 @@ function handleSubmit(event) {
 
 /* ------ Functions to handle form data and table data ------- */
 
+let formSubmitted = false;
+
 // Function to save task data to Firestore
 async function saveFormData() {
+    // Check if the form has already been submitted
+    if (formSubmitted) {
+        return;
+    }
+
     const user = auth.currentUser;
 
     if (!user) {
@@ -104,32 +111,45 @@ async function saveFormData() {
         return;
     }
 
+    // Set the flag to true to prevent multiple submissions
+    formSubmitted = true;
+
     // Extract form data
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
-    const startDate = document.getElementById('startDate').value;
+    const rawStartDate = document.getElementById('startDate').value; // Get raw date value
+    const startDateParts = rawStartDate.split('-'); // Split into parts
+    const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
     // Validate the start date format
     const datePattern = /^\d{2}-\d{2}-\d{4}$/;
-    if (!datePattern.test(startDate)) {
+    if (!datePattern.test(formattedStartDate)) {
         alert("Please enter the start date in the format MM-DD-YYYY.");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
         return;
     }
 
     // Take month, day, and year from the input
-    const [month, day, year] = startDate.split('-').map(Number);
+    const [month, day, year] = formattedStartDate.split('-').map(Number);
     if (month < 1 || month > 12) {
         alert("Please enter a valid month (1-12).");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
         return;
     }
     if (day < 1 || day > 31) {
         alert("Please enter a valid day (1-31).");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
         return;
     }
     if (year < 1900 || year > 2100) {
         alert("Please enter a valid year (1900-2100).");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
         return;
     }
 
@@ -138,7 +158,7 @@ async function saveFormData() {
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
-            startDate: startDate,
+            startDate: formattedStartDate, // Use formatted start date
             interval: interval,
             description: description
         });
@@ -146,9 +166,13 @@ async function saveFormData() {
         // Reset form and close modal
         document.getElementById('addTaskForm').reset();
         document.getElementById('addTaskModal').close();
+        // Call displayTasks to update the table with the new task
         displayTasks();
     } catch (error) {
         console.error("Error writing document: ", error);
+    } finally {
+        // Reset the flag after the operation is complete
+        formSubmitted = false;
     }
 }
 
@@ -158,6 +182,7 @@ document.addEventListener('click', function(event) {
         saveFormData();
     }
 });
+
 
 // Function to populate the edit task modal with data from the corresponding row
 function populateEditTaskModal(taskData) {

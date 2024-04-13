@@ -124,3 +124,8 @@ table {
     color: #3C3C3C;
     font-weight: bold;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(100%);
+}
+

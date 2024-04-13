@@ -35,6 +35,7 @@ auth.onAuthStateChanged(user => {
     }
 });
 
+
 /* ----- Firebase messages via chat ----- */
 
 // Function to send a message to Firestore
@@ -95,52 +96,97 @@ function handleSubmit(event) {
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
-async function saveFormData(user) {
-    var taskName = document.getElementById('taskName').value;
-    var category = document.getElementById('category').value;
-    var startDate = document.getElementById('startDate').value;
-    var interval = document.getElementById('interval').value.trim();
-    var description = document.getElementById('description').value;
+let formSubmitted = false;
 
-    // Validate interval field
-    var intervalRegex = /^\d+$/;
-    if (!intervalRegex.test(interval)) {
-        alert("Interval must be a positive integer.");
+async function saveFormData() {
+    // Check if the form has already been submitted
+    if (formSubmitted) {
         return;
     }
 
-    interval = parseInt(interval);
-    if (interval < 0 || interval > 365) {
-        alert("Interval must be between 0 and 365.");
+    const user = auth.currentUser;
+
+    if (!user) {
+        console.error("No user logged in.");
+        return;
+    }
+
+    // Set the flag to true to prevent multiple submissions
+    formSubmitted = true;
+
+    // Extract form data
+    const taskName = document.getElementById('taskName').value;
+    const category = document.getElementById('category').value;
+    const rawStartDate = document.getElementById('startDate').value; // Get raw date value
+    const startDateParts = rawStartDate.split('-'); // Split into parts
+    const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
+    const interval = document.getElementById('interval').value;
+    const description = document.getElementById('description').value;
+
+    // Validate the start date format
+    const datePattern = /^\d{2}-\d{2}-\d{4}$/;
+    if (!datePattern.test(formattedStartDate)) {
+        alert("Please enter the start date in the format MM-DD-YYYY.");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
+        return;
+    }
+
+    // Take month, day, and year from the input
+    const [month, day, year] = formattedStartDate.split('-').map(Number);
+    if (month < 1 || month > 12) {
+        alert("Please enter a valid month (1-12).");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
+        return;
+    }
+    if (day < 1 || day > 31) {
+        alert("Please enter a valid day (1-31).");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
+        return;
+    }
+    if (year < 1900 || year > 2100) {
+        alert("Please enter a valid year (1900-2100).");
+        // Reset the flag to allow resubmission
+        formSubmitted = false;
         return;
     }
 
     try {
-        // Convert start date to timestamp
-        const startDateTimestamp = new Date(startDate).getTime();
-
-        // Format start date as "MM-DD-YYYY"
-        const formattedStartDate = formatDate(new Date(startDateTimestamp));
-
-        // Add the task to Firestore with formatted start date
+        // Add a new document with a generated ID and user's authentication information
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
-            startDate: formattedStartDate,
+            startDate: formattedStartDate, // Use formatted start date
             interval: interval,
             description: description
         });
-
         console.log("Document successfully written!");
 
-        // Reset the form after successful submission
+        // Call displayTasks to update the table with the new task
+        displayTasks(user, currentYear, currentMonth);
+
+        // Reset form and close modal
         document.getElementById('addTaskForm').reset();
         document.getElementById('addTaskModal').close();
-        renderCalendar(user);
+        // Call displayTasks to update the table with the new task
+        displayTasks();
     } catch (error) {
         console.error("Error writing document: ", error);
+    } finally {
+        // Reset the flag after the operation is complete
+        formSubmitted = false;
     }
 }
+
+// Add event listener for submit button on add task form
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.id === 'submitTaskButton') {
+        saveFormData();
+    }
+});
+
 
 // Event listener for submit button on add task form
 document.addEventListener('click', function(event) {
@@ -157,7 +203,6 @@ document.addEventListener('click', function(event) {
 async function displayTasks(user, year, month) {
     try {
         if (!user) {
-            console.error("User is undefined");
             return;
         }
 
@@ -245,13 +290,13 @@ function showAddTaskFormModal(clickedDate) {
     }
 };
 
-// Function to format date as MM-DD-YYYY
+// Function to format date as YYYY-MM-DD
 function formatDate(timestamp) {
     const date = new Date(timestamp);
-    const day = date.getDate();
-    const month = date.getMonth() + 1;
     const year = date.getFullYear();
-    return `${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}-${year}`;
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
 }
 
 // Add event listener to bring up add task form to the date blocks when clicked
