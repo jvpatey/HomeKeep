@@ -207,8 +207,8 @@ function initializeModals() {
                 });
         });
 
-        // Event listener for chat form submission
-        chatForm.addEventListener('submit', handleSubmit);
+    // Event listener for chat form submission
+    chatForm.addEventListener('submit', handleSubmit);
     } else {
         console.error("One or more modals or signup form not found in the loaded content.");
     }

@@ -289,38 +289,51 @@ const monthNames = ["January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"];
 
                     
-const renderCalendar = (user) => {
-    const calendarGrid = document.getElementById('calendar');
-    // Display the current month and year
-    document.getElementById('currentMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-
-    // Function to generate date string in "MM-DD-YYYY" format
-    const getDateString = (day, month, year) => {
-        return `${month + 1}-${day}-${year}`;
-    };
-
-    const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
-    const startingDay = firstDayOfMonth.getDay();
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
-    calendarGrid.innerHTML = '';
-
-    // Add empty date blocks for days before the start of the month
-    for (let i = 0; i < startingDay; i++) {
-        calendarGrid.innerHTML += `<div class="date-block h-16"></div>`;
-    }
-
-    // Add date blocks for each day of the month
-    for (let i = 1; i <= daysInMonth; i++) {
-        const dateString = getDateString(i, currentMonth, currentYear);
-        calendarGrid.innerHTML += `<div class="date-block border h-16 text-center text-clean border-clean rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
-    }
-
-    // Call displayTasks only if user object is defined
-    if (user) {
-        displayTasks(user, currentYear, currentMonth);
-    }
-};
+                    const renderCalendar = (user) => {
+                        const calendarGrid = document.getElementById('calendar');
+                        // Display the current month and year
+                        document.getElementById('currentMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
+                    
+                        // Function to generate date string in "MM-DD-YYYY" format
+                        const getDateString = (day, month, year) => {
+                            return `${month + 1}-${day}-${year}`;
+                        };
+                    
+                        const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+                        const startingDay = firstDayOfMonth.getDay();
+                        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+                    
+                        const today = new Date();
+                        const currentDay = today.getDate();
+                    
+                        calendarGrid.innerHTML = '';
+                    
+                        // Add empty date blocks for days before the start of the month
+                        for (let i = 0; i < startingDay; i++) {
+                            calendarGrid.innerHTML += `<div class="date-block h-16"></div>`;
+                        }
+                    
+                        // Add date blocks for each day of the month
+                        for (let i = 1; i <= daysInMonth; i++) {
+                            const dateString = getDateString(i, currentMonth, currentYear);
+                            const currentDate = new Date(currentYear, currentMonth, i);
+                    
+                            let dateBlock = `<div class="date-block border h-16 text-center text-clean border-clean rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
+                    
+                            if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate()) {
+                                dateBlock = `<div class="date-block border h-16 text-center text-clean border-clean rounded-md current-day" data-date="${dateString}" data-day="${i}">${i}</div>`;
+                            }
+                    
+                            calendarGrid.innerHTML += dateBlock;
+                        }
+                    
+                        // Call displayTasks only if user object is defined
+                        if (user) {
+                            displayTasks(user, currentYear, currentMonth);
+                        }
+                    };
+                    
+                    
                     
 //event listeners for calendar buttons
 

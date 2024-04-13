@@ -118,3 +118,9 @@ table {
   .form-container .btn:hover, .open-button:hover {
     opacity: 1;
   }
+
+  .current-day {
+    background-color: #77C9D4;
+    color: #3C3C3C;
+    font-weight: bold;
+}

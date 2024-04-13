@@ -62,31 +62,41 @@
       
   <!-- Calendar HTML -->
 
-  <main id="calendar-container" class="container bg-grey rounded-lg mx-auto px-4 py-4">
-      <!-- Calendar Header -->
-      <div class="flex justify-between items-center mb-4">
-          <!-- Previous month button -->
-          <button id="prevMonth" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean">
-              <i class="fa-solid fa-backward"></i>
-          </button>
-          <!-- Current month button and text -->
-          <div class="text-center">
-              <h1 class="text-3xl font-normal text-clean mb-2" id="currentMonth">April 2024</h1>
-              <button id="currentMonthButton" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean"><i class="fa-solid fa-house"></i></button>
-          </div>
-          <!-- Next month button -->
-          <button id="nextMonth" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean">
-              <i class="fa-solid fa-forward"></i>
-          </button>
-      </div>
-      <!-- Calendar grid to be filled dynamically-->
-      <div id="calendar" class="grid grid-cols-7 gap-2 rounded-lg p-4">
-      </div>
+  <main id="calendar-container" class="container bg-grey rounded-lg mx-auto px-4 py-2">
+    <!-- Calendar Header -->
+    <div class="flex justify-between items-center mb-4">
+        <!-- Previous month button -->
+        <button id="prevMonth" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean">
+            <i class="fa-solid fa-backward"></i>
+        </button>
+        <!-- Current month button and text -->
+        <div class="text-center">
+            <h1 class="text-3xl font-normal text-clean mb-2" id="currentMonth">April 2024</h1>
+            <button id="currentMonthButton" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean"><i class="fa-solid fa-house"></i></button>
+        </div>
+        <!-- Next month button -->
+        <button id="nextMonth" class="btn btn-outline btn-sm border-clean bg-clean text-charcoal hover:border-charcoal hover:text-charcoal hover:bg-clean">
+            <i class="fa-solid fa-forward"></i>
+        </button>
+    </div>
+    <!-- Day headers -->
+    <div class="grid grid-cols-7">
+        <div class="text-center text-charcoal">Sun</div>
+        <div class="text-center text-charcoal">Mon</div>
+        <div class="text-center text-charcoal">Tue</div>
+        <div class="text-center text-charcoal">Wed</div>
+        <div class="text-center text-charcoal">Thu</div>
+        <div class="text-center text-charcoal">Fri</div>
+        <div class="text-center text-charcoal">Sat</div>
+    </div>
+    <!-- Calendar grid to be filled dynamically-->
+    <div id="calendar" class="grid grid-cols-7 gap-2 rounded-lg p-2">
+    </div>
   </main>
 
   <!-- Footer -->
 
-	<footer class="relative bottom-0 left-0 z-20 w-full p-4 bg-clean shadow md:flex md:items-center md:justify-between md:p-6 border-none">
+	<footer class="relative bottom-0 left-0 z-20 w-full p-4 bg-clean shadow md:flex md:items-center md:justify-between md:p-4 border-none">
 		<span class="text-sm text-charcoal sm:text-center">© 2024. All Rights Reserved.
 		</span>
     <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine"><i class="fa-solid fa-comment"></i></button>
