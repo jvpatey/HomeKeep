@@ -20,12 +20,10 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const messagesCollection = collection(firestore, 'messages');
-const responsesCollection = collection(firestore, 'responses'); // New collection reference
+const responsesCollection = collection(firestore, 'responses');
 
 // Check authentication status
 console.log(auth.currentUser);
-
-// Handle authentication state changes
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("User is logged in:", user);
@@ -35,14 +33,13 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-
 /* ----- Firebase messages via chat ----- */
 
 // Function to send a message to Firestore
 async function sendMessage(message) {
     try {
         await addDoc(messagesCollection, {
-            sender: 'user', // You can replace 'user' with any identifier for the sender
+            sender: 'user',
             content: message,
             timestamp: new Date().toISOString()
         });
@@ -89,7 +86,7 @@ function handleSubmit(event) {
     const messageInput = document.getElementById('messageInput');
     const message = messageInput.value.trim();
     if (message !== '') {
-        sendMessage(message); // Call sendMessage function
+        sendMessage(message);
         messageInput.value = '';
     }
 }
@@ -99,27 +96,28 @@ function handleSubmit(event) {
 let formSubmitted = false;
 
 async function saveFormData() {
-    // Check if the form has already been submitted
+
     if (formSubmitted) {
         return;
     }
 
     const user = auth.currentUser;
-
     if (!user) {
         console.error("No user logged in.");
         return;
     }
 
-    // Set the flag to true to prevent multiple submissions
     formSubmitted = true;
 
     // Extract form data
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
-    const rawStartDate = document.getElementById('startDate').value; // Get raw date value
-    const startDateParts = rawStartDate.split('-'); // Split into parts
+    const rawStartDate = document.getElementById('startDate').value;
+    const startDateParts = rawStartDate.split('-');
     const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
+    const rawEndDate = document.getElementById('endDate').value;
+    const endDateParts = rawEndDate.split('-');
+    const formattedEndDate = `${endDateParts[1]}-${endDateParts[2]}-${endDateParts[0]}`; // Convert to MM-DD-YYYY format
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
@@ -127,28 +125,29 @@ async function saveFormData() {
     const datePattern = /^\d{2}-\d{2}-\d{4}$/;
     if (!datePattern.test(formattedStartDate)) {
         alert("Please enter the start date in the format MM-DD-YYYY.");
-        // Reset the flag to allow resubmission
         formSubmitted = false;
         return;
     }
 
-    // Take month, day, and year from the input
-    const [month, day, year] = formattedStartDate.split('-').map(Number);
-    if (month < 1 || month > 12) {
-        alert("Please enter a valid month (1-12).");
-        // Reset the flag to allow resubmission
+    // Validate the end date format
+    if (!datePattern.test(formattedEndDate)) {
+        alert("Please enter the end date in the format MM-DD-YYYY.");
         formSubmitted = false;
         return;
     }
-    if (day < 1 || day > 31) {
-        alert("Please enter a valid day (1-31).");
-        // Reset the flag to allow resubmission
+
+    // Take month, day, and year from the start date input
+    const [startMonth, startDay, startYear] = formattedStartDate.split('-').map(Number);
+    if (startMonth < 1 || startMonth > 12 || startDay < 1 || startDay > 31 || startYear < 1900 || startYear > 2100) {
+        alert("Please enter a valid start date (MM-DD-YYYY).");
         formSubmitted = false;
         return;
     }
-    if (year < 1900 || year > 2100) {
-        alert("Please enter a valid year (1900-2100).");
-        // Reset the flag to allow resubmission
+
+    // Take month, day, and year from the end date input
+    const [endMonth, endDay, endYear] = formattedEndDate.split('-').map(Number);
+    if (endMonth < 1 || endMonth > 12 || endDay < 1 || endDay > 31 || endYear < 1900 || endYear > 2100) {
+        alert("Please enter a valid end date (MM-DD-YYYY).");
         formSubmitted = false;
         return;
     }
@@ -158,24 +157,22 @@ async function saveFormData() {
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
-            startDate: formattedStartDate, // Use formatted start date
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
             interval: interval,
             description: description
         });
         console.log("Document successfully written!");
 
         // Call displayTasks to update the table with the new task
-        displayTasks(user, currentYear, currentMonth);
+        displayTasks();
 
         // Reset form and close modal
         document.getElementById('addTaskForm').reset();
         document.getElementById('addTaskModal').close();
-        // Call displayTasks to update the table with the new task
-        displayTasks();
     } catch (error) {
         console.error("Error writing document: ", error);
     } finally {
-        // Reset the flag after the operation is complete
         formSubmitted = false;
     }
 }
@@ -186,7 +183,6 @@ document.addEventListener('click', function(event) {
         saveFormData();
     }
 });
-
 
 // Event listener for submit button on add task form
 document.addEventListener('click', function(event) {
@@ -199,7 +195,6 @@ document.addEventListener('click', function(event) {
     }
 });
 
-// function to display tasks to calendar that are stored in firestore
 async function displayTasks(user, year, month) {
     try {
         if (!user) {
@@ -222,10 +217,16 @@ async function displayTasks(user, year, month) {
 
             const startDateTimestamp = new Date(task.startDate).getTime();
             const interval = parseInt(task.interval);
+            const endDate = task.endDate ? new Date(task.endDate).getTime() : null;
 
             // Calculate the next occurrence date
             let nextOccurrenceDate = new Date(startDateTimestamp);
             while (nextOccurrenceDate <= new Date(year, month + 1, 0)) {
+                // Check if the task exceeds the end date (if available)
+                if (endDate && nextOccurrenceDate > endDate) {
+                    break;
+                }
+
                 if (nextOccurrenceDate.getFullYear() === year && nextOccurrenceDate.getMonth() === month) {
                     const formattedDate = nextOccurrenceDate.toISOString().slice(0, 10);
                     const dayOfMonth = nextOccurrenceDate.getDate();
@@ -251,28 +252,29 @@ async function displayTasks(user, year, month) {
                         eventContainer.appendChild(eventBlock);
                     }
                 }
-
                 // Move to the next occurrence date
                 nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
             }
         });
-            // Add scrollbar to date block if needed
-            setTimeout(() => {
-                const eventContainers = document.querySelectorAll('.event-container');
-                eventContainers.forEach(container => {
-                    if (container.scrollHeight > 60) {
-                        container.style.overflowY = 'auto';
-                        container.style.scrollbarBackgroundColor = 'transparent'; // Apply the CSS to set scrollbar background transparent
-                    } else {
-                        container.style.overflowY = 'hidden';
-                    }
-                });
-            }, 100);
+
+        // Add scrollbar to date block if needed
+        setTimeout(() => {
+            const eventContainers = document.querySelectorAll('.event-container');
+            eventContainers.forEach(container => {
+                if (container.scrollHeight > 60) {
+                    container.style.overflowY = 'auto';
+                    container.style.scrollbarBackgroundColor = 'transparent';
+                } else {
+                    container.style.overflowY = 'hidden';
+                }
+            });
+        }, 100);
 
     } catch (error) {
         console.error("Error fetching tasks: ", error);
     }
 }
+
 
 /* ------ Calendar functionality ------ */
 
@@ -371,8 +373,6 @@ const renderCalendar = (user) => {
 
         calendarGrid.innerHTML += dateBlock;
     }
-
-    // Call displayTasks only if user object is defined
     if (user) {
         displayTasks(user, currentYear, currentMonth);
     }
@@ -470,7 +470,7 @@ fetch('modals.html')
 // Function to initialize modals
 function initializeModals() {
     var addTaskModal = document.getElementById('addTaskModal');
-    var chatForm = document.getElementById('chatForm'); // Get the chatForm
+    var chatForm = document.getElementById('chatForm');
 
     if (addTaskModal && chatForm) {
         document.getElementById('addTaskButton').addEventListener('click', function() {
@@ -499,9 +499,9 @@ function showAddTaskModal() {
 function toggleChatModal() {
     var chatModal = document.getElementById("chatModal");
     if (chatModal.style.display === "block") {
-        chatModal.style.display = "none"; // Close the modal
+        chatModal.style.display = "none";
     } else {
-        chatModal.style.display = "block"; // Open the modal
+        chatModal.style.display = "block";
     }
 }
 

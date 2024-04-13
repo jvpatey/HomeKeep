@@ -24,8 +24,6 @@ const responsesCollection = collection(firestore, 'responses'); // New collectio
 
 // Check authentication status
 console.log(auth.currentUser);
-
-// Handle authentication state changes
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("User is logged in:", user);
@@ -41,7 +39,7 @@ auth.onAuthStateChanged(user => {
 async function sendMessage(message) {
     try {
         await addDoc(messagesCollection, {
-            sender: 'user', // You can replace 'user' with any identifier for the sender
+            sender: 'user',
             content: message,
             timestamp: new Date().toISOString()
         });
@@ -88,7 +86,7 @@ function handleSubmit(event) {
     const messageInput = document.getElementById('messageInput');
     const message = messageInput.value.trim();
     if (message !== '') {
-        sendMessage(message); // Call sendMessage function
+        sendMessage(message);
         messageInput.value = '';
     }
 }
@@ -99,13 +97,12 @@ let formSubmitted = false;
 
 // Function to save task data to Firestore
 async function saveFormData() {
-    // Check if the form has already been submitted
+
     if (formSubmitted) {
         return;
     }
 
     const user = auth.currentUser;
-
     if (!user) {
         console.error("No user logged in.");
         return;
@@ -117,9 +114,12 @@ async function saveFormData() {
     // Extract form data
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
-    const rawStartDate = document.getElementById('startDate').value; // Get raw date value
-    const startDateParts = rawStartDate.split('-'); // Split into parts
+    const rawStartDate = document.getElementById('startDate').value;
+    const startDateParts = rawStartDate.split('-');
     const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
+    const rawEndDate = document.getElementById('endDate').value; 
+    const endDateParts = rawEndDate.split('-');
+    const formattedEndDate = `${endDateParts[1]}-${endDateParts[2]}-${endDateParts[0]}`; // Convert to MM-DD-YYYY format
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
@@ -127,28 +127,49 @@ async function saveFormData() {
     const datePattern = /^\d{2}-\d{2}-\d{4}$/;
     if (!datePattern.test(formattedStartDate)) {
         alert("Please enter the start date in the format MM-DD-YYYY.");
-        // Reset the flag to allow resubmission
         formSubmitted = false;
         return;
     }
 
-    // Take month, day, and year from the input
-    const [month, day, year] = formattedStartDate.split('-').map(Number);
-    if (month < 1 || month > 12) {
-        alert("Please enter a valid month (1-12).");
-        // Reset the flag to allow resubmission
+    // Validate the end date format
+    if (!datePattern.test(formattedEndDate)) {
+        alert("Please enter the end date in the format MM-DD-YYYY.");
         formSubmitted = false;
         return;
     }
-    if (day < 1 || day > 31) {
-        alert("Please enter a valid day (1-31).");
-        // Reset the flag to allow resubmission
+
+    // Take month, day, and year from the input for start date
+    const [startMonth, startDay, startYear] = formattedStartDate.split('-').map(Number);
+    if (startMonth < 1 || startMonth > 12) {
+        alert("Please enter a valid start month (1-12).");
         formSubmitted = false;
         return;
     }
-    if (year < 1900 || year > 2100) {
-        alert("Please enter a valid year (1900-2100).");
-        // Reset the flag to allow resubmission
+    if (startDay < 1 || startDay > 31) {
+        alert("Please enter a valid start day (1-31).");
+        formSubmitted = false;
+        return;
+    }
+    if (startYear < 1900 || startYear > 2100) {
+        alert("Please enter a valid start year (1900-2100).");
+        formSubmitted = false;
+        return;
+    }
+
+    // Take month, day, and year from the input for end date
+    const [endMonth, endDay, endYear] = formattedEndDate.split('-').map(Number);
+    if (endMonth < 1 || endMonth > 12) {
+        alert("Please enter a valid end month (1-12).");
+        formSubmitted = false;
+        return;
+    }
+    if (endDay < 1 || endDay > 31) {
+        alert("Please enter a valid end day (1-31).");
+        formSubmitted = false;
+        return;
+    }
+    if (endYear < 1900 || endYear > 2100) {
+        alert("Please enter a valid end year (1900-2100).");
         formSubmitted = false;
         return;
     }
@@ -158,20 +179,19 @@ async function saveFormData() {
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
-            startDate: formattedStartDate, // Use formatted start date
+            startDate: formattedStartDate,
+            endDate: formattedEndDate,
             interval: interval,
             description: description
         });
         console.log("Document successfully written!");
-        // Reset form and close modal
         document.getElementById('addTaskForm').reset();
         document.getElementById('addTaskModal').close();
-        // Call displayTasks to update the table with the new task
         displayTasks();
+
     } catch (error) {
         console.error("Error writing document: ", error);
     } finally {
-        // Reset the flag after the operation is complete
         formSubmitted = false;
     }
 }
@@ -183,6 +203,12 @@ document.addEventListener('click', function(event) {
     }
 });
 
+// Add event listener for submit button on add task form
+document.addEventListener('click', function(event) {
+    if (event.target && event.target.id === 'submitTaskButton') {
+        saveFormData();
+    }
+});
 
 // Function to populate the edit task modal with data from the corresponding row
 function populateEditTaskModal(taskData) {
@@ -190,6 +216,7 @@ function populateEditTaskModal(taskData) {
     editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
     editTaskForm.querySelector('#editCategory').value = taskData.category;
     editTaskForm.querySelector('#editStartDate').value = taskData.startDate;
+    editTaskForm.querySelector('#editEndDate').value = taskData.endDate;
     editTaskForm.querySelector('#editInterval').value = taskData.interval;
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 }
@@ -202,8 +229,10 @@ async function updateTask(taskData, docRef, row) {
         row.children[0].textContent = taskData.taskName;
         row.children[1].textContent = taskData.category;
         row.children[2].textContent = taskData.startDate;
-        row.children[3].textContent = taskData.interval;
-        row.children[4].textContent = taskData.description;
+        row.children[3].textContent = taskData.endDate;
+        row.children[4].textContent = taskData.interval;
+        row.children[5].textContent = taskData.description;
+
     } catch (error) {
         console.error("Error updating document: ", error);
     }
@@ -211,12 +240,10 @@ async function updateTask(taskData, docRef, row) {
 
 // Function to fetch and display task data from Firestore
 async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
-    // Get the currently logged-in user
     const user = auth.currentUser;
     if (!user) {
         return;
     }
-
     try {
         const taskTableBody = document.getElementById('taskTableBody');
         // Clear existing table rows
@@ -226,9 +253,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
         const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
 
         if (querySnapshot.empty) {
-            // Append a row with the message "No tasks entered yet"
+            // Append a row with the message "No tasks entered yet if no data"
             const emptyRow = document.createElement('tr');
-            emptyRow.innerHTML = '<td colspan="7" class="text-center py-4">No tasks entered yet</td>';
+            emptyRow.innerHTML = '<td colspan="8" class="text-center py-4">No tasks entered yet</td>';
             taskTableBody.appendChild(emptyRow);
         } else {
             // Convert querySnapshot to an array of tasks
@@ -237,7 +264,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 tasks.push({ id: doc.id, ...doc.data() });
             });
 
-            // Sort tasks by name and start date
+            // Sort functions to sort tasks by name and startdate
             if (sortByTaskName) {
                 tasks.sort((a, b) => a.taskName.localeCompare(b.taskName));
             } else if (sortByStartDate) {
@@ -251,13 +278,14 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     <td>${task.taskName}</td>
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
+                    <td>${task.endDate}</td> <!-- Include end date -->
                     <td>${task.interval}</td>
                     <td>${task.description}</td>
                     <td></td>
                     <td></td>
                 `;
 
-                // DaisyUI toggle switch for cell 5
+                // DaisyUI toggle switch for cell 6
                 const toggleSwitchContainer = document.createElement('div');
                 toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center');
 
@@ -272,9 +300,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 toggleSwitchContainer.appendChild(toggleSwitchInput);
                 toggleSwitchContainer.appendChild(toggleSwitchMark);
 
-                row.children[5].appendChild(toggleSwitchContainer);
+                row.children[6].appendChild(toggleSwitchContainer);
 
-                // Flex container for icons in cell 6
+                // Flex container for icons in cell 7
                 const iconsContainer = document.createElement('div');
                 iconsContainer.classList.add('flex', 'items-center');
 
@@ -287,13 +315,13 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 // Font Awesome pencil icon
                 const pencilIcon = document.createElement('i');
                 pencilIcon.className = 'fas fa-pencil-alt';
-                pencilIcon.classList.add('hover:text-orange');
+                pencilIcon.classList.add('hover:text-marine', 'text-lg', 'mr-2');
                 editLink.appendChild(pencilIcon);
 
                 // Font Awesome garbage can icon
                 const garbageIcon = document.createElement('i');
                 garbageIcon.className = 'fas fa-trash-alt';
-                garbageIcon.classList.add('hover:text-orange');
+                garbageIcon.classList.add('hover:text-marine', 'text-lg', 'mr-2');
                 garbageIcon.addEventListener('click', async () => {
                     try {
                         // Capture the doc reference for deletion
@@ -308,7 +336,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 });
 
                 iconsContainer.appendChild(garbageIcon);
-                row.children[6].appendChild(iconsContainer);
+                row.children[7].appendChild(iconsContainer);
 
                 // Add event listener to the pencil icon
                 pencilIcon.addEventListener('click', async () => {
@@ -316,8 +344,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                         taskName: row.children[0].textContent,
                         category: row.children[1].textContent,
                         startDate: row.children[2].textContent,
-                        interval: row.children[3].textContent,
-                        description: row.children[4].textContent
+                        endDate: row.children[3].textContent,
+                        interval: row.children[4].textContent,
+                        description: row.children[5].textContent
                     };
                     // Populate the edit task modal with data from the corresponding row
                     populateEditTaskModal(taskData);
@@ -332,6 +361,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                             taskName: editTaskForm.querySelector('#editTaskName').value,
                             category: editTaskForm.querySelector('#editCategory').value,
                             startDate: editTaskForm.querySelector('#editStartDate').value,
+                            endDate: editTaskForm.querySelector('#editEndDate').value,
                             interval: editTaskForm.querySelector('#editInterval').value,
                             description: editTaskForm.querySelector('#editDescription').value
                         };
@@ -378,7 +408,7 @@ function loadModals() {
 function initializeModals() {
     var addTaskModal = document.getElementById('addTaskModal');
     var editTaskModal = document.getElementById('editTaskModal');
-    var chatForm = document.getElementById('chatForm'); // Get the chatForm
+    var chatForm = document.getElementById('chatForm');
 
     if (addTaskModal && editTaskModal && chatForm) {
         document.getElementById('addTaskButton').addEventListener('click', function() {
@@ -393,7 +423,6 @@ function initializeModals() {
         } else {
             console.error("One or more modals or signup form not found in the loaded content.");
         }
-    
 }
 
 // Function to show the add task modal
@@ -407,16 +436,15 @@ function showAddTaskModal() {
 function toggleChatModal() {
     var chatModal = document.getElementById("chatModal");
     if (chatModal.style.display === "block") {
-        chatModal.style.display = "none"; // Close the modal
+        chatModal.style.display = "none";
     } else {
-        chatModal.style.display = "block"; // Open the modal
+        chatModal.style.display = "block";
     }
 }
 
 const testNotificationApi = () => {
     fetch("http://127.0.0.1:5001/homekeep-x/us-central1/notify");
 }
-
 
 // Add event listeners to show modals
 document.getElementById('addTaskButton').addEventListener('click', showAddTaskModal);
@@ -451,7 +479,6 @@ document.getElementById('startDateHeader').addEventListener('click', () => {
     } else {
         sortButton.innerHTML = '▼';
     }
-
     displayTasks(false, !isDescending);
 });
 

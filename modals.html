@@ -1,22 +1,31 @@
  <!-- HTML file to contain modals -->
- 
- <!-- DaisyUI add-task form modal -->
- <dialog id="addTaskModal" class="modal">
+
+<!-- DaisyUI add-task form modal -->
+<dialog id="addTaskModal" class="modal">
     <div class="modal-box bg-clean p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
         <form id="addTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
             <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Add a Task</h1>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
-                <input id="taskName" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
+                <input id="taskName" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
             </label>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
-                <input id="category" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Category" />
+                <input id="category" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Category" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
-                <input id="startDate" type="date" class="grow text-charcoal placeholder-charcoal" placeholder="Start Date" pattern="\d{2}-\d{2}-\d{4}" required />
-            </label>
+            <div class="flex items-center gap-2 mb-2">
+                <label class="text-charcoal">Start Date:</label>
+                <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
+                    <input id="startDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Start Date" pattern="\d{2}-\d{2}-\d{4}" required />
+                </label>
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+                <label class="text-charcoal mr-2">End Date:</label>
+                <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
+                    <input id="endDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="End Date" pattern="\d{2}-\d{2}-\d{4}" />
+                </label>
+            </div>
             <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine">
-                <input id="interval" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
+                <input id="interval" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
             </label>
             <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-clean gap-2 text-charcoal border-marine placeholder-charcoal" placeholder="Maintenance Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center">
@@ -25,6 +34,9 @@
         </form>
     </div>
 </dialog>
+
+
+
 
 <!-- DaisyUI task details modal -->
 <dialog id="taskDetailsModal" class="modal">
@@ -72,6 +84,9 @@
                 </label>
                 <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
                     <input id="editStartDate" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Start Date" />
+                </label>
+                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
+                    <input id="editEndDate" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance End Date" />
                 </label>
                 <label class="input input-bordered flex items-center gap-2 bg-clean border-marine">
                     <input id="editInterval" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />

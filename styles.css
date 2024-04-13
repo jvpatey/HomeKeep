@@ -1,7 +1,7 @@
 /* Logo Styles */
 .logo {
-    font-size: 1.75rem;
-    background-image: linear-gradient(to right, #57BC90, #77C9D4);
+    font-size: 2rem;
+    background-image: linear-gradient(to right, #57BC90, #27bfd3);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;

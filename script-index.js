@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
 const messagesCollection = collection(firestore, 'messages');
-const responsesCollection = collection(firestore, 'responses'); // New collection reference
+const responsesCollection = collection(firestore, 'responses');
 
 // Check authentication status
 console.log(auth.currentUser);
@@ -40,7 +40,7 @@ auth.onAuthStateChanged(user => {
 async function sendMessage(message) {
     try {
         await addDoc(messagesCollection, {
-            sender: 'user', // You can replace 'user' with any identifier for the sender
+            sender: 'user',
             content: message,
             timestamp: new Date().toISOString()
         });
@@ -87,7 +87,7 @@ function handleSubmit(event) {
     const messageInput = document.getElementById('messageInput');
     const message = messageInput.value.trim();
     if (message !== '') {
-        sendMessage(message); // Call sendMessage function
+        sendMessage(message);
         messageInput.value = '';
     }
 }
@@ -132,7 +132,6 @@ document.getElementById("loginEmailPassword").addEventListener("click", function
 document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
     event.preventDefault();
     
-    // Prompt user to enter their email
     const email = prompt("Please enter your email address to reset your password:");
     
     if (email) {
@@ -152,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById("loginGoogleBtn").addEventListener("click", signInWithGoogle);
 });
 
-/* Javascript to handle fetching and displaying modals */
+/* -----Javascript to handle fetching and displaying modals------ */
 
 // Function to load modal content from modals.html
 function loadModals() {
@@ -177,7 +176,7 @@ function loadModals() {
 function initializeModals() {
     var createAccountModal = document.getElementById('createAccountModal');
     var signupForm = document.getElementById('signupForm');
-    var chatForm = document.getElementById('chatForm'); // Get the chatForm
+    var chatForm = document.getElementById('chatForm');
 
     if (createAccountModal && signupForm && chatForm) {
         document.getElementById('createAccountLink').addEventListener('click', function() {
@@ -226,9 +225,9 @@ function showCreateAccountModal() {
 function toggleChatModal() {
     var chatModal = document.getElementById("chatModal");
     if (chatModal.style.display === "block") {
-        chatModal.style.display = "none"; // Close the modal
+        chatModal.style.display = "none";
     } else {
-        chatModal.style.display = "block"; // Open the modal
+        chatModal.style.display = "block";
     }
 }
 
