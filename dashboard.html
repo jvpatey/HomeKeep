@@ -68,27 +68,26 @@
 
     <!-- Table with sample data -->
 
-    <div class="px-8" style="height: calc(100vh - 256px); overflow-y: auto;">
-      <table class="table bg-grey" id="taskTable">
+    <div class="px-8 bg-clean" style="height: calc(100vh - 256px); overflow-y: auto;">
+      <table class="table border bg-paper border-charcoal shadow-xl" id="taskTable">
         <thead class="text-charcoal text-lg">
           <tr>
-            <th class="font-normal hover:text-marine" id="taskNameHeader">Task <button id="sortTasksButton" class="btn-sort hover:text-marine">▼</button></th>
-            <th class="font-normal">Category</th>
-            <th class="font-normal hover:text-marine" id="startDateHeader">Start Date <button id="sortTasksByStartDateButton" class="btn-sort hover:text-marine">▼</button></th>
-            <th class="font-normal">Interval</th>
-            <th class="font-normal">Description</th>
-            <th class="font-normal">Notifications</th>
-            <th></th>
+            <th class="font-normal hover:text-marine border-charcoal" id="taskNameHeader">Task <button id="sortTasksButton" class="btn-sort hover:text-marine">▼</button></th>
+            <th class="font-normal border-charcoal">Category</th>
+            <th class="font-normal hover:text-marine border-charcoal" id="startDateHeader">Start Date <button id="sortTasksByStartDateButton" class="btn-sort hover:text-marine">▼</button></th>
+            <th class="font-normal border-charcoal">Interval</th>
+            <th class="font-normal border-charcoal">Description</th>
+            <th class="font-normal border-charcoal">Notifications</th>
+            <th class="border-charcoal"></th>
           </tr>
         </thead>
         <tbody class="text-charcoal" id="taskTableBody">
           <!-- empty row -->
-          <tr class="empty-row">
+          <tr class="empty-row border-charcoal">
           </tr>
         </tbody>
       </table>
     </div>
-  </main>
 
   <!-- Footer -->
   

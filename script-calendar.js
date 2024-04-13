@@ -256,18 +256,18 @@ async function displayTasks(user, year, month) {
                 nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
             }
         });
-
-        // Add scrollbar to date block if needed
-        setTimeout(() => {
-            const eventContainers = document.querySelectorAll('.event-container');
-            eventContainers.forEach(container => {
-                if (container.scrollHeight > 60) {
-                    container.style.overflowY = 'auto';
-                } else {
-                    container.style.overflowY = 'hidden';
-                }
-            });
-        }, 100);
+            // Add scrollbar to date block if needed
+            setTimeout(() => {
+                const eventContainers = document.querySelectorAll('.event-container');
+                eventContainers.forEach(container => {
+                    if (container.scrollHeight > 60) {
+                        container.style.overflowY = 'auto';
+                        container.style.scrollbarBackgroundColor = 'transparent'; // Apply the CSS to set scrollbar background transparent
+                    } else {
+                        container.style.overflowY = 'hidden';
+                    }
+                });
+            }, 100);
 
     } catch (error) {
         console.error("Error fetching tasks: ", error);
@@ -363,10 +363,10 @@ const renderCalendar = (user) => {
         const dateString = getDateString(i, currentMonth, currentYear);
         const currentDate = new Date(currentYear, currentMonth, i);
 
-        let dateBlock = `<div class="date-block border h-16 text-center text-clean border-clean rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
+        let dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
 
         if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate()) {
-            dateBlock = `<div class="date-block border h-16 text-center text-clean border-clean rounded-md current-day" data-date="${dateString}" data-day="${i}">${i}</div>`;
+            dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md current-day" data-date="${dateString}" data-day="${i}">${i}</div>`;
         }
 
         calendarGrid.innerHTML += dateBlock;
