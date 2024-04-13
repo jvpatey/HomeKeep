@@ -1,22 +1,26 @@
-/* -----Firebase Initialization----- */
+/* ----- Firebase Initialization ----- */
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
-import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, onSnapshot, query, orderBy } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js';
 
-// Firebase Config
+// Firbase config
 const firebaseConfig = {
-  apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
-  authDomain: "homekeep-x.firebaseapp.com",
-  projectId: "homekeep-x",
-  storageBucket: "homekeep-x.appspot.com",
-  messagingSenderId: "142689184811",
-  appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
-};
+    apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
+    authDomain: "homekeep-x.firebaseapp.com",
+    projectId: "homekeep-x",
+    storageBucket: "homekeep-x.appspot.com",
+    messagingSenderId: "142689184811",
+    appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
+  };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const firestore = getFirestore(app);
+const messagesCollection = collection(firestore, 'messages');
+const responsesCollection = collection(firestore, 'responses'); // New collection reference
 
 // Check authentication status
 console.log(auth.currentUser);
@@ -29,6 +33,64 @@ auth.onAuthStateChanged(user => {
         console.log("No user logged in.");
     }
 });
+
+/* ----- Firebase messages via chat ----- */
+
+// Function to send a message to Firestore
+async function sendMessage(message) {
+    try {
+        await addDoc(messagesCollection, {
+            sender: 'user', // You can replace 'user' with any identifier for the sender
+            content: message,
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        console.error("Error sending message:", error);
+    }
+}
+
+// Function to handle receiving messages from Firestore
+function receiveMessage(snapshot) {
+    snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+            const message = change.doc.data();
+            const messagesContainer = document.getElementById('messagesContainer');
+            const messageElement = document.createElement('div');
+            messageElement.textContent = message.sender + ': ' + message.content;
+            messagesContainer.appendChild(messageElement);
+        }
+    });
+}
+
+// Listen for new messages from Firestore
+onSnapshot(messagesCollection, receiveMessage);
+
+// Function to handle receiving response messages from Firestore
+function receiveResponse(snapshot) {
+    snapshot.docChanges().forEach((change) => {
+        if (change.type === 'added') {
+            const response = change.doc.data();
+            const messagesContainer = document.getElementById('messagesContainer');
+            const responseElement = document.createElement('div');
+            responseElement.textContent = response.sender + ': ' + response.content;
+            messagesContainer.appendChild(responseElement);
+        }
+    });
+}
+
+// Listen for new response messages from Firestore
+onSnapshot(responsesCollection, receiveResponse);
+
+// Function to handle form submission
+function handleSubmit(event) {
+    event.preventDefault();
+    const messageInput = document.getElementById('messageInput');
+    const message = messageInput.value.trim();
+    if (message !== '') {
+        sendMessage(message); // Call sendMessage function
+        messageInput.value = '';
+    }
+}
 
 /* -----Firebase Auth----- */
 
@@ -114,22 +176,12 @@ function loadModals() {
 // Function to initialize modals and sign up form in create account modal
 function initializeModals() {
     var createAccountModal = document.getElementById('createAccountModal');
-    var helpModal = document.getElementById('helpRequestModal');
     var signupForm = document.getElementById('signupForm');
+    var chatForm = document.getElementById('chatForm'); // Get the chatForm
 
-    if (createAccountModal && helpModal && signupForm) {
+    if (createAccountModal && signupForm && chatForm) {
         document.getElementById('createAccountLink').addEventListener('click', function() {
             createAccountModal.showModal();
-        });
-
-        document.getElementById('helpFooterLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            helpModal.showModal();
-        });
-
-        document.getElementById('helpLink').addEventListener('click', function(event) {
-            event.preventDefault();
-            helpModal.showModal();
         });
 
         // Event listener for create account form submission
@@ -154,10 +206,14 @@ function initializeModals() {
                     alert(error.message);
                 });
         });
+
+        // Event listener for chat form submission
+        chatForm.addEventListener('submit', handleSubmit);
     } else {
         console.error("One or more modals or signup form not found in the loaded content.");
     }
 };
+
 
 // Function to show the create account modal
 function showCreateAccountModal() {
@@ -167,17 +223,18 @@ function showCreateAccountModal() {
     }
 }
 
-// Function to show the help modal
-function showHelpModal() {
-    var helpModal = document.getElementById('helpRequestModal');
-    if (helpModal) {
-        helpModal.showModal();
+function toggleChatModal() {
+    var chatModal = document.getElementById("chatModal");
+    if (chatModal.style.display === "block") {
+        chatModal.style.display = "none"; // Close the modal
+    } else {
+        chatModal.style.display = "block"; // Open the modal
     }
 }
+
 // Add event listeners to show modals
 document.getElementById('createAccountLink').addEventListener('click', showCreateAccountModal);
-document.getElementById('helpFooterLink').addEventListener('click', showHelpModal);
-document.getElementById('helpLink').addEventListener('click', showHelpModal);
+document.getElementById("chatIcon").addEventListener("click", toggleChatModal)
 
 //call load modals function
 document.addEventListener('DOMContentLoaded', function() {

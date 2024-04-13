@@ -26,35 +26,6 @@
     </div>
 </dialog>
 
-<!-- DaisyUI help request modal -->
-<dialog id="helpRequestModal" class="modal">
-    <div class="modal-box bg-forest p-1 rounded-lg">
-        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('helpRequestModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-forest rounded-md">
-            <div class="w-full max-w-lg bg-forest rounded-md">
-              <form class="card-body">
-                <h1 class="text-left p-2 text-2xl mb-5 font-light text-clean border-b border-clean">Help Request</h1>
-                <div class="form-control">
-                  <input type="text" placeholder="first name" class="input input-bordered bg-clean text-forest placeholder-forest" required />
-                </div>
-                <div class="form-control">
-                  <input type="text" placeholder="last name" class="input input-bordered bg-clean text-forest placeholder-forest" required />
-                </div>
-                <div class="form-control">
-                  <input type="email" placeholder="email" class="input input-bordered bg-clean text-forest placeholder-forest" required />
-                </div>
-                <div class="form-control">
-                  <textarea class="text-base w-full textarea textarea-bordered gap-2 mb-2 bg-clean text-forest placeholder-forest" placeholder="message"></textarea>
-                </div>
-                <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                  <button class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
-                </div>
-              </form>
-            </div>
-          </div>
-    </div>
-</dialog>
-
 <!-- DaisyUI task details modal -->
 <dialog id="taskDetailsModal" class="modal">
     <div class="modal-box bg-clean p-4 rounded-lg">
@@ -94,18 +65,18 @@
             <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Edit a Task</h1>
             <form id="editTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
                 <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                    <input id="editTaskName" type="text" class="grow text-charcoal placeholder-forest" placeholder="Task Name" />
+                    <input id="editTaskName" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
                 </label>
                 <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                    <input id="editCategory" type="text" class="grow text-forest placeholder-forest" placeholder="Category" />
+                    <input id="editCategory" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Category" />
                 </label>
                 <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                    <input id="editStartDate" type="text" class="grow text-forest placeholder-forest" placeholder="Maintenance Start Date" />
+                    <input id="editStartDate" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Start Date" />
                 </label>
                 <label class="input input-bordered flex items-center gap-2 bg-clean border-marine">
-                    <input id="editInterval" type="text" class="grow text-forest placeholder-forest" placeholder="Maintenance Interval (days)" />
+                    <input id="editInterval" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
                 </label>
-                <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-forest placeholder-forest gap-2 bg-clean border-marine" placeholder="Maintenace Description"></textarea>
+                <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal placeholder-charcoal gap-2 bg-clean border-marine" placeholder="Maintenace Description"></textarea>
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
                     <button id="editSubmitBtn" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
                 </div>
@@ -141,3 +112,19 @@
         </div>
     </div>
   </dialog>
+
+<!-- Chat Modal -->
+<div id="chatModal" class="chat-popup bottom-24 rounded-xl">
+    <form id="chatForm" class="form-container bg-paper">
+        <h1 class="text-xl font-bold text-feather pb-2">Help</h1>
+        <label class="text-md text-charcoal" for="msg">Message: </label>
+        <input id="messageInput" class="text-base w-full input input-bordered border-marine gap-2 mb-2 bg-paper text-charcoal placeholder-charcoal resize-none h-12" type="text" placeholder="Type message.." name="msg" required></input>
+        <label class="text-md text-charcoal" for="msg">Response: </label>
+        <input id="messagesContainer" class="text-base w-full input input-bordered border-marine gap-2 mb-2 bg-paper text-charcoal resize-none h-48" type="text"></input>
+        <button type="submit" class="btn bg-marine">Send</button>
+    </form>
+</div>
+
+
+
+

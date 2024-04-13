@@ -14,6 +14,7 @@
             extend: {
               colors: {
                 clean: '#E7DFDD',
+                paper:'#E9E9E9',
                 feather: '#77C9D4',
                 marine: '#57BC90',
                 forest: '#015249',
@@ -48,7 +49,6 @@
 
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-marine rounded-box w-52 right-0">
           <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
-          <li><a href="#" id="helpLink" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-question mr-2"></i>Help</a></li>
         </ul>
       </div>
     </div>
@@ -90,14 +90,10 @@
 
   <!-- Footer -->
   
-  <footer class="fixed bottom-0 left-0 z-0 w-full p-4 shadow md:flex md:items-center md:justify-between md:p-6">
-    <span class="text-sm text-charcoal sm:text-center">© 2024 <a href="https://flowbite.com/" class="hover:underline">HomeKeep™</a>. All Rights Reserved.
-    </span>
-    <ul class="flex flex-wrap items-center mt-3 text-sm font-medium sm:mt-0">
-      <li>
-        <a id="helpFooterLink" href="#" class="text-charcoal hover:underline me-4 md:me-6">Help</a>
-    </li>
-    </ul>
+  <footer class="fixed bottom-0 left-0 z-0 w-full bg-clean border-t border-clean shadow md:flex md:items-center md:justify-between md:p-6">
+      <span class="text-md font-normal text-charcoal sm:text-center">© 2024 All Rights Reserved.
+      </span>
+      <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine"><i class="fa-solid fa-comment"></i></button>
   </footer>
 
   <script src="script.js" type="module"></script>
