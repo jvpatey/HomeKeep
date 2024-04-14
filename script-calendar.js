@@ -165,7 +165,7 @@ async function saveFormData() {
         console.log("Document successfully written!");
 
         // Call displayTasks to update the table with the new task
-        displayTasks();
+        displayTasks(user, currentYear, currentMonth);
 
         // Reset form and close modal
         document.getElementById('addTaskForm').reset();
@@ -354,6 +354,7 @@ const renderCalendar = (user) => {
 
     const today = new Date();
     const currentDay = today.getDate();
+    const currentYearInt = today.getFullYear(); // Get the current year
 
     calendarGrid.innerHTML = '';
 
@@ -370,7 +371,8 @@ const renderCalendar = (user) => {
                             </div>
                         </div>`;
 
-        if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate()) {
+        // Check if the current date belongs to the current year
+        if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate() && currentYear === currentYearInt) {
             dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md current-day" data-date="${dateString}" data-day="${i}">
                             <div class="day-info">
                                 <span class="day-of-week">${dayOfWeek}</span>
@@ -385,7 +387,7 @@ const renderCalendar = (user) => {
         displayTasks(user, currentYear, currentMonth);
     }
 };
-                    
+                                    
                     
 //event listeners for calendar buttons
 
