@@ -2,243 +2,286 @@
 
 /* Logo Styling - Gradient */
 .logo {
-    font-size: 2rem;
-    background-image: linear-gradient(to right, #57BC90, #27bfd3);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    display: inline-block;
-    transition: font-size 0.3s ease, margin-left 0.3s ease, font-weight 0.3s ease;
-    font-weight: bold;
-    margin-left: 10px;
+  font-size: 2rem;
+  background-image: linear-gradient(to right, #57BC90, #27bfd3);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  display: inline-block;
+  transition: font-size 0.3s ease, margin-left 0.3s ease, font-weight 0.3s ease;
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 /* Logo Styling - Gradient Hover */
 .logo:hover {
-    font-size: 2.5xl;
-    background-image: linear-gradient(to right, #77C9D4, #57BC90);
-    cursor: pointer;
-    font-weight: bold;
-    margin-left: 20px;
+  font-size: 2.5xl;
+  background-image: linear-gradient(to right, #77C9D4, #57BC90);
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 20px;
 }
 
 /* Style for date block in calendar */
 .date-block {
-    min-height: 6rem;
-    min-width: 6rem;
-    border: 1px solid #ccc;
-    text-align: center;
-    line-height: 1.5;
-    border-radius: 0.25rem;
+  min-height: 6rem;
+  min-width: 6rem;
+  border: 1px solid #ccc;
+  text-align: center;
+  line-height: 1.5;
+  border-radius: 0.25rem;
 }
 /* Style for task block in calendar */
 .event-block {
-    margin: 2px;
-    max-width: calc(100% - 4px);
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    font-size: 14px;
+  margin: 2px;
+  max-width: calc(100% - 4px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 14px;
 }
 
 .event-container {
-    max-height: 60px; 
-    overflow-y: auto; 
+  max-height: 60px; 
+  overflow-y: auto; 
 }
 
 /* Button used to open the chat form - fixed at the bottom of the page */
 .open-button {
-    background-color: #555;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    opacity: 0.8;
-    position: fixed;
-    bottom: 23px;
-    right: 28px;
-    width: 280px;
-  }
-  
-  /* The popup chat - hidden by default */
-  .chat-popup {
-    display: none;
-    position: fixed;
-    bottom: 0;
-    right: 15px;
-    border: 3px solid #f1f1f1;
-    z-index: 9;
-  }
-  
-  /* Add styles to the chat form container */
-  .form-container {
-    max-width: 300px;
-    padding: 10px;
-    background-color: white;
-  }
-  
-  /* Full-width chat form textarea */
-  .form-container textarea {
-    width: 100%;
-    padding: 15px;
-    margin: 5px 0 22px 0;
-    border: none;
-    background: #f1f1f1;
-    resize: none;
-    min-height: 200px;
-  }
-  
-  /* When the textarea gets focus, do something */
-  .form-container textarea:focus {
-    background-color: #ddd;
-    outline: none;
-  }
-  
-  /* Set a style for the submit/send button */
-  .form-container .btn {
-    background-color: #04AA6D;
-    color: white;
-    padding: 16px 20px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-bottom:10px;
-    opacity: 0.8;
-  }
-  
-  /* Add some hover effects to buttons */
-  .form-container .btn:hover, .open-button:hover {
-    opacity: 1;
-  }
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
 
-  .current-day {
-    background-color: #77C9D4;
-    color: #3C3C3C;
-    font-weight: bold;
+/* The popup chat - hidden by default */
+.chat-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the chat form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width chat form textarea */
+.form-container textarea {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+  resize: none;
+  min-height: 200px;
+}
+
+/* When the textarea gets focus, do something */
+.form-container textarea:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/send button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+
+.current-day {
+  background-color: #77C9D4;
+  color: #3C3C3C;
+  font-weight: bold;
 }
 
 /* Set background of scrollbar in calendar to transparent */
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(100%);
+filter: invert(100%);
 }
 
 .event-container::-webkit-scrollbar {
-  width: 10px; /
+width: 10px; /
 }
 
 .event-container::-webkit-scrollbar-track {
-  background-color: transparent;
+background-color: transparent;
 }
 
 .event-container::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 5px; /
+background-color: #888;
+border-radius: 5px; /
 }
 
 /* Hide Table headers in small view by default */
 thead {
-  display: none;
+display: none;
 }
 
 /* Stack rows vertically on small screens */
 @media (max-width: 934px) {
-  table {
-    display: block !important;
-    width: 100%;
-    padding-bottom: 10px;
-    padding-left: 10px;
-    margin-bottom: 50px;
-    border-collapse: collapse;
-    border: none;
-  }
+table {
+  display: block !important;
+  width: 100%;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin-bottom: 50px;
+  border-collapse: collapse;
+  border: none;
+}
 
-  tbody {
-    display: block;
-  }
+tbody {
+  display: block;
+}
 
-  tr {
-    display: block;
-    margin-bottom: 10px;
-    border-bottom: 2px solid rgba(105, 105, 105, 0.1);
-  }
+tr {
+  display: block;
+  margin-bottom: 10px;
+  border-bottom: 2px solid rgba(105, 105, 105, 0.1);
+}
 
-  td {
-    display: block;
-    border-bottom: none;
-    border-bottom: 2px solid rgba(0, 0, 0, .1);
-    font-size: 15px;
-  }
+td {
+  display: block;
+  border-bottom: none;
+  border-bottom: 2px solid rgba(0, 0, 0, .1);
+  font-size: 15px;
+}
 
-  strong {
-    font-size: 16px;
-    color: #5E5E5E;
-  }
+strong {
+  font-size: 16px;
+  color: #5E5E5E;
+}
 
-  .table-header {
-    display: block;
-    font-weight: bold;
-  }
+.table-header {
+  display: block;
+  font-weight: bold;
+}
 
-  footer {
-    position: relative;
-  }
+footer {
+  position: relative;
+}
 }
 
 /* table layout on larger screens */
 @media (min-width: 935px) {
-  table {
-    display: table !important;
-    width: auto;
-    padding-left: 0; 
-    padding-bottom: 0;
-  }
-  
-  /* Apply styles to odd rows */
-  tbody tr:nth-child(odd) {
-    background-color: #f7f7f7;
-  }
-
-  /* Apply styles to even rows */
-  tbody tr:nth-child(even) {
-    background-color: #eaeaea;
-  }
-
-  /* Add rounded corners to the table */
-  table {
-    border-collapse: collapse;
-    border-radius: 10px;
-    overflow: hidden;
-  }
-
-  /* Add padding to the last row to preserve bottom rounded corners */
-  tbody tr:last-child td {
-    padding-bottom: 10px;
-  }
-
-  thead {
-    display: table-header-group;
-  }
-
-  tbody {
-    display: table-row-group;
-  }
-
-  tr {
-    display: table-row;
-    border-bottom: none; 
-  }
-
-  td {
-    display: table-cell;
-    border-bottom: none;
-  }
-
-  /* Hide <strong> elements in rows on large screens */
-  @media (min-width: 641px) {
-    td strong {
-      display: none;
-    }
-  }
+table {
+  display: table !important;
+  width: auto;
+  padding-left: 0; 
+  padding-bottom: 0;
 }
 
+/* Apply styles to odd rows */
+tbody tr:nth-child(odd) {
+  background-color: #f7f7f7;
+}
+
+/* Apply styles to even rows */
+tbody tr:nth-child(even) {
+  background-color: #eaeaea;
+}
+
+/* Add rounded corners to the table */
+table {
+  border-collapse: collapse;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+/* Add padding to the last row to preserve bottom rounded corners */
+tbody tr:last-child td {
+  padding-bottom: 10px;
+}
+
+thead {
+  display: table-header-group;
+}
+
+tbody {
+  display: table-row-group;
+}
+
+tr {
+  display: table-row;
+  border-bottom: none; 
+}
+
+td {
+  display: table-cell;
+  border-bottom: none;
+}
+
+/* Hide <strong> elements in rows on large screens */
+@media (min-width: 641px) {
+  td strong {
+    display: none;
+  }
+}
+}
+
+/* Ensure calendar container resizes as a whole on smaller screens */
+#calendar-container {
+  position: relative;
+  width: calc(100% - 40px);
+  max-width: 1000px;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+#calendar-buttons button {
+  margin-right: 10px;
+}
+
+/* Ensure calendar grid fits within the available space */
+#calendar {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+gap: 5px;
+}
+
+/* Ensure date blocks always have some space and event blocks are contained within date blocks */
+.date-block {
+padding: 10px;
+position: relative;
+}
+
+.day-of-month {
+font-weight: bold;
+color: marine;
+}
+
+.day-of-week {
+font-size: smaller;
+color: grey;
+}
+
+/* Media query for larger screens */
+@media screen and (min-width: 800px) {
+/* Limit the calendar to 7 columns when expanded */
+#calendar {
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+}
+}

@@ -28,7 +28,7 @@
       </script>
 </head>
 
-<body class="bg-clean h-screen">
+<body class="bg-clean min-h-screen flex flex-col">
 
   <!--navbar -->
 
@@ -53,22 +53,19 @@
       </div>
     </div>
   </div>
-
-  <!-- Buttons above calendar -->
-
-  <div class="container mx-auto py-1">
-    <button onclick="window.location.href = 'dashboard.html';" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">Table</button>
-    <button id="addTaskButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">+</button>
-    <button id="testButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">N</button>
-  </div>
-      
+ 
   <!-- Calendar HTML -->
 
-  <main id="calendar-container" class="container bg-paper rounded-lg mx-auto px-4 py-2 shadow-xl mb-4">
+  <main id="calendar-container" class="container bg-paper max-w-screen-lg mx-auto px-4 py-2 shadow-xl mb-24 rounded-xl">
+    <div id="calendarButtons" class="container mx-auto py-1 mt-4">
+      <button onclick="window.location.href = 'dashboard.html';" class="btn border-marine bg-marine mr-1 text-forest text-sm  hover:border-marine hover:text-marine hover:bg-clean">Table</button>
+      <button id="addTaskButton" class="btn border-marine bg-marine text-forest text-sm m-1 hover:border-marine hover:text-marine hover:bg-clean">+</button>
+      <button id="testButton" class="btn border-marine bg-marine text-forest text-sm m-1 hover:border-marine hover:text-marine hover:bg-clean">N</button>
+    </div>
     <!-- Calendar Header -->
     <div class="flex justify-between items-center mb-4">
         <!-- Previous month button -->
-        <button id="prevMonth" class="btn btn-outline btn-sm border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine">
+        <button id="prevMonth" class="btn btn-outline btn-sm  ml-4 border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine">
             <i class="fa-solid fa-backward"></i>
         </button>
         <!-- Current month button and text -->
@@ -77,32 +74,22 @@
             <button id="currentMonthButton" class="btn btn-outline btn-sm border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine"><i class="fa-solid fa-house"></i></button>
         </div>
         <!-- Next month button -->
-        <button id="nextMonth" class="btn btn-outline btn-sm border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine">
+        <button id="nextMonth" class="btn btn-outline btn-sm mr-4 border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine">
             <i class="fa-solid fa-forward"></i>
         </button>
     </div>
-    <!-- Day headers -->
-    <div class="grid grid-cols-7">
-        <div class="text-center text-charcoal">Sun</div>
-        <div class="text-center text-charcoal">Mon</div>
-        <div class="text-center text-charcoal">Tue</div>
-        <div class="text-center text-charcoal">Wed</div>
-        <div class="text-center text-charcoal">Thu</div>
-        <div class="text-center text-charcoal">Fri</div>
-        <div class="text-center text-charcoal">Sat</div>
-    </div>
     <!-- Calendar grid to be filled dynamically-->
     <div id="calendar" class="grid grid-cols-7 gap-2 rounded-lg p-2">
-    </div>
+    </div> 
+
   </main>
 
   <!-- Footer -->
 
-	<footer class="relative bottom-0 left-0 z-20 w-full p-4 bg-clean shadow md:flex md:items-center md:justify-between md:p-4 border-none">
-		<span class="text-sm text-charcoal sm:text-center">© 2024. All Rights Reserved.
-		</span>
-    <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine"><i class="fa-solid fa-comment"></i></button>
-	</footer>
+  <footer class="relative bottom-0 left-0 p-2 w-full bg-clean border-t border-clean shadow sm:fixed sm:bottom-0 sm:left-0">
+    <span class="text-md font-normal text-charcoal sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
+    <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
+  </footer>  
 
   <script src="script-calendar.js" type="module"></script>
   </body>
