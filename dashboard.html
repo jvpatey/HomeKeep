@@ -64,39 +64,34 @@
     <button id="testButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">N</button>
   </div>
 
-  <main class="flex-grow overflow-y-auto">
+  <!-- Table with sample data -->
+  <div class="flex flex-col px-8 pb-12 sm:pb-4 mb-3 bg-clean overflow-y-auto">
+    <table class="table border bg-paper border-charcoal shadow-xl" id="taskTable">
+      <thead class="text-charcoal text-lg">
+        <tr class="table-header">
+          <th class="font-normal hover:text-marine border-charcoal" id="taskNameHeader">Task <button id="sortTasksButton" class="btn-sort hover: text-marine">▼</button></th>
+          <th class="font-normal border-charcoal">Category</th>
+          <th class="font-normal hover:text-marine border-charcoal" id="startDateHeader">Start Date <button id="sortTasksByStartDateButton" class="btn-sort hover: text-marine">▼</button></th>
+          <th class="font-normal border-charcoal">End Date </th>
+          <th class="font-normal border-charcoal">Interval</th>
+          <th class="font-normal border-charcoal">Description</th>
+          <th class="font-normal border-charcoal">Notifications</th>
+          <th class="border-charcoal"></th>
+        </tr>
+      </thead>
+      <tbody class="text-charcoal" id="taskTableBody">
+        <!-- Table rows will be added dynamically here -->
+      </tbody>
+    </table>
+  </div>
 
-    <!-- Table with sample data -->
-
-    <div class="px-8 bg-clean" style="height: calc(100vh - 256px); overflow-y: auto;">
-      <table class="table border bg-paper border-charcoal shadow-xl" id="taskTable">
-        <thead class="text-charcoal text-lg">
-          <tr>
-            <th class="font-normal hover:text-marine border-charcoal" id="taskNameHeader">Task <button id="sortTasksButton" class="btn-sort hover:text-marine">▼</button></th>
-            <th class="font-normal border-charcoal">Category</th>
-            <th class="font-normal hover:text-marine border-charcoal" id="startDateHeader">Start Date <button id="sortTasksByStartDateButton" class="btn-sort hover:text-marine">▼</button></th>
-            <th class="font-normal border-charcoal">End Date </th>
-            <th class="font-normal border-charcoal">Interval</th>
-            <th class="font-normal border-charcoal">Description</th>
-            <th class="font-normal border-charcoal">Notifications</th>
-            <th class="border-charcoal"></th>
-          </tr>
-        </thead>
-        <tbody class="text-charcoal" id="taskTableBody">
-          <!-- empty row -->
-          <tr class="empty-row border-charcoal">
-          </tr>
-        </tbody>
-      </table>
-    </div>
 
   <!-- Footer -->
   
-  <footer class="fixed bottom-0 left-0 z-0 w-full bg-clean border-t border-clean shadow md:flex md:items-center md:justify-between md:p-6">
-      <span class="text-md font-normal text-charcoal sm:text-center">© 2024 All Rights Reserved.
-      </span>
-      <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine"><i class="fa-solid fa-comment"></i></button>
-  </footer>
+  <footer class="relative bottom-0 left-0 w-full bg-clean border-t border-clean shadow sm:fixed sm:bottom-0 sm:left-0">
+    <span class="text-md font-normal text-charcoal sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
+    <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
+  </footer>    
 
   <script src="script.js" type="module"></script>
   </body>

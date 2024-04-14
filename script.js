@@ -270,20 +270,22 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
             } else if (sortByStartDate) {
                 tasks.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
             }
-
+            
             // Append each task as a row to the table
             tasks.forEach(task => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${task.taskName}</td>
-                    <td>${task.category}</td>
-                    <td>${task.startDate}</td>
-                    <td>${task.endDate}</td> <!-- Include end date -->
-                    <td>${task.interval}</td>
-                    <td>${task.description}</td>
+                    <td><strong>Task:</strong> ${task.taskName}</td>
+                    <td><strong>Category:</strong> ${task.category}</td>
+                    <td><strong>Start Date:</strong> ${task.startDate}</td>
+                    <td><strong>End Date:</strong> ${task.endDate}</td>
+                    <td><strong>Interval:</strong> ${task.interval} days</td>
+                    <td><strong>Description:</strong> ${task.description}</td>
                     <td></td>
                     <td></td>
                 `;
+                document.getElementById('taskTableBody').appendChild(row);
+
 
                 // DaisyUI toggle switch for cell 6
                 const toggleSwitchContainer = document.createElement('div');
