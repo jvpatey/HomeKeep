@@ -281,7 +281,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     <td><strong>End Date:</strong> ${task.endDate}</td>
                     <td><strong>Interval:</strong> ${task.interval} days</td>
                     <td><strong>Description:</strong> ${task.description}</td>
-                    <td></td>
+                    <td><strong>Notifications:</strong></td>
                     <td></td>
                 `;
                 document.getElementById('taskTableBody').appendChild(row);
