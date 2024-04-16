@@ -247,6 +247,7 @@ async function displayTasks(user, year, month) {
                         eventBlock.dataset.taskId = doc.id;
                         eventBlock.dataset.category = task.category;
                         eventBlock.dataset.startDate = task.startDate;
+                        eventBlock.dataset.endDate = task.endDate;
                         eventBlock.dataset.interval = task.interval;
                         eventBlock.dataset.description = task.description;
                         eventContainer.appendChild(eventBlock);
@@ -427,11 +428,11 @@ document.getElementById('currentMonthButton').addEventListener('click', () => {
 
 renderCalendar();
 
-// function to populate the task details modal
 function showTaskDetailsModal(taskData) {
     document.getElementById('taskDetailsName').textContent = taskData.taskName;
     document.getElementById('taskDetailsCategory').textContent = taskData.category;
     document.getElementById('taskDetailsStartDate').textContent = taskData.startDate;
+    document.getElementById('taskDetailsEndDate').textContent = taskData.endDate; // Populate end date
     document.getElementById('taskDetailsInterval').textContent = taskData.interval;
     document.getElementById('taskDetailsDescription').textContent = taskData.description;
 
@@ -441,6 +442,7 @@ function showTaskDetailsModal(taskData) {
     }
 }
 
+
 // event listener to show task details modal when task is clicked in calendar
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('event-block')) {
@@ -449,6 +451,7 @@ document.addEventListener('click', function(event) {
             taskName: event.target.textContent,
             category: event.target.dataset.category,
             startDate: event.target.dataset.startDate,
+            endDate: event.target.dataset.endDate,
             interval: event.target.dataset.interval,
             description: event.target.dataset.description
         };

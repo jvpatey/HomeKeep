@@ -138,109 +138,123 @@ border-radius: 5px; /
 
 /* Hide Table headers in small view by default */
 thead {
-display: none;
+  display: none;
 }
 
-/* Stack rows vertically on small screens */
-@media (max-width: 934px) {
-table {
-  display: block !important;
-  width: 100%;
-  padding-bottom: 10px;
-  padding-left: 10px;
-  margin-bottom: 50px;
-  border-collapse: collapse;
-  border: none;
-}
+/* Stack rows vertically on smaller screens */
+@media (max-width: 939px) {
+  table {
+      display: block !important;
+      width: 100%;
+      padding-bottom: 5px; /* Reduce padding */
+      padding-left: 5px; /* Reduce padding */
+      margin-bottom: 20px; /* Reduce margin */
+      border-collapse: collapse;
+      border: none; /* Remove border */
+  }
 
-tbody {
-  display: block;
-}
+  tbody {
+      display: block;
+  }
 
-tr {
-  display: block;
-  margin-bottom: 10px;
-  border-bottom: 2px solid rgba(105, 105, 105, 0.1);
-}
+  tr {
+      display: flex;
+      justify-content: space-between;
+      align-items: center; /* Center align items */
+      margin-bottom: 5px; /* Reduce margin */
+  }
 
-td {
-  display: block;
-  border-bottom: none;
-  border-bottom: 2px solid rgba(0, 0, 0, .1);
-  font-size: 15px;
-}
+  td {
+      display: block;
+      border-bottom: none;
+      font-size: 15px;
+  }
 
-strong {
-  font-size: 16px;
-  color: #5E5E5E;
-}
+  /* Make the task name larger and bold */
+  td:first-child {
+      font-size: 18px;
+      font-weight: bold;
+      flex: 1; /* Allow the task name to take up remaining space */
+  }
 
-.table-header {
-  display: block;
-  font-weight: bold;
-}
+  /* Hide all table headers */
+  th {
+      display: none;
+  }
 
-footer {
-  position: relative;
-}
+  /* Hide all cells except the first (taskName) and the last (buttons) */
+  td:not(:first-child):not(:last-child) {
+      display: none;
+  }
+
+  /* Style for the buttons container */
+  .buttons-container {
+      display: flex;
+      align-items: center; /* Center align items */
+  }
+
+  /* Adjust padding for better spacing */
+  .buttons-container > * {
+      padding: 5px; /* Reduce padding */
+  }
+
+  /* Adjust icon size */
+  .buttons-container i {
+      font-size: 1.5rem;
+  }
 }
 
 /* table layout on larger screens */
-@media (min-width: 935px) {
-table {
-  display: table !important;
-  width: auto;
-  padding-left: 0; 
-  padding-bottom: 0;
-}
+@media (min-width: 940px) {
+  table {
+      display: table !important;
+      width: auto;
+      padding-left: 0; 
+      padding-bottom: 0;
+  }
 
-/* Apply styles to odd rows */
-tbody tr:nth-child(odd) {
-  background-color: #f7f7f7;
-}
+  /* Apply styles to odd rows */
+  tbody tr:nth-child(odd) {
+      background-color: #f7f7f7;
+  }
 
-/* Apply styles to even rows */
-tbody tr:nth-child(even) {
-  background-color: #eaeaea;
-}
+  /* Apply styles to even rows */
+  tbody tr:nth-child(even) {
+      background-color: #eaeaea;
+  }
 
-/* Add rounded corners to the table */
-table {
-  border-collapse: collapse;
-  border-radius: 10px;
-  overflow: hidden;
-}
+  /* Add rounded corners to the table */
+  table {
+      border-collapse: collapse;
+      border-radius: 10px;
+      overflow: hidden;
+  }
 
-/* Add padding to the last row to preserve bottom rounded corners */
-tbody tr:last-child td {
-  padding-bottom: 10px;
-}
+  /* Add padding to the last row to preserve bottom rounded corners */
+  tbody tr:last-child td {
+      padding-bottom: 10px;
+  }
 
-thead {
-  display: table-header-group;
-}
+  thead {
+      display: table-header-group;
+  }
 
-tbody {
-  display: table-row-group;
-}
+  tbody {
+      display: table-row-group;
+  }
 
-tr {
-  display: table-row;
-  border-bottom: none; 
-}
+  tr {
+      display: table-row;
+      border-bottom: none; 
+  }
 
-td {
-  display: table-cell;
-  border-bottom: none;
-}
-
-/* Hide <strong> elements in rows on large screens */
-@media (min-width: 641px) {
-  td strong {
-    display: none;
+  td {
+      display: table-cell;
+      border-bottom: none;
   }
 }
-}
+
+
 
 /* Ensure calendar container resizes as a whole on smaller screens */
 #calendar-container {

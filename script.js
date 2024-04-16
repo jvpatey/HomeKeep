@@ -275,16 +275,23 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
             tasks.forEach(task => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><strong>Task:</strong> ${task.taskName}</td>
-                    <td><strong>Category:</strong> ${task.category}</td>
-                    <td><strong>Start Date:</strong> ${task.startDate}</td>
-                    <td><strong>End Date:</strong> ${task.endDate}</td>
-                    <td><strong>Interval:</strong> ${task.interval} days</td>
-                    <td><strong>Description:</strong> ${task.description}</td>
-                    <td><strong>Notifications:</strong></td>
+                    <td><a href="#" class="task-name-link">${task.taskName}</a></td>
+                    <td>${task.category}</td>
+                    <td>${task.startDate}</td>
+                    <td>${task.endDate}</td>
+                    <td>${task.interval} days</td>
+                    <td>${task.description}</td>
+                    <td></td>
                     <td></td>
                 `;
                 document.getElementById('taskTableBody').appendChild(row);
+            
+                // Add event listener to the task name link
+                const taskNameLink = row.querySelector('.task-name-link');
+                taskNameLink.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    showTaskDetailsModal(task);
+                });
 
 
                 // DaisyUI toggle switch for cell 6
@@ -432,6 +439,22 @@ function showAddTaskModal() {
     var addTaskModal = document.getElementById('addTaskModal');
     if (addTaskModal) {
         addTaskModal.showModal();
+    }
+}
+
+// Function to show task details modal with task data
+function showTaskDetailsModal(task) {
+    const taskDetailsModal = document.getElementById('taskDetailsModal');
+    if (taskDetailsModal) {
+        // Populate modal with task data
+        document.getElementById('taskDetailsName').textContent = task.taskName;
+        document.getElementById('taskDetailsCategory').textContent = task.category;
+        document.getElementById('taskDetailsStartDate').textContent = task.startDate;
+        document.getElementById('taskDetailsEndDate').textContent = task.endDate;
+        document.getElementById('taskDetailsInterval').textContent = `${task.interval} days`;
+        document.getElementById('taskDetailsDescription').textContent = task.description;
+
+        taskDetailsModal.showModal();
     }
 }
 
