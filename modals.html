@@ -35,9 +35,6 @@
     </div>
 </dialog>
 
-
-
-
 <!-- DaisyUI task details modal -->
 <dialog id="taskDetailsModal" class="modal">
     <div class="modal-box bg-clean p-4 rounded-lg">
@@ -74,7 +71,6 @@
     </div>
 </dialog>
 
-<!-- DaisyUI edit-task form modal -->
 <dialog id="editTaskModal" class="modal">
     <div class="modal-box bg-clean p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('editTaskModal').close()">✕</button>
@@ -86,22 +82,29 @@
                 <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
                     <input id="editCategory" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Category" />
                 </label>
-                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                    <input id="editStartDate" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Start Date" />
-                </label>
-                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                    <input id="editEndDate" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance End Date" />
-                </label>
+                <div class="flex items-center gap-2 mb-2">
+                    <label class="text-charcoal">Start Date:</label>
+                    <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
+                        <input id="editStartDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Start Date" pattern="\d{2}-\d{2}-\d{4}" required />
+                    </label>
+                </div>
+                <div class="flex items-center gap-2 mb-2">
+                    <label class="text-charcoal mr-2">End Date:</label>
+                    <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
+                        <input id="editEndDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="End Date" pattern="\d{2}-\d{2}-\d{4}" />
+                    </label>
+                </div>
                 <label class="input input-bordered flex items-center gap-2 bg-clean border-marine">
                     <input id="editInterval" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
                 </label>
-                <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal placeholder-charcoal gap-2 bg-clean border-marine" placeholder="Maintenace Description"></textarea>
+                <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal placeholder-charcoal gap-2 bg-clean border-marine" placeholder="Maintenance Description"></textarea>
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
                     <button id="editSubmitBtn" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
                 </div>
             </form>
     </div>
-  </dialog>
+</dialog>
+
 
 <!-- DaisyUI create account Modal -->
 <dialog id="createAccountModal" class="modal">

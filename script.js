@@ -95,9 +95,7 @@ function handleSubmit(event) {
 
 let formSubmitted = false;
 
-// Function to save task data to Firestore
 async function saveFormData() {
-
     if (formSubmitted) {
         return;
     }
@@ -134,6 +132,15 @@ async function saveFormData() {
     // Validate the end date format
     if (!datePattern.test(formattedEndDate)) {
         alert("Please enter the end date in the format MM-DD-YYYY.");
+        formSubmitted = false;
+        return;
+    }
+
+    // Validate that end date is after start date
+    const startDateObj = new Date(formattedStartDate);
+    const endDateObj = new Date(formattedEndDate);
+    if (endDateObj <= startDateObj) {
+        alert("End date must be after start date.");
         formSubmitted = false;
         return;
     }
@@ -196,30 +203,20 @@ async function saveFormData() {
     }
 }
 
-// Add event listener for submit button on add task form
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.id === 'submitTaskButton') {
-        saveFormData();
-    }
-});
-
-// Add event listener for submit button on add task form
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.id === 'submitTaskButton') {
-        saveFormData();
-    }
-});
-
 // Function to populate the edit task modal with data from the corresponding row
 function populateEditTaskModal(taskData) {
     var editTaskForm = document.getElementById('editTaskForm');
     editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
     editTaskForm.querySelector('#editCategory').value = taskData.category;
-    editTaskForm.querySelector('#editStartDate').value = taskData.startDate;
-    editTaskForm.querySelector('#editEndDate').value = taskData.endDate;
+    
+    // Set the value attribute of date picker inputs with the corresponding dates
+    editTaskForm.querySelector('#editStartDate').valueAsDate = new Date(taskData.startDate);
+    editTaskForm.querySelector('#editEndDate').valueAsDate = new Date(taskData.endDate);
+    
     editTaskForm.querySelector('#editInterval').value = taskData.interval;
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 }
+
 
 // Function to update task data in Firestore and the table
 async function updateTask(taskData, docRef, row) {
@@ -293,7 +290,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
             tasks.forEach(task => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td><a href="#" class="task-name-link">${task.taskName}</a></td>
+                    <td><a href="#" class="task-name-link hover:text-marine">${task.taskName}</a></td>
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
                     <td>${task.endDate}</td>
@@ -383,6 +380,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     editTaskForm.addEventListener('submit', async (e) => {
                         e.preventDefault();
 
+                        // Extract edited task data
                         const editedTaskData = {
                             taskName: editTaskForm.querySelector('#editTaskName').value,
                             category: editTaskForm.querySelector('#editCategory').value,
@@ -392,11 +390,20 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                             description: editTaskForm.querySelector('#editDescription').value
                         };
 
+                        // Validate that end date is after start date
+                        const editedStartDateObj = new Date(editedTaskData.startDate);
+                        const editedEndDateObj = new Date(editedTaskData.endDate);
+                        if (editedEndDateObj <= editedStartDateObj) {
+                            alert("End date must be after start date.");
+                            return;
+                        }
+
                         // Update task data in Firestore and the table
                         const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
                         await updateTask(editedTaskData, docRef, row);
                         document.getElementById('editTaskModal').close();
                     });
+
                 });
 
                 taskTableBody.appendChild(row);
