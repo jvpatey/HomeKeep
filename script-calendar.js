@@ -96,7 +96,6 @@ function handleSubmit(event) {
 let formSubmitted = false;
 
 async function saveFormData() {
-
     if (formSubmitted) {
         return;
     }
@@ -132,6 +131,15 @@ async function saveFormData() {
     // Validate the end date format
     if (!datePattern.test(formattedEndDate)) {
         alert("Please enter the end date in the format MM-DD-YYYY.");
+        formSubmitted = false;
+        return;
+    }
+
+    // Ensure end date is after start date
+    const startDateObj = new Date(formattedStartDate);
+    const endDateObj = new Date(formattedEndDate);
+    if (endDateObj <= startDateObj) {
+        alert("End date must be after start date.");
         formSubmitted = false;
         return;
     }
@@ -176,24 +184,6 @@ async function saveFormData() {
         formSubmitted = false;
     }
 }
-
-// Add event listener for submit button on add task form
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.id === 'submitTaskButton') {
-        saveFormData();
-    }
-});
-
-// Event listener for submit button on add task form
-document.addEventListener('click', function(event) {
-    if (event.target && event.target.id === 'submitTaskButton') {
-        if (auth.currentUser) {
-            saveFormData(auth.currentUser);
-        } else {
-            console.error("No user logged in.");
-        }
-    }
-});
 
 async function displayTasks(user, year, month) {
     try {
