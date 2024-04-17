@@ -355,7 +355,7 @@ const renderCalendar = (user) => {
         const dayOfWeek = daysOfWeek[currentDate.getDay()]; // Get the day of the week for the current date
         const dateString = getDateString(i, currentMonth, currentYear);
 
-        let dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md" data-date="${dateString}" data-day="${i}">
+        let dateBlock = `<div class="date-block border h-16 text-center text-charcoal hover:bg-clean hover:text-marine border-charcoal rounded-md" data-date="${dateString}" data-day="${i}">
                             <div class="day-info">
                                 <span class="day-of-week">${dayOfWeek}</span>
                                 <span class="day-of-month">${i}</span>
