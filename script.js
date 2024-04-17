@@ -2,7 +2,7 @@
 
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
-import { getFirestore, collection, doc, addDoc, getDocs, deleteDoc, setDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
+import { getFirestore, collection, doc, addDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
 // Firbase config
@@ -20,7 +20,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 const messagesCollection = collection(firestore, 'messages');
-const responsesCollection = collection(firestore, 'responses');
+const responsesCollection = collection(firestore, 'responses'); // New collection reference
 
 // Check authentication status
 console.log(auth.currentUser);
@@ -221,32 +221,14 @@ function populateEditTaskModal(taskData) {
 // Function to update task data in Firestore and the table
 async function updateTask(taskData, docRef, row) {
     try {
-        const user = auth.currentUser;
-        if (!user) {
-            console.error("No user logged in.");
-            return;
-        }
-
-        const taskIdBeforeEdit = docRef.id;
-
-        // Delete the existing task
-        await deleteDoc(docRef);
-
-        // Add the edited task as a new document with the original task's ID
-        await setDoc(doc(collection(firestore, `users/${user.uid}/tasks`), taskIdBeforeEdit), taskData);
-
-        // Update table row with new data (if needed)
+        // Update document in Firestore and table
+        await updateDoc(docRef, taskData);
         row.children[0].textContent = taskData.taskName;
         row.children[1].textContent = taskData.category;
         row.children[2].textContent = taskData.startDate;
         row.children[3].textContent = taskData.endDate;
         row.children[4].textContent = taskData.interval;
         row.children[5].textContent = taskData.description;
-
-        const taskIdAfterEdit = docRef.id; // Get the ID of the edited task
-
-        console.log("Task ID before edit:", taskIdBeforeEdit);
-        console.log("Document updated - Task ID after edit:", taskIdAfterEdit);
 
     } catch (error) {
         console.error("Error updating document: ", error);
@@ -294,7 +276,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
                     <td>${task.endDate}</td>
-                    <td>${task.interval}</td>
+                    <td>${task.interval} days</td>
                     <td>${task.description}</td>
                     <td></td>
                     <td></td>
@@ -307,6 +289,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     event.preventDefault();
                     showTaskDetailsModal(task);
                 });
+
 
                 // DaisyUI toggle switch for cell 6
                 const toggleSwitchContainer = document.createElement('div');
