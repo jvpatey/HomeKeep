@@ -235,6 +235,8 @@ async function updateTask(taskData, docRef, row) {
     }
 }
 
+var lastFunction;
+
 // Function to fetch and display task data from Firestore
 async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
     const user = auth.currentUser;
@@ -360,7 +362,13 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
 
                     // Add event listener to the submit button on the edit task form
                     const editTaskForm = document.getElementById('editTaskForm');
-                    editTaskForm.addEventListener('submit', async (e) => {
+
+                    if (lastFunction !== undefined) {
+                        editTaskForm.removeEventListener('submit', lastFunction);
+                        console.log("remove");
+                    }
+
+                    lastFunction = async (e) => {
                         e.preventDefault();
 
                         // Extract edited task data
@@ -385,8 +393,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                         const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
                         await updateTask(editedTaskData, docRef, row);
                         document.getElementById('editTaskModal').close();
-                    });
+                    }
 
+                    editTaskForm.addEventListener('submit', lastFunction);
                 });
 
                 taskTableBody.appendChild(row);
