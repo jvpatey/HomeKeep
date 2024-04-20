@@ -19,8 +19,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
-const messagesCollection = collection(firestore, 'messages');
-const responsesCollection = collection(firestore, 'responses'); // New collection reference
 
 // Check authentication status
 console.log(auth.currentUser);
@@ -32,64 +30,6 @@ auth.onAuthStateChanged(user => {
         console.log("No user logged in.");
     }
 });
-
-/* ----- Firebase messages via chat ----- */
-
-// Function to send a message to Firestore
-async function sendMessage(message) {
-    try {
-        await addDoc(messagesCollection, {
-            sender: 'user',
-            content: message,
-            timestamp: new Date().toISOString()
-        });
-    } catch (error) {
-        console.error("Error sending message:", error);
-    }
-}
-
-// Function to handle receiving messages from Firestore
-function receiveMessage(snapshot) {
-    snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-            const message = change.doc.data();
-            const messagesContainer = document.getElementById('messagesContainer');
-            const messageElement = document.createElement('div');
-            messageElement.textContent = message.sender + ': ' + message.content;
-            messagesContainer.appendChild(messageElement);
-        }
-    });
-}
-
-// Listen for new messages from Firestore
-onSnapshot(messagesCollection, receiveMessage);
-
-// Function to handle receiving response messages from Firestore
-function receiveResponse(snapshot) {
-    snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-            const response = change.doc.data();
-            const messagesContainer = document.getElementById('messagesContainer');
-            const responseElement = document.createElement('div');
-            responseElement.textContent = response.sender + ': ' + response.content;
-            messagesContainer.appendChild(responseElement);
-        }
-    });
-}
-
-// Listen for new response messages from Firestore
-onSnapshot(responsesCollection, receiveResponse);
-
-// Function to handle form submission
-function handleSubmit(event) {
-    event.preventDefault();
-    const messageInput = document.getElementById('messageInput');
-    const message = messageInput.value.trim();
-    if (message !== '') {
-        sendMessage(message);
-        messageInput.value = '';
-    }
-}
 
 /* ------ Functions to handle form data and table data ------- */
 
@@ -278,7 +218,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
                     <td>${task.endDate}</td>
-                    <td>${task.interval} days</td>
+                    <td>${task.interval}</td>
                     <td>${task.description}</td>
                     <td></td>
                     <td></td>
@@ -291,7 +231,6 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     event.preventDefault();
                     showTaskDetailsModal(task);
                 });
-
 
                 // DaisyUI toggle switch for cell 6
                 const toggleSwitchContainer = document.createElement('div');
@@ -393,12 +332,14 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                         const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
                         await updateTask(editedTaskData, docRef, row);
                         document.getElementById('editTaskModal').close();
+                        displayTasks();
                     }
-
+                    
                     editTaskForm.addEventListener('submit', lastFunction);
                 });
 
                 taskTableBody.appendChild(row);
+
             });
         }
     } catch (error) {
@@ -438,17 +379,18 @@ function initializeModals() {
     if (addTaskModal && editTaskModal && chatForm) {
         document.getElementById('addTaskButton').addEventListener('click', function() {
             addTaskModal.showModal();
-            document.getElementById('submitTaskButton').addEventListener('click', function() {
+
+        document.getElementById('submitTaskButton').addEventListener('click', function() {
                 saveFormData();
             });
         });
 
     // Event listener for chat form submission
-    chatForm.addEventListener('submit', handleSubmit);
+    /* chatForm.addEventListener('submit', handleSubmit);
         } else {
             console.error("One or more modals or signup form not found in the loaded content.");
-        }
-}
+        } */
+}}
 
 // Function to show the add task modal
 function showAddTaskModal() {
