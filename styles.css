@@ -146,11 +146,11 @@ thead {
   table {
       display: block !important;
       width: 100%;
-      padding-bottom: 5px; /* Reduce padding */
-      padding-left: 5px; /* Reduce padding */
-      margin-bottom: 20px; /* Reduce margin */
+      padding-bottom: 5px; 
+      padding-left: 5px; 
+      margin-bottom: 20px;
       border-collapse: collapse;
-      border: none; /* Remove border */
+      border: none; 
   }
 
   tbody {
@@ -160,8 +160,8 @@ thead {
   tr {
       display: flex;
       justify-content: space-between;
-      align-items: center; /* Center align items */
-      margin-bottom: 5px; /* Reduce margin */
+      align-items: center;
+      margin-bottom: 5px;
   }
 
   td {
@@ -174,7 +174,7 @@ thead {
   td:first-child {
       font-size: 18px;
       font-weight: bold;
-      flex: 1; /* Allow the task name to take up remaining space */
+      flex: 1;
   }
 
   /* Hide all table headers */
@@ -190,12 +190,12 @@ thead {
   /* Style for the buttons container */
   .buttons-container {
       display: flex;
-      align-items: center; /* Center align items */
+      align-items: center;
   }
 
   /* Adjust padding for better spacing */
   .buttons-container > * {
-      padding: 5px; /* Reduce padding */
+      padding: 5px;
   }
 
   /* Adjust icon size */
@@ -254,8 +254,6 @@ thead {
   }
 }
 
-
-
 /* Ensure calendar container resizes as a whole on smaller screens */
 #calendar-container {
   position: relative;
@@ -269,33 +267,101 @@ thead {
   margin-right: 10px;
 }
 
-/* Ensure calendar grid fits within the available space */
 #calendar {
-display: grid;
-grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-gap: 5px;
+  display: grid;
+  grid-template-columns: repeat(7, minmax(30px, 1fr)); 
+  gap: 10px; 
+  overflow-x: auto; 
 }
 
-/* Ensure date blocks always have some space and event blocks are contained within date blocks */
 .date-block {
-padding: 10px;
-position: relative;
+  padding: 6px;
+  border-radius: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 10rem;
+  min-width: 6rem; 
 }
 
 .day-of-month {
 font-weight: bold;
+font-size: 0.85em;
 color: marine;
 }
 
 .day-of-week {
-font-size: smaller;
+font-size: 0.75em;
 color: grey;
 }
 
-/* Media query for larger screens */
-@media screen and (min-width: 800px) {
-/* Limit the calendar to 7 columns when expanded */
-#calendar {
-  grid-template-columns: repeat(7, minmax(100px, 1fr));
+.event-block {
+  overflow: hidden; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  padding: 4px; 
+  max-width: 100%; 
 }
+
+.event-container {
+  overflow-y: auto; 
+  overflow-x: hidden; 
+  max-height: 100px; 
+  width: 100%;
+  position: relative; 
+  text-align: left;
+  flex-grow: 1; 
 }
+
+@media (min-width: 800px) {
+  #calendar {
+    grid-template-columns: repeat(7, minmax(50px, 1fr)); 
+    gap: 15px;
+  }
+
+  .date-block {
+    min-height: 5rem;
+    padding: 12px; 
+  }
+}
+
+/* Media query for smaller screens - flexibility */
+@media (max-width: 800px) {
+  #calendar {
+    grid-template-columns: repeat(7, minmax(30px, 1fr)); 
+    gap: 8px; 
+  }
+
+  .event-block {
+    font-size: 10px;
+    max-width: 90%;
+  }
+
+  .event-container {
+    max-height: 40px;
+    overflow-y: auto;
+  }
+
+  .date-block {
+    padding: 6px;
+    min-height: 3rem;
+    min-width: 3rem; 
+  }
+
+  .day-of-month {
+    font-weight: bold;
+    font-size: 0.5em;
+    color: marine;
+    }
+    
+    .day-of-week {
+    font-size: 0.5em;
+    color: grey;
+    }
+}
+
+

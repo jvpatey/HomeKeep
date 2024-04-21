@@ -389,63 +389,54 @@ document.addEventListener('click', function(event) {
 
 /* -------- Modal and HTML javascript ------- */
 
-// Function to load modal content from modals.html
+// Function to load modal content from modals.html and initialize the modals
 function loadModals() {
-fetch('modals.html')
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.text();
-    })
-    .then(html => {
-        console.log('Modal content fetched successfully:');
-        document.body.insertAdjacentHTML('beforeend', html);
-        initializeModals();
-    })
-    .catch(error => {
-        console.error('Error fetching modal content:', error);
-    });
-}
-
-// Function to initialize modals
-function initializeModals() {
-    var addTaskModal = document.getElementById('addTaskModal');
-
-    if (addTaskModal) {
-        document.getElementById('addTaskButton').addEventListener('click', function() {
-            addTaskModal.showModal();
-            document.getElementById('submitTaskButton').addEventListener('click', function() {
-                saveFormData();
-            });
+    fetch('modals.html')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(html => {
+            console.log('Modal content fetched successfully');
+            document.body.insertAdjacentHTML('beforeend', html);
+            initializeModals();
+        })
+        .catch(error => {
+            console.error('Error fetching modal content:', error);
         });
-    }
 }
 
-// Function to show the add task modal
-function showAddTaskModal() {
-    var addTaskModal = document.getElementById('addTaskModal');
+// Function to initialize modal-related event listeners
+function initializeModals() {
+    const addTaskModal = document.getElementById('addTaskModal');
+
     if (addTaskModal) {
-        addTaskModal.showModal();
+        // Show add task modal when the corresponding button is clicked
+        document.getElementById('addTaskButton').addEventListener('click', () => {
+            addTaskModal.showModal();
+        });
+
+        // Call the form submission function when the submit button is clicked
+        document.getElementById('submitTaskButton').addEventListener('click', saveFormData);
     }
 }
 
+// Function to show the chat modal when the chat icon is clicked
 function toggleChatModal() {
-    var chatModal = document.getElementById("chatModal");
-    if (chatModal.style.display === "block") {
-        chatModal.style.display = "none";
-    } else {
-        chatModal.style.display = "block";
-    }
+    const chatModal = document.getElementById("chatModal");
+    chatModal.style.display = chatModal.style.display === "block" ? "none" : "block";
 }
 
-// Add event listeners to show modals
-document.getElementById('addTaskButton').addEventListener('click', showAddTaskModal);
-document.getElementById("chatIcon").addEventListener("click", toggleChatModal)
-
-document.addEventListener('DOMContentLoaded', function() {
+// Add general event listeners after DOM is fully loaded
+document.addEventListener('DOMContentLoaded', () => {
     loadModals();
+
+    // Show chat modal when chat icon is clicked
+    document.getElementById("chatIcon").addEventListener("click", toggleChatModal);
 });
+
 
 /* ------- Firebase Auth ------- */
 
