@@ -374,23 +374,16 @@ function loadModals() {
 function initializeModals() {
     var addTaskModal = document.getElementById('addTaskModal');
     var editTaskModal = document.getElementById('editTaskModal');
-    var chatForm = document.getElementById('chatForm');
 
-    if (addTaskModal && editTaskModal && chatForm) {
+    if (addTaskModal && editTaskModal) {
         document.getElementById('addTaskButton').addEventListener('click', function() {
             addTaskModal.showModal();
+        });
 
         document.getElementById('submitTaskButton').addEventListener('click', function() {
                 saveFormData();
-            });
         });
-
-    // Event listener for chat form submission
-    /* chatForm.addEventListener('submit', handleSubmit);
-        } else {
-            console.error("One or more modals or signup form not found in the loaded content.");
-        } */
-}}
+    }}
 
 // Function to show the add task modal
 function showAddTaskModal() {

@@ -19,8 +19,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
-const messagesCollection = collection(firestore, 'messages');
-const responsesCollection = collection(firestore, 'responses');
 
 // Check authentication status
 console.log(auth.currentUser);
@@ -32,64 +30,6 @@ auth.onAuthStateChanged(user => {
         console.log("No user logged in.");
     }
 });
-
-/* ----- Firebase messages via chat ----- */
-
-// Function to send a message to Firestore
-async function sendMessage(message) {
-    try {
-        await addDoc(messagesCollection, {
-            sender: 'user',
-            content: message,
-            timestamp: new Date().toISOString()
-        });
-    } catch (error) {
-        console.error("Error sending message:", error);
-    }
-}
-
-// Function to handle receiving messages from Firestore
-function receiveMessage(snapshot) {
-    snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-            const message = change.doc.data();
-            const messagesContainer = document.getElementById('messagesContainer');
-            const messageElement = document.createElement('div');
-            messageElement.textContent = message.sender + ': ' + message.content;
-            messagesContainer.appendChild(messageElement);
-        }
-    });
-}
-
-// Listen for new messages from Firestore
-onSnapshot(messagesCollection, receiveMessage);
-
-// Function to handle receiving response messages from Firestore
-function receiveResponse(snapshot) {
-    snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-            const response = change.doc.data();
-            const messagesContainer = document.getElementById('messagesContainer');
-            const responseElement = document.createElement('div');
-            responseElement.textContent = response.sender + ': ' + response.content;
-            messagesContainer.appendChild(responseElement);
-        }
-    });
-}
-
-// Listen for new response messages from Firestore
-onSnapshot(responsesCollection, receiveResponse);
-
-// Function to handle form submission
-function handleSubmit(event) {
-    event.preventDefault();
-    const messageInput = document.getElementById('messageInput');
-    const message = messageInput.value.trim();
-    if (message !== '') {
-        sendMessage(message);
-        messageInput.value = '';
-    }
-}
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
@@ -378,10 +318,8 @@ const renderCalendar = (user) => {
         displayTasks(user, currentYear, currentMonth);
     }
 };
-                                    
-                    
+                                                 
 //event listeners for calendar buttons
-
 document.getElementById('prevMonth').addEventListener('click', () => {
     currentMonth -= 1;
     if (currentMonth < 0) {
@@ -432,7 +370,6 @@ function showTaskDetailsModal(taskData) {
     }
 }
 
-
 // event listener to show task details modal when task is clicked in calendar
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('event-block')) {
@@ -474,22 +411,15 @@ fetch('modals.html')
 // Function to initialize modals
 function initializeModals() {
     var addTaskModal = document.getElementById('addTaskModal');
-    var chatForm = document.getElementById('chatForm');
 
-    if (addTaskModal && chatForm) {
+    if (addTaskModal) {
         document.getElementById('addTaskButton').addEventListener('click', function() {
             addTaskModal.showModal();
             document.getElementById('submitTaskButton').addEventListener('click', function() {
                 saveFormData();
             });
         });
-
-    // Event listener for chat form submission
-    chatForm.addEventListener('submit', handleSubmit);
-    } else {
-        console.error("One or more modals or signup form not found in the loaded content.");
     }
-    
 }
 
 // Function to show the add task modal

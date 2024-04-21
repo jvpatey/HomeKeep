@@ -19,8 +19,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const firestore = getFirestore(app);
-const messagesCollection = collection(firestore, 'messages');
-const responsesCollection = collection(firestore, 'responses');
 
 // Check authentication status
 console.log(auth.currentUser);
@@ -33,64 +31,6 @@ auth.onAuthStateChanged(user => {
         console.log("No user logged in.");
     }
 });
-
-/* ----- Firebase messages via chat ----- */
-
-// Function to send a message to Firestore
-async function sendMessage(message) {
-    try {
-        await addDoc(messagesCollection, {
-            sender: 'user',
-            content: message,
-            timestamp: new Date().toISOString()
-        });
-    } catch (error) {
-        console.error("Error sending message:", error);
-    }
-}
-
-// Function to handle receiving messages from Firestore
-function receiveMessage(snapshot) {
-    snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-            const message = change.doc.data();
-            const messagesContainer = document.getElementById('messagesContainer');
-            const messageElement = document.createElement('div');
-            messageElement.textContent = message.sender + ': ' + message.content;
-            messagesContainer.appendChild(messageElement);
-        }
-    });
-}
-
-// Listen for new messages from Firestore
-onSnapshot(messagesCollection, receiveMessage);
-
-// Function to handle receiving response messages from Firestore
-function receiveResponse(snapshot) {
-    snapshot.docChanges().forEach((change) => {
-        if (change.type === 'added') {
-            const response = change.doc.data();
-            const messagesContainer = document.getElementById('messagesContainer');
-            const responseElement = document.createElement('div');
-            responseElement.textContent = response.sender + ': ' + response.content;
-            messagesContainer.appendChild(responseElement);
-        }
-    });
-}
-
-// Listen for new response messages from Firestore
-onSnapshot(responsesCollection, receiveResponse);
-
-// Function to handle form submission
-function handleSubmit(event) {
-    event.preventDefault();
-    const messageInput = document.getElementById('messageInput');
-    const message = messageInput.value.trim();
-    if (message !== '') {
-        sendMessage(message);
-        messageInput.value = '';
-    }
-}
 
 /* -----Firebase Auth----- */
 
@@ -176,9 +116,8 @@ function loadModals() {
 function initializeModals() {
     var createAccountModal = document.getElementById('createAccountModal');
     var signupForm = document.getElementById('signupForm');
-    var chatForm = document.getElementById('chatForm');
 
-    if (createAccountModal && signupForm && chatForm) {
+    if (createAccountModal && signupForm) {
         document.getElementById('createAccountLink').addEventListener('click', function() {
             createAccountModal.showModal();
         });
@@ -205,13 +144,7 @@ function initializeModals() {
                     alert(error.message);
                 });
         });
-
-    // Event listener for chat form submission
-    chatForm.addEventListener('submit', handleSubmit);
-    } else {
-        console.error("One or more modals or signup form not found in the loaded content.");
-    }
-};
+}};
 
 
 // Function to show the create account modal
