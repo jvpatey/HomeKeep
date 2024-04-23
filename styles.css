@@ -275,27 +275,24 @@ thead {
 }
 
 .date-block {
-  padding: 6px;
+  padding: 12px;
   border-radius: 0.25rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: flex-start; 
   box-sizing: border-box;
   overflow: hidden;
-  min-height: 10rem;
-  min-width: 6rem; 
+  min-height: 9rem;
+  min-width: 6rem;
+  font-size: 0.75em;
 }
 
 .day-of-month {
-font-weight: bold;
-font-size: 0.85em;
-color: marine;
-}
-
-.day-of-week {
-font-size: 0.75em;
-color: grey;
+  font-weight: bold;
+  font-size: 0.25em;
+  color: marine;
+  text-align: center;
 }
 
 .event-block {
@@ -324,7 +321,7 @@ color: grey;
   }
 
   .date-block {
-    min-height: 5rem;
+    min-height: 9em;
     padding: 12px; 
   }
 }
@@ -361,6 +358,10 @@ color: grey;
     .day-of-week {
     font-size: 0.5em;
     color: grey;
+    }
+
+    .event-container::-webkit-scrollbar {
+      display: none;
     }
 }
 

@@ -265,8 +265,7 @@ let currentYear = currentDate.getFullYear();
 
 const monthNames = ["January", "February", "March", "April", "May", "June",
                     "July", "August", "September", "October", "November", "December"];
-
-                    
+             
 const renderCalendar = (user) => {
     const calendarGrid = document.getElementById('calendar');
     // Display the current month and year
@@ -277,39 +276,29 @@ const renderCalendar = (user) => {
         return `${month + 1}-${day}-${year}`;
     };
 
-    const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
     const startingDay = firstDayOfMonth.getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
 
     const today = new Date();
     const currentDay = today.getDate();
-    const currentYearInt = today.getFullYear(); // Get the current year
 
     calendarGrid.innerHTML = '';
 
+    // Add empty date blocks for days before the start of the month
+    for (let i = 0; i < startingDay; i++) {
+        calendarGrid.innerHTML += `<div class="date-block h-16"></div>`;
+    }
+
     // Add date blocks for each day of the month
     for (let i = 1; i <= daysInMonth; i++) {
-        const currentDate = new Date(currentYear, currentMonth, i);
-        const dayOfWeek = daysOfWeek[currentDate.getDay()]; // Get the day of the week for the current date
         const dateString = getDateString(i, currentMonth, currentYear);
+        const currentDate = new Date(currentYear, currentMonth, i);
 
-        let dateBlock = `<div class="date-block border h-16 text-center text-charcoal hover:bg-clean hover:text-marine border-charcoal rounded-md" data-date="${dateString}" data-day="${i}">
-                            <div class="day-info">
-                                <span class="day-of-week">${dayOfWeek}</span>
-                                <span class="day-of-month">${i}</span>
-                            </div>
-                        </div>`;
+        let dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
 
-        // Check if the current date belongs to the current year
-        if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate() && currentYear === currentYearInt) {
-            dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md current-day" data-date="${dateString}" data-day="${i}">
-                            <div class="day-info">
-                                <span class="day-of-week">${dayOfWeek}</span>
-                                <span class="day-of-month">${i}</span>
-                            </div>
-                        </div>`;
+        if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate()) {
+            dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md current-day" data-date="${dateString}" data-day="${i}">${i}</div>`;
         }
 
         calendarGrid.innerHTML += dateBlock;
