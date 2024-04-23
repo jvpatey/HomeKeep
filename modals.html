@@ -1,6 +1,6 @@
  <!-- HTML file to contain modals -->
 
-<!-- DaisyUI add-task form modal -->
+<!-- DaisyUI add-task form modal with drop-down list for category -->
 <dialog id="addTaskModal" class="modal">
     <div class="modal-box bg-clean p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
@@ -10,24 +10,38 @@
                 <input id="taskName" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
             </label>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
-                <input id="category" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Category" />
+                <!-- Drop-down list for category -->
+                <select id="category" class="flex-grow bg-clean text-charcoal border-marine" placeholder="Category">
+                    <option disabled selected>Select Category</option>
+                    <option value="Appliance Maintenance">Appliance Maintenance</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Electrical and Safety">Electrical and Safety</option>
+                    <option value="Exterior Maintenance">Exterior Maintenance</option>
+                    <option value="Filters and Ventilation">Filters and Ventilation</option>
+                    <option value="General Home Maintenance">General Home Maintenance</option>
+                    <option value="Laundry">Laundry</option>
+                    <option value="Plumbing and Water Systems">Plumbing and Water Systems</option>
+                    <option value="Seasonal Tasks">Seasonal Tasks</option>
+                    <option value="Yard Work">Yard Work</option>
+                    <option value="Other">Other</option>
+                </select>
             </label>
             <div class="flex items-center gap-2 mb-2">
                 <label class="text-charcoal">Start Date:</label>
                 <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
-                    <input id="startDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Start Date" pattern="\d{2}-\d{2}-\d{4}" required />
+                    <input id="startDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" required />
                 </label>
             </div>
             <div class="flex items-center gap-2 mb-2">
                 <label class="text-charcoal mr-2">End Date:</label>
                 <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
-                    <input id="endDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="End Date" pattern="\d{2}-\d{2}-\d{4}" />
+                    <input id="endDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" />
                 </label>
             </div>
             <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine">
-                <input id="interval" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
+                <input id="interval" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder=" Interval (days)" />
             </label>
-            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-clean gap-2 text-charcoal border-marine placeholder-charcoal" placeholder="Maintenance Description"></textarea>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-clean gap-2 text-charcoal border-marine placeholder-charcoal" placeholder="Task Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center">
                 <button id="submitTaskButton" type="button" class="btn text-charcoal font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
             </div>
@@ -71,39 +85,55 @@
     </div>
 </dialog>
 
+<!-- DaisyUI edit task modal -->
 <dialog id="editTaskModal" class="modal">
     <div class="modal-box bg-clean p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('editTaskModal').close()">✕</button>
-            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Edit a Task</h1>
-            <form id="editTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
-                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                    <input id="editTaskName" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
+        <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Edit a Task</h1>
+        <form id="editTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
+                <input id="editTaskName" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
+            </label>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
+                <!-- Updated drop-down list for category -->
+                <select id="editCategory" class="flex-grow bg-clean text-charcoal border-marine">
+                    <option disabled selected>Select Category</option>
+                    <option value="Appliance Maintenance">Appliance Maintenance</option>
+                    <option value="Cleaning">Cleaning</option>
+                    <option value="Electrical and Safety">Electrical and Safety</option>
+                    <option value="Exterior Maintenance">Exterior Maintenance</option>
+                    <option value="Filters and Ventilation">Filters and Ventilation</option>
+                    <option value="General Home Maintenance">General Home Maintenance</option>
+                    <option value="Laundry">Laundry</option>
+                    <option value="Plumbing and Water Systems">Plumbing and Water Systems</option>
+                    <option value="Seasonal Tasks">Seasonal Tasks</option>
+                    <option value="Yard Work">Yard Work</option>
+                    <option value="Other">Other</option>
+                </select>
+            </label>
+            <div class="flex items-center gap-2 mb-2">
+                <label class="text-charcoal">Start Date:</label>
+                <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
+                    <input id="editStartDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" required />
                 </label>
-                <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                    <input id="editCategory" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Category" />
+            </div>
+            <div class="flex items-center gap-2 mb-2">
+                <label class="text-charcoal mr-2">End Date:</label>
+                <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
+                    <input id="editEndDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" />
                 </label>
-                <div class="flex items-center gap-2 mb-2">
-                    <label class="text-charcoal">Start Date:</label>
-                    <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
-                        <input id="editStartDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Start Date" pattern="\d{2}-\d{2}-\d{4}" required />
-                    </label>
-                </div>
-                <div class="flex items-center gap-2 mb-2">
-                    <label class="text-charcoal mr-2">End Date:</label>
-                    <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
-                        <input id="editEndDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" placeholder="End Date" pattern="\d{2}-\d{2}-\d{4}" />
-                    </label>
-                </div>
-                <label class="input input-bordered flex items-center gap-2 bg-clean border-marine">
-                    <input id="editInterval" type="text" class="grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
-                </label>
-                <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal placeholder-charcoal gap-2 bg-clean border-marine" placeholder="Maintenance Description"></textarea>
-                <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                    <button id="editSubmitBtn" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
-                </div>
-            </form>
+            </div>
+            <label class="input input-bordered flex items-center gap-2 bg-clean border-marine">
+                <input id="editInterval" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
+            </label>
+            <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal bg-clean border-marine" placeholder="Maintenance Description"></textarea>
+            <div class="mx-auto w-1/2 py-1 text-center mt-2">
+                <button id="editSubmitBtn" class="btn text-charcoal font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
+            </div>
+        </form>
     </div>
 </dialog>
+
 
 
 <!-- DaisyUI create account Modal -->
