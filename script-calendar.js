@@ -126,17 +126,17 @@ async function saveFormData() {
 }
 
 const categoryColors = {
-    "Appliance Maintenance": "#FFD6C2",
-    "Cleaning": "#B5EAD7",
-    "Electrical and Safety": "#FFE1E6",
-    "Exterior Maintenance": "#C7CEEA",
-    "Filters and Ventilation": "#FFD3B5",
-    "General Home Maintenance": "#D0E6A5",
-    "Laundry": "#B8E1FF",
-    "Plumbing and Water Systems": "#FFDAC1",
-    "Seasonal Tasks": "#FFB5E8",
-    "Yard Work": "#A7FFEB",
-    "Other": "#FFC2E0"
+    "Appliance Maintenance": "#FD8A8A",
+    "Cleaning": "#FFCBCB",
+    "Electrical and Safety": "#9EA1D4",
+    "Exterior Maintenance": "#F1F7B5",
+    "Filters and Ventilation": "#A8D1D1",
+    "General Home Maintenance": "#DFEBEB",
+    "Laundry": "#FAD1FA",
+    "Plumbing and Water Systems": "#FEC868",
+    "Seasonal Tasks": "#CDE8E6",
+    "Yard Work": "#F9DC5C",
+    "Other": "#E8E8E4"
 };
 
 async function displayTasks(user, year, month) {
