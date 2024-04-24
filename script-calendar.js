@@ -125,6 +125,20 @@ async function saveFormData() {
     }
 }
 
+const categoryColors = {
+    "Appliance Maintenance": "#FFD6C2",
+    "Cleaning": "#B5EAD7",
+    "Electrical and Safety": "#FFE1E6",
+    "Exterior Maintenance": "#C7CEEA",
+    "Filters and Ventilation": "#FFD3B5",
+    "General Home Maintenance": "#D0E6A5",
+    "Laundry": "#B8E1FF",
+    "Plumbing and Water Systems": "#FFDAC1",
+    "Seasonal Tasks": "#FFB5E8",
+    "Yard Work": "#A7FFEB",
+    "Other": "#FFC2E0"
+};
+
 async function displayTasks(user, year, month) {
     try {
         if (!user) {
@@ -171,7 +185,11 @@ async function displayTasks(user, year, month) {
                         }
 
                         const eventBlock = document.createElement('div');
-                        eventBlock.classList.add('event-block', 'rounded-lg', 'bg-marine', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-charcoal', 'overflow-hidden', 'hover:bg-charcoal', 'hover:text-marine');
+                        eventBlock.classList.add('event-block', 'rounded-lg', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-charcoal', 'overflow-hidden', 'hover:bg-charcoal', 'hover:text-marine');
+
+                        // Set background color based on category
+                        eventBlock.style.backgroundColor = categoryColors[task.category];
+
                         eventBlock.textContent = task.taskName;
                         eventBlock.title = task.taskName;
                         eventBlock.dataset.taskId = doc.id;
