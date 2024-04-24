@@ -157,11 +157,9 @@ function populateEditTaskModal(taskData) {
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 }
 
-
 // Function to update task data in Firestore and the table
 async function updateTask(taskData, docRef, row) {
     try {
-        // Update document in Firestore and table
         await updateDoc(docRef, taskData);
         row.children[0].textContent = taskData.taskName;
         row.children[1].textContent = taskData.category;
@@ -192,7 +190,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
         const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
 
         if (querySnapshot.empty) {
-            // Append a row with the message "No tasks entered yet if no data"
+            // If no data - append a row with the message "No tasks entered yet if no data"
             const emptyRow = document.createElement('tr');
             emptyRow.innerHTML = '<td colspan="8" class="text-center py-4">No tasks entered yet</td>';
             taskTableBody.appendChild(emptyRow);
@@ -203,14 +201,14 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 tasks.push({ id: doc.id, ...doc.data() });
             });
 
-            // Sort functions to sort tasks by name and startdate
+            // Sort tasks by name and startdate
             if (sortByTaskName) {
                 tasks.sort((a, b) => a.taskName.localeCompare(b.taskName));
             } else if (sortByStartDate) {
                 tasks.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
             }
             
-            // Append each task as a row to the table
+            // Append each task as a row in the table
             tasks.forEach(task => {
                 const row = document.createElement('tr');
                 row.innerHTML = `
@@ -270,15 +268,24 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 garbageIcon.className = 'fas fa-trash-alt';
                 garbageIcon.classList.add('hover:text-marine', 'text-lg', 'mr-2');
                 garbageIcon.addEventListener('click', async () => {
-                    try {
-                        // Capture the doc reference for deletion
-                        const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
-                        // Delete document from Firestore
-                        await deleteDoc(docRef);
-                        // Remove row from table
-                        taskTableBody.removeChild(row);
-                    } catch (error) {
-                        console.error("Error deleting document: ", error);
+                    // Ask for confirmation before deleting the task
+                    const userConfirmed = confirm("Are you sure you want to delete this task?");
+                    
+                    if (userConfirmed) {
+                        try {
+                            // Capture the doc reference for deletion
+                            const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
+                
+                            // Delete the document from Firestore
+                            await deleteDoc(docRef);
+                
+                            // Remove the row from the table
+                            taskTableBody.removeChild(row);
+                
+                            console.log("Task deleted successfully.");
+                        } catch (error) {
+                            console.error("Error deleting document: ", error);
+                        }
                     }
                 });
 
