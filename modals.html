@@ -1,6 +1,6 @@
  <!-- HTML file to contain modals -->
 
-<!-- DaisyUI add-task form modal with drop-down list for category -->
+<!-- DaisyUI add-task form modal -->
 <dialog id="addTaskModal" class="modal">
     <div class="modal-box bg-clean p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
@@ -95,7 +95,6 @@
                 <input id="editTaskName" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
             </label>
             <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                <!-- Updated drop-down list for category -->
                 <select id="editCategory" class="flex-grow bg-clean text-charcoal border-marine">
                     <option disabled selected>Select Category</option>
                     <option value="Appliance Maintenance">Appliance Maintenance</option>
@@ -134,8 +133,6 @@
     </div>
 </dialog>
 
-
-
 <!-- DaisyUI create account Modal -->
 <dialog id="createAccountModal" class="modal">
     <div class="modal-box bg-clean p-1 rounded-md">
@@ -143,7 +140,6 @@
         <div class="w-full max-w-lg bg-clean p-1 rounded-md">
             <form id="signupForm" class="card-body">
                 <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Create an Account</h1>
-                <!-- Form Input Fields -->
                 <div class="form-control">
                     <input id="firstName" type="text" placeholder="First Name" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
                 </div>
@@ -165,7 +161,7 @@
     </div>
   </dialog>
 
-<!-- Chat Modal -->
+<!-- Chat popup with help form modal -->
 <div id="chatModal" class="chat-popup bottom-24 rounded-xl">
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeVsLFIqVvFndKxTw34VOhbTh-ZZ7xnw3yDTsPld0u02yi8gg/viewform?embedded=true" width="500" height="550" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 </div>

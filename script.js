@@ -2,7 +2,7 @@
 
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
-import { getFirestore, collection, doc, addDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
+import { getFirestore, collection, doc, addDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
 // Firbase config
@@ -52,12 +52,15 @@ async function saveFormData() {
     // Extract form data
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
+
     const rawStartDate = document.getElementById('startDate').value;
     const startDateParts = rawStartDate.split('-');
     const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
+
     const rawEndDate = document.getElementById('endDate').value; 
     const endDateParts = rawEndDate.split('-');
     const formattedEndDate = `${endDateParts[1]}-${endDateParts[2]}-${endDateParts[0]}`; // Convert to MM-DD-YYYY format
+
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
@@ -85,7 +88,7 @@ async function saveFormData() {
         return;
     }
 
-    // Take month, day, and year from the input for start date
+    // Take month, day, and year from the input field for start date
     const [startMonth, startDay, startYear] = formattedStartDate.split('-').map(Number);
     if (startMonth < 1 || startMonth > 12) {
         alert("Please enter a valid start month (1-12).");
@@ -103,7 +106,7 @@ async function saveFormData() {
         return;
     }
 
-    // Take month, day, and year from the input for end date
+    // Take month, day, and year from the input field for end date
     const [endMonth, endDay, endYear] = formattedEndDate.split('-').map(Number);
     if (endMonth < 1 || endMonth > 12) {
         alert("Please enter a valid end month (1-12).");
@@ -148,11 +151,8 @@ function populateEditTaskModal(taskData) {
     var editTaskForm = document.getElementById('editTaskForm');
     editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
     editTaskForm.querySelector('#editCategory').value = taskData.category;
-    
-    // Set the value attribute of date picker inputs with the corresponding dates
     editTaskForm.querySelector('#editStartDate').valueAsDate = new Date(taskData.startDate);
     editTaskForm.querySelector('#editEndDate').valueAsDate = new Date(taskData.endDate);
-    
     editTaskForm.querySelector('#editInterval').value = taskData.interval;
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 }

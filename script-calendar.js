@@ -2,7 +2,7 @@
 
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
-import { getFirestore, doc, collection, getDoc, addDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
+import { getFirestore, doc, collection, addDoc, getDocs } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
 // Firebase config
@@ -163,14 +163,13 @@ async function displayTasks(user, year, month) {
             const interval = parseInt(task.interval);
             const endDate = task.endDate ? new Date(task.endDate).getTime() : null;
 
-            // Calculate the next occurrence date
+            // Calculate the next occurrence date for the task and add it to the calendar
             let nextOccurrenceDate = new Date(startDateTimestamp);
             while (nextOccurrenceDate <= new Date(year, month + 1, 0)) {
                 // Check if the task exceeds the end date (if available)
                 if (endDate && nextOccurrenceDate > endDate) {
                     break;
                 }
-
                 if (nextOccurrenceDate.getFullYear() === year && nextOccurrenceDate.getMonth() === month) {
                     const formattedDate = nextOccurrenceDate.toISOString().slice(0, 10);
                     const dayOfMonth = nextOccurrenceDate.getDate();
@@ -235,7 +234,6 @@ function showAddTaskFormModal(clickedDate) {
         
         var startDateInput = document.getElementById('startDate');
         if (startDateInput) {
-            // Format the clicked date and set it as the value of the start date input on form
             startDateInput.value = formatDate(clickedDate.getTime());
         }
     }
@@ -257,7 +255,6 @@ document.getElementById('calendar').addEventListener('click', function(event) {
         var clickedDateStr = event.target.dataset.date;
         console.log("Clicked date:", clickedDateStr);
         if (clickedDateStr) {
-            // Parse the date string into a Date object
             var dateParts = clickedDateStr.split('-');
             if (dateParts.length === 3) {
                 var month = parseInt(dateParts[0]) - 1;
@@ -389,7 +386,6 @@ document.addEventListener('click', function(event) {
             interval: event.target.dataset.interval,
             description: event.target.dataset.description
         };
-        // Show task details modal with the task data
         showTaskDetailsModal(taskData);
     }
 });
@@ -420,7 +416,6 @@ function initializeModals() {
     const addTaskModal = document.getElementById('addTaskModal');
 
     if (addTaskModal) {
-        // Show add task modal when the corresponding button is clicked
         document.getElementById('addTaskButton').addEventListener('click', () => {
             addTaskModal.showModal();
         });
@@ -436,7 +431,6 @@ function toggleChatModal() {
     chatModal.style.display = chatModal.style.display === "block" ? "none" : "block";
 }
 
-// Add general event listeners after DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     loadModals();
 

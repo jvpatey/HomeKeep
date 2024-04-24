@@ -29,7 +29,7 @@
 
 <body class="bg-clean min-h-screen flex flex-col">
 
-  <!--navbar -->
+  <!-- daisyUI navbar -->
 
   <div class="navbar bg-clean pb-6">
     <div class="navbar-start">
@@ -56,7 +56,7 @@
     </div>
   </div>
 
-  <!-- Buttons above table -->
+  <!-- Add task and calendar buttons -->
 
   <div class="flex items-end pt-16 pl-8">
     <button onclick="window.location.href = 'dashboard-calendar.html';" class=" btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">Calendar</button>
@@ -64,7 +64,7 @@
     <button id="testButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">N</button>
   </div>
 
-  <!-- Table with sample data -->
+  <!-- Task table -->
   <div class="flex flex-col px-8 pb-12 sm:pb-4 mb-3 bg-clean overflow-y-auto">
     <table class="table border bg-paper border-charcoal shadow-xl" id="taskTable">
       <thead class="text-charcoal text-lg">
@@ -80,11 +80,10 @@
         </tr>
       </thead>
       <tbody class="text-charcoal" id="taskTableBody">
-        <!-- Table rows will be added dynamically here -->
+        <!-- Table rows are added dynamically here -->
       </tbody>
     </table>
   </div>
-
 
   <!-- Footer -->
   
