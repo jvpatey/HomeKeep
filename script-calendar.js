@@ -226,15 +226,19 @@ async function displayTasks(user, year, month) {
 
 /* ------ Calendar functionality ------ */
 
-// Function to show the add-task-form modal and preload the clicked date into the start date field
-function showAddTaskFormModal(clickedDate) {
+// Function to show the add-task-form modal
+function showAddTaskFormModal(clickedDate = null) {
     var addTaskModal = document.getElementById('addTaskModal');
     if (addTaskModal) {
         addTaskModal.showModal();
         
-        var startDateInput = document.getElementById('startDate');
+        const startDateInput = document.getElementById('startDate');
         if (startDateInput) {
-            startDateInput.value = formatDate(clickedDate.getTime());
+            if (clickedDate) { // Only preload if a date is provided
+                startDateInput.value = formatDate(clickedDate.getTime());
+            } else { // Clear the input if no date is provided
+                startDateInput.value = ''; 
+            }
         }
     }
 };
@@ -417,7 +421,7 @@ function initializeModals() {
 
     if (addTaskModal) {
         document.getElementById('addTaskButton').addEventListener('click', () => {
-            addTaskModal.showModal();
+            showAddTaskFormModal();
         });
 
         // Call the form submission function when the submit button is clicked
