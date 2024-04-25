@@ -2,7 +2,7 @@
 
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
-import { getFirestore, collection, doc, addDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
+import { getFirestore, collection, doc, addDoc, getDoc, setDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
 // Firbase config
@@ -126,6 +126,12 @@ async function saveFormData() {
 
     try {
         // Add a new document with a generated ID and user's authentication information
+        const userDocRef = doc(firestore, 'users', user.uid);
+        const docSnapshot = await getDoc(userDocRef);
+
+        if (!docSnapshot.exists()) {
+            await setDoc(userDocRef, {});
+        }
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
