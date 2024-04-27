@@ -110,12 +110,30 @@ async function saveFormData() {
     }
 }
 
+function formatToMMDDYYYY(date) {
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = String(date.getFullYear());
+    return `${month}-${day}-${year}`;
+}
+
+function convertToISO(date) {
+    const dateParts = date.split('-');
+    const month = dateParts[0];
+    const day = dateParts[1];
+    const year = dateParts[2];
+    return `${year}-${month}-${day}`;
+}
+
 function populateEditTaskModal(taskData) {
     const editTaskForm = document.getElementById('editTaskForm');
     
     editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
     editTaskForm.querySelector('#editCategory').value = taskData.category;
-    editTaskForm.querySelector('#editStartDate').valueAsDate = new Date(taskData.startDate);
+
+    const isoDate = convertToISO(taskData.startDate);
+    editTaskForm.querySelector('#editStartDate').value = isoDate;
+
     const intervalText = intervalTextMapping[taskData.interval] || taskData.interval;
     const editInterval = editTaskForm.querySelector('#editInterval');
     for (let option of editInterval.options) {
@@ -124,6 +142,7 @@ function populateEditTaskModal(taskData) {
             break;
         }
     }
+
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 }
 
@@ -310,22 +329,25 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
 
                     lastFunction = async (e) => {
                         e.preventDefault();
-
-                        // Extract edited task data
+                    
+                        const rawStartDate = editTaskForm.querySelector('#editStartDate').value;
+                        const isoDateParts = rawStartDate.split('-');
+                        const formattedStartDate = `${isoDateParts[1]}-${isoDateParts[2]}-${isoDateParts[0]}`; // MM-DD-YYYY
+                    
                         const editedTaskData = {
                             taskName: editTaskForm.querySelector('#editTaskName').value,
                             category: editTaskForm.querySelector('#editCategory').value,
-                            startDate: editTaskForm.querySelector('#editStartDate').value,
+                            startDate: formattedStartDate, // Store in MM-DD-YYYY format
                             interval: editTaskForm.querySelector('#editInterval').value,
-                            description: editTaskForm.querySelector('#editDescription').value
+                            description: editTaskForm.querySelector('#editDescription').value,
                         };
-
-                        // Update task data in Firestore and the table
+                    
                         const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
                         await updateTask(editedTaskData, docRef, row);
                         document.getElementById('editTaskModal').close();
                         displayTasks();
-                    }
+                    };
+                    
                     
                     editTaskForm.addEventListener('submit', lastFunction);
                 });
