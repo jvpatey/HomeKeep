@@ -57,10 +57,6 @@ async function saveFormData() {
     const startDateParts = rawStartDate.split('-');
     const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
 
-    const rawEndDate = document.getElementById('endDate').value; 
-    const endDateParts = rawEndDate.split('-');
-    const formattedEndDate = `${endDateParts[1]}-${endDateParts[2]}-${endDateParts[0]}`; // Convert to MM-DD-YYYY format
-
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
@@ -68,22 +64,6 @@ async function saveFormData() {
     const datePattern = /^\d{2}-\d{2}-\d{4}$/;
     if (!datePattern.test(formattedStartDate)) {
         alert("Please enter the start date in the format MM-DD-YYYY.");
-        formSubmitted = false;
-        return;
-    }
-
-    // Validate the end date format
-    if (!datePattern.test(formattedEndDate)) {
-        alert("Please enter the end date in the format MM-DD-YYYY.");
-        formSubmitted = false;
-        return;
-    }
-
-    // Validate that end date is after start date
-    const startDateObj = new Date(formattedStartDate);
-    const endDateObj = new Date(formattedEndDate);
-    if (endDateObj <= startDateObj) {
-        alert("End date must be after start date.");
         formSubmitted = false;
         return;
     }
@@ -106,24 +86,6 @@ async function saveFormData() {
         return;
     }
 
-    // Take month, day, and year from the input field for end date
-    const [endMonth, endDay, endYear] = formattedEndDate.split('-').map(Number);
-    if (endMonth < 1 || endMonth > 12) {
-        alert("Please enter a valid end month (1-12).");
-        formSubmitted = false;
-        return;
-    }
-    if (endDay < 1 || endDay > 31) {
-        alert("Please enter a valid end day (1-31).");
-        formSubmitted = false;
-        return;
-    }
-    if (endYear < 1900 || endYear > 2100) {
-        alert("Please enter a valid end year (1900-2100).");
-        formSubmitted = false;
-        return;
-    }
-
     try {
         // Add a new document with a generated ID and user's authentication information
         const userDocRef = doc(firestore, 'users', user.uid);
@@ -136,7 +98,6 @@ async function saveFormData() {
             taskName: taskName,
             category: category,
             startDate: formattedStartDate,
-            endDate: formattedEndDate,
             interval: interval,
             description: description
         });
@@ -158,7 +119,6 @@ function populateEditTaskModal(taskData) {
     editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
     editTaskForm.querySelector('#editCategory').value = taskData.category;
     editTaskForm.querySelector('#editStartDate').valueAsDate = new Date(taskData.startDate);
-    editTaskForm.querySelector('#editEndDate').valueAsDate = new Date(taskData.endDate);
     editTaskForm.querySelector('#editInterval').value = taskData.interval;
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 }
@@ -170,9 +130,8 @@ async function updateTask(taskData, docRef, row) {
         row.children[0].textContent = taskData.taskName;
         row.children[1].textContent = taskData.category;
         row.children[2].textContent = taskData.startDate;
-        row.children[3].textContent = taskData.endDate;
-        row.children[4].textContent = taskData.interval;
-        row.children[5].textContent = taskData.description;
+        row.children[3].textContent = taskData.interval;
+        row.children[4].textContent = taskData.description;
 
     } catch (error) {
         console.error("Error updating document: ", error);
@@ -221,7 +180,6 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                     <td><a href="#" class="task-name-link hover:text-marine">${task.taskName}</a></td>
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
-                    <td>${task.endDate}</td>
                     <td>${task.interval}</td>
                     <td>${task.description}</td>
                     <td></td>
@@ -251,7 +209,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 toggleSwitchContainer.appendChild(toggleSwitchInput);
                 toggleSwitchContainer.appendChild(toggleSwitchMark);
 
-                row.children[6].appendChild(toggleSwitchContainer);
+                row.children[5].appendChild(toggleSwitchContainer);
 
                 // Flex container for icons in cell 7
                 const iconsContainer = document.createElement('div');
@@ -296,7 +254,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 });
 
                 iconsContainer.appendChild(garbageIcon);
-                row.children[7].appendChild(iconsContainer);
+                row.children[6].appendChild(iconsContainer);
 
                 // Add event listener to the pencil icon
                 pencilIcon.addEventListener('click', async () => {
@@ -304,9 +262,8 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                         taskName: row.children[0].textContent,
                         category: row.children[1].textContent,
                         startDate: row.children[2].textContent,
-                        endDate: row.children[3].textContent,
-                        interval: row.children[4].textContent,
-                        description: row.children[5].textContent
+                        interval: row.children[3].textContent,
+                        description: row.children[4].textContent
                     };
                     // Populate the edit task modal with data from the corresponding row
                     populateEditTaskModal(taskData);
@@ -328,18 +285,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                             taskName: editTaskForm.querySelector('#editTaskName').value,
                             category: editTaskForm.querySelector('#editCategory').value,
                             startDate: editTaskForm.querySelector('#editStartDate').value,
-                            endDate: editTaskForm.querySelector('#editEndDate').value,
                             interval: editTaskForm.querySelector('#editInterval').value,
                             description: editTaskForm.querySelector('#editDescription').value
                         };
-
-                        // Validate that end date is after start date
-                        const editedStartDateObj = new Date(editedTaskData.startDate);
-                        const editedEndDateObj = new Date(editedTaskData.endDate);
-                        if (editedEndDateObj <= editedStartDateObj) {
-                            alert("End date must be after start date.");
-                            return;
-                        }
 
                         // Update task data in Firestore and the table
                         const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), task.id);
@@ -414,7 +362,6 @@ function showTaskDetailsModal(task) {
         document.getElementById('taskDetailsName').textContent = task.taskName;
         document.getElementById('taskDetailsCategory').textContent = task.category;
         document.getElementById('taskDetailsStartDate').textContent = task.startDate;
-        document.getElementById('taskDetailsEndDate').textContent = task.endDate;
         document.getElementById('taskDetailsInterval').textContent = `${task.interval} days`;
         document.getElementById('taskDetailsDescription').textContent = task.description;
 

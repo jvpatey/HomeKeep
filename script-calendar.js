@@ -54,9 +54,6 @@ async function saveFormData() {
     const rawStartDate = document.getElementById('startDate').value;
     const startDateParts = rawStartDate.split('-');
     const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
-    const rawEndDate = document.getElementById('endDate').value;
-    const endDateParts = rawEndDate.split('-');
-    const formattedEndDate = `${endDateParts[1]}-${endDateParts[2]}-${endDateParts[0]}`; // Convert to MM-DD-YYYY format
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
@@ -68,34 +65,10 @@ async function saveFormData() {
         return;
     }
 
-    // Validate the end date format
-    if (!datePattern.test(formattedEndDate)) {
-        alert("Please enter the end date in the format MM-DD-YYYY.");
-        formSubmitted = false;
-        return;
-    }
-
-    // Ensure end date is after start date
-    const startDateObj = new Date(formattedStartDate);
-    const endDateObj = new Date(formattedEndDate);
-    if (endDateObj <= startDateObj) {
-        alert("End date must be after start date.");
-        formSubmitted = false;
-        return;
-    }
-
     // Take month, day, and year from the start date input
     const [startMonth, startDay, startYear] = formattedStartDate.split('-').map(Number);
     if (startMonth < 1 || startMonth > 12 || startDay < 1 || startDay > 31 || startYear < 1900 || startYear > 2100) {
         alert("Please enter a valid start date (MM-DD-YYYY).");
-        formSubmitted = false;
-        return;
-    }
-
-    // Take month, day, and year from the end date input
-    const [endMonth, endDay, endYear] = formattedEndDate.split('-').map(Number);
-    if (endMonth < 1 || endMonth > 12 || endDay < 1 || endDay > 31 || endYear < 1900 || endYear > 2100) {
-        alert("Please enter a valid end date (MM-DD-YYYY).");
         formSubmitted = false;
         return;
     }
@@ -112,7 +85,6 @@ async function saveFormData() {
             taskName: taskName,
             category: category,
             startDate: formattedStartDate,
-            endDate: formattedEndDate,
             interval: interval,
             description: description
         });
@@ -167,15 +139,10 @@ async function displayTasks(user, year, month) {
 
             const startDateTimestamp = new Date(task.startDate).getTime();
             const interval = parseInt(task.interval);
-            const endDate = task.endDate ? new Date(task.endDate).getTime() : null;
 
             // Calculate the next occurrence date for the task and add it to the calendar
             let nextOccurrenceDate = new Date(startDateTimestamp);
             while (nextOccurrenceDate <= new Date(year, month + 1, 0)) {
-                // Check if the task exceeds the end date (if available)
-                if (endDate && nextOccurrenceDate > endDate) {
-                    break;
-                }
                 if (nextOccurrenceDate.getFullYear() === year && nextOccurrenceDate.getMonth() === month) {
                     const formattedDate = nextOccurrenceDate.toISOString().slice(0, 10);
                     const dayOfMonth = nextOccurrenceDate.getDate();
@@ -200,7 +167,6 @@ async function displayTasks(user, year, month) {
                         eventBlock.dataset.taskId = doc.id;
                         eventBlock.dataset.category = task.category;
                         eventBlock.dataset.startDate = task.startDate;
-                        eventBlock.dataset.endDate = task.endDate;
                         eventBlock.dataset.interval = task.interval;
                         eventBlock.dataset.description = task.description;
                         eventContainer.appendChild(eventBlock);
@@ -374,7 +340,6 @@ function showTaskDetailsModal(taskData) {
     document.getElementById('taskDetailsName').textContent = taskData.taskName;
     document.getElementById('taskDetailsCategory').textContent = taskData.category;
     document.getElementById('taskDetailsStartDate').textContent = taskData.startDate;
-    document.getElementById('taskDetailsEndDate').textContent = taskData.endDate; // Populate end date
     document.getElementById('taskDetailsInterval').textContent = taskData.interval;
     document.getElementById('taskDetailsDescription').textContent = taskData.description;
 
@@ -392,7 +357,6 @@ document.addEventListener('click', function(event) {
             taskName: event.target.textContent,
             category: event.target.dataset.category,
             startDate: event.target.dataset.startDate,
-            endDate: event.target.dataset.endDate,
             interval: event.target.dataset.interval,
             description: event.target.dataset.description
         };
@@ -447,7 +411,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show chat modal when chat icon is clicked
     document.getElementById("chatIcon").addEventListener("click", toggleChatModal);
 });
-
 
 /* ------- Firebase Auth ------- */
 
