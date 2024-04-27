@@ -110,19 +110,18 @@ async function saveFormData() {
     }
 }
 
-
 const categoryColors = {
-    "Appliance Maintenance": "#FD8A8A",
-    "Cleaning": "#FFCBCB",
-    "Electrical and Safety": "#9EA1D4",
-    "Exterior Maintenance": "#F1F7B5",
-    "Filters and Ventilation": "#A8D1D1",
-    "General Home Maintenance": "#DFEBEB",
-    "Laundry": "#FAD1FA",
-    "Plumbing and Water Systems": "#FEC868",
-    "Seasonal Tasks": "#CDE8E6",
-    "Yard Work": "#F9DC5C",
-    "Other": "#E8E8E4"
+    "Appliance Maintenance": "#556B2F",
+    "Cleaning": "#4682B4",
+    "Electrical and Safety": "#708090",
+    "Exterior Maintenance": "#6B8E23",
+    "Filters and Ventilation": "#8FBC8F",
+    "General Home Maintenance": "#2F4F4F",
+    "Laundry": "#696969",
+    "Plumbing and Water Systems": "#5F9EA0",
+    "Seasonal Tasks": "#6A5ACD",
+    "Yard Work": "#8B4513",
+    "Other": "#A0522D",
 };
 
 async function displayTasks(user, year, month) {
@@ -165,7 +164,7 @@ async function displayTasks(user, year, month) {
                         }
 
                         const eventBlock = document.createElement('div');
-                        eventBlock.classList.add('event-block', 'rounded-lg', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-charcoal', 'overflow-hidden', 'hover:bg-charcoal', 'hover:text-marine');
+                        eventBlock.classList.add('event-block', 'rounded-lg', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-paper', 'overflow-hidden', 'hover:text-charcoal');
 
                         // Set background color based on category
                         eventBlock.style.backgroundColor = categoryColors[task.category];

@@ -142,6 +142,20 @@ async function updateTask(taskData, docRef, row) {
     }
 }
 
+const categoryColors = {
+    "Appliance Maintenance": "#556B2F",
+    "Cleaning": "#4682B4",
+    "Electrical and Safety": "#708090",
+    "Exterior Maintenance": "#6B8E23",
+    "Filters and Ventilation": "#8FBC8F",
+    "General Home Maintenance": "#2F4F4F",
+    "Laundry": "#696969",
+    "Plumbing and Water Systems": "#5F9EA0",
+    "Seasonal Tasks": "#6A5ACD",
+    "Yard Work": "#8B4513",
+    "Other": "#A0522D",
+};
+
 // Mapping from interval value to display text
 const intervalTextMapping = {
     "1": "Daily",
@@ -192,8 +206,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
             tasks.forEach(task => {
                 const row = document.createElement('tr');
                 const intervalText = intervalTextMapping[task.interval] || task.interval;
+                const taskColor = categoryColors[task.category] || '#3C3C3C';
                 row.innerHTML = `
-                    <td><a href="#" class="task-name-link hover:text-marine">${task.taskName}</a></td>
+                    <td><a href="#" class="task-name-link" style="color: ${taskColor}">${task.taskName}</a></td>
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
                     <td>${intervalText}</td>
