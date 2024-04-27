@@ -431,14 +431,9 @@ function toggleChatModal() {
     }
 }
 
-const testNotificationApi = () => {
-    fetch("http://127.0.0.1:5001/homekeep-x/us-central1/notify");
-}
-
 // Add event listeners to show modals
 document.getElementById('addTaskButton').addEventListener('click', showAddTaskModal);
 document.getElementById("chatIcon").addEventListener("click", toggleChatModal)
-document.getElementById('testButton').addEventListener('click', testNotificationApi);
 
 document.addEventListener('DOMContentLoaded', function() {
     loadModals();
