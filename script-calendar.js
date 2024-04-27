@@ -33,6 +33,14 @@ auth.onAuthStateChanged(user => {
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
+function convertToMMDDYYYY(dateString) {
+    const date = new Date(dateString);
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${month}-${day}-${year}`;
+}
+
 let formSubmitted = false;
 
 async function saveFormData() {
@@ -52,8 +60,7 @@ async function saveFormData() {
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
     const rawStartDate = document.getElementById('startDate').value;
-    const startDateParts = rawStartDate.split('-');
-    const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
+    const formattedStartDate = convertToMMDDYYYY(rawStartDate); // Format the date to MM-DD-YYYY
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
@@ -65,7 +72,7 @@ async function saveFormData() {
         return;
     }
 
-    // Take month, day, and year from the start date input
+    // Take month, day, and year from the formatted start date
     const [startMonth, startDay, startYear] = formattedStartDate.split('-').map(Number);
     if (startMonth < 1 || startMonth > 12 || startDay < 1 || startDay > 31 || startYear < 1900 || startYear > 2100) {
         alert("Please enter a valid start date (MM-DD-YYYY).");
@@ -84,13 +91,13 @@ async function saveFormData() {
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
             taskName: taskName,
             category: category,
-            startDate: formattedStartDate,
+            startDate: formattedStartDate, // Ensure formatted date
             interval: interval,
             description: description
         });
         console.log("Document successfully written!");
 
-        // Call displayTasks to update the table with the new task
+        // Update the table with the new task
         displayTasks(user, currentYear, currentMonth);
 
         // Reset form and close modal
@@ -102,6 +109,7 @@ async function saveFormData() {
         formSubmitted = false;
     }
 }
+
 
 const categoryColors = {
     "Appliance Maintenance": "#FD8A8A",
