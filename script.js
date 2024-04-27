@@ -52,11 +52,9 @@ async function saveFormData() {
     // Extract form data
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
-
     const rawStartDate = document.getElementById('startDate').value;
     const startDateParts = rawStartDate.split('-');
     const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
-
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
@@ -113,13 +111,20 @@ async function saveFormData() {
     }
 }
 
-// Function to populate the edit task modal with data from the corresponding row
 function populateEditTaskModal(taskData) {
-    var editTaskForm = document.getElementById('editTaskForm');
+    const editTaskForm = document.getElementById('editTaskForm');
+    
     editTaskForm.querySelector('#editTaskName').value = taskData.taskName;
     editTaskForm.querySelector('#editCategory').value = taskData.category;
     editTaskForm.querySelector('#editStartDate').valueAsDate = new Date(taskData.startDate);
-    editTaskForm.querySelector('#editInterval').value = taskData.interval;
+    const intervalText = intervalTextMapping[taskData.interval] || taskData.interval;
+    const editInterval = editTaskForm.querySelector('#editInterval');
+    for (let option of editInterval.options) {
+        if (option.text === intervalText) {
+            option.selected = true;
+            break;
+        }
+    }
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 }
 
@@ -137,6 +142,17 @@ async function updateTask(taskData, docRef, row) {
         console.error("Error updating document: ", error);
     }
 }
+
+// Mapping from interval value to display text
+const intervalTextMapping = {
+    "1": "Daily",
+    "7": "Weekly",
+    "14": "Bi-Weekly",
+    "30": "Monthly",
+    "90": "Quarterly",
+    "180": "Bi-Annually",
+    "365": "Annually",
+};
 
 var lastFunction;
 
@@ -176,11 +192,12 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
             // Append each task as a row in the table
             tasks.forEach(task => {
                 const row = document.createElement('tr');
+                const intervalText = intervalTextMapping[task.interval] || task.interval;
                 row.innerHTML = `
                     <td><a href="#" class="task-name-link hover:text-marine">${task.taskName}</a></td>
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
-                    <td>${task.interval}</td>
+                    <td>${intervalText}</td>
                     <td>${task.description}</td>
                     <td></td>
                     <td></td>

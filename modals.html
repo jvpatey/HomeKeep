@@ -33,7 +33,16 @@
                 </label>
             </div>
             <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine">
-                <input id="interval" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder=" Interval (days)" />
+                <select id="interval" class="flex-grow bg-clean text-charcoal border-marine">
+                    <option disabled selected>Select Interval</option>
+                    <option value="1">Daily</option>
+                    <option value="7">Weekly</option>
+                    <option value="14">Bi-Weekly</option>
+                    <option value="30">Monthly</option>
+                    <option value="90">Quarterly</option>
+                    <option value="180">Bi-Annually</option>
+                    <option value="365">Annually</option>
+                </select>
             </label>
             <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-clean gap-2 text-charcoal border-marine placeholder-charcoal" placeholder="Task Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center">
@@ -106,8 +115,17 @@
                     <input id="editStartDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" required />
                 </label>
             </div>
-            <label class="input input-bordered flex items-center gap-2 bg-clean border-marine">
-                <input id="editInterval" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Maintenance Interval (days)" />
+            <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine">
+                <select id="editInterval" class="flex-grow bg-clean text-charcoal border-marine">
+                    <option disabled selected>Select Interval</option>
+                    <option value="1">Daily</option>
+                    <option value="7">Weekly</option>
+                    <option value="14">Bi-Weekly</option>
+                    <option value="30">Monthly</option>
+                    <option value="90">Quarterly</option>
+                    <option value="180">Bi-Annually</option>
+                    <option value="365">Annually</option>
+                </select>
             </label>
             <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal bg-clean border-marine" placeholder="Maintenance Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center mt-2">
