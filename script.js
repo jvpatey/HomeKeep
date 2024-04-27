@@ -409,20 +409,21 @@ function showAddTaskModal() {
     }
 }
 
-// Function to show task details modal with task data
 function showTaskDetailsModal(task) {
     const taskDetailsModal = document.getElementById('taskDetailsModal');
     if (taskDetailsModal) {
-        // Populate modal with task data
+        // Populate the modal with task data
         document.getElementById('taskDetailsName').textContent = task.taskName;
         document.getElementById('taskDetailsCategory').textContent = task.category;
         document.getElementById('taskDetailsStartDate').textContent = task.startDate;
-        document.getElementById('taskDetailsInterval').textContent = `${task.interval} days`;
+        const intervalText = intervalTextMapping[task.interval] || 'Unknown Interval';
+        document.getElementById('taskDetailsInterval').textContent = intervalText;
         document.getElementById('taskDetailsDescription').textContent = task.description;
 
         taskDetailsModal.showModal();
     }
 }
+
 
 function toggleChatModal() {
     var chatModal = document.getElementById("chatModal");

@@ -110,6 +110,17 @@ async function saveFormData() {
     }
 }
 
+// Mapping from interval value to display text
+const intervalTextMapping = {
+    "1": "Daily",
+    "7": "Weekly",
+    "14": "Bi-Weekly",
+    "30": "Monthly",
+    "90": "Quarterly",
+    "180": "Bi-Annually",
+    "365": "Annually",
+};
+
 const categoryColors = {
     "Appliance Maintenance": "#556B2F",
     "Cleaning": "#4682B4",
@@ -344,10 +355,12 @@ document.getElementById('currentMonthButton').addEventListener('click', () => {
 renderCalendar();
 
 function showTaskDetailsModal(taskData) {
+    const intervalText = intervalTextMapping[taskData.interval] || 'Unknown Interval';
+
     document.getElementById('taskDetailsName').textContent = taskData.taskName;
     document.getElementById('taskDetailsCategory').textContent = taskData.category;
     document.getElementById('taskDetailsStartDate').textContent = taskData.startDate;
-    document.getElementById('taskDetailsInterval').textContent = taskData.interval;
+    document.getElementById('taskDetailsInterval').textContent = intervalText;
     document.getElementById('taskDetailsDescription').textContent = taskData.description;
 
     var taskDetailsModal = document.getElementById('taskDetailsModal');
@@ -355,6 +368,7 @@ function showTaskDetailsModal(taskData) {
         taskDetailsModal.showModal();
     }
 }
+
 
 // event listener to show task details modal when task is clicked in calendar
 document.addEventListener('click', function(event) {
