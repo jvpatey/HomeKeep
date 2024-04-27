@@ -189,7 +189,7 @@ const intervalTextMapping = {
 var lastFunction;
 
 // Function to fetch and display task data from Firestore
-async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
+async function displayTasks(sortByTaskName = false, sortByStartDate = false, sortByCategory = false) {
     const user = auth.currentUser;
     if (!user) {
         return;
@@ -214,11 +214,13 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false) {
                 tasks.push({ id: doc.id, ...doc.data() });
             });
 
-            // Sort tasks by name and startdate
+            // Sorting logic
             if (sortByTaskName) {
                 tasks.sort((a, b) => a.taskName.localeCompare(b.taskName));
             } else if (sortByStartDate) {
                 tasks.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+            } else if (sortByCategory) {
+                tasks.sort((a, b) => a.category.localeCompare(b.category));
             }
             
             // Append each task as a row in the table
@@ -465,6 +467,21 @@ document.getElementById('startDateHeader').addEventListener('click', () => {
     }
     displayTasks(false, !isDescending);
 });
+
+// Add event listener to category header to sort tasks by category when clicked
+document.getElementById('categoryHeader').addEventListener('click', () => {
+    const sortButton = document.getElementById('sortTasksByCategoryButton');
+    const isDescending = sortButton.innerHTML === '▼';
+
+    if (isDescending) {
+        sortButton.innerHTML = '▲';
+    } else {
+        sortButton.innerHTML = '▼';
+    }
+
+    displayTasks(false, false, !isDescending);
+});
+
 
 /* ---- Firbase Auth Sign Out JS ----- */
 
