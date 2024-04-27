@@ -21,7 +21,6 @@ const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
 // Check authentication status
-console.log(auth.currentUser);
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("User is logged in:", user);

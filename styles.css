@@ -49,7 +49,7 @@
 }
 
 /* Change table view for small screens - stacked view */
-@media (max-width: 939px) {
+@media (max-width: 814px) {
   table {
       display: block !important;
       width: 100%;
@@ -91,60 +91,58 @@
   td:not(:first-child):not(:last-child) {
       display: none;
   }
-
-  .buttons-container {
-      display: flex;
-      align-items: center;
-      padding: 5px;
-      font-size: 1.5rem;
-  }
 }
 
 /* Styling table for larger screens */
-@media (min-width: 940px) {
-  table {
-      display: table !important;
-      width: auto;
-      padding-left: 0; 
-      padding-bottom: 0;
+@media (min-width: 815px) {
+  #table-container {
+    display: block;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1050px;
+    width: 100%;
   }
 
-  /* Styling even and odd rows in alternating colors */
+  table {
+    display: table;
+    width: 100%;
+    padding: 10px;
+    border-collapse: collapse;
+    overflow: hidden;
+  }
+
+  /* Alternate row colors for visibility */
   tbody tr:nth-child(odd) {
-      background-color: #f7f7f7;
+    background-color: #f7f7f7;
   }
 
   tbody tr:nth-child(even) {
-      background-color: #eaeaea;
+    background-color: #eaeaea;
   }
 
-  /* Rounding corners on table */
+  /* Rounded corners for the table */
   table {
-      border-collapse: collapse;
-      border-radius: 10px;
-      overflow: hidden;
+    border-radius: 10px;
   }
 
-  tbody tr:last-child td {
-      padding-bottom: 10px;
-  }
-
+  /* Maintain proper cell and row structure */
   thead {
-      display: table-header-group;
+    display: table-header-group;
   }
 
   tbody {
-      display: table-row-group;
+    display: table-row-group;
   }
 
   tr {
-      display: table-row;
-      border-bottom: none;
+    display: table-row;
+    border-bottom: none;
   }
 
   td {
-      display: table-cell;
-      border-bottom: none;
+    display: table-cell;
+    border-bottom: none;
+    padding: 10px;
   }
 }
 
@@ -178,14 +176,16 @@ border-radius: 5px;
 
 #calendar-container {
   position: relative;
-  width: calc(100% - 40px);
   max-width: 1000px;
-  padding: 0 20px;
+  padding: 20px;
   box-sizing: border-box;
 }
 
-#calendar-buttons button {
-  margin-right: 10px;
+/* Calendar buttons should align with the left edge of the container */
+#calendarButtons {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 20px;
 }
 
 #calendar {
@@ -249,6 +249,14 @@ border-radius: 5px;
     min-height: 9em;
     padding: 12px; 
   }
+
+  #calendar-container {
+    padding-left: 20px; 
+  }
+  
+  #calendarButtons {
+    padding-left: 20px;
+  }
 }
 
 /* Resizing for smaller screens */
@@ -258,14 +266,19 @@ border-radius: 5px;
     gap: 8px; 
   }
 
-  #currentMonth {
-    font-size: 20px;
+  #calendar-container {
+    padding-left: 20px;
+  }
+  
+  #calendarButtons {
+    padding-left: 20px;
   }
 
   .event-block {
     font-size: 10px;
     max-width: 90%;
   }
+
   .calendar-header {
     font-size: 10px;
   }
