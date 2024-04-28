@@ -10,34 +10,42 @@
     <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
     <script>
-        tailwind.config = {
-          theme: {
-            extend: {
-              colors: {
-                clean: '#D9D9D9',
-                paper: '#E9E9E9',
-                feather: '#77C9D4',
-                marine: '#57BC90',
-                forest: '#015249',
-                grey: '#9099A2',
-                charcoal: '#3C3C3C'
-              }
+      tailwind.config = {
+        darkMode: 'selector',
+        theme: {
+          extend: {
+            colors: {
+              clean: '#D9D9D9',
+              paper:'#E9E9E9',
+              feather: '#77C9D4',
+              marine: '#57BC90',
+              forest: '#015249',
+              grey: '#9099A2',
+              charcoal: '#3C3C3C',
+              steel: '#31363F',
+              smoke: '#222831d9',
+              slate: '#222831'
             }
           }
         }
-      </script>
+      }
+    </script>
 </head>
 
-<body class="bg-clean min-h-screen flex flex-col">
+<body class="bg-clean dark:bg-slate min-h-screen flex flex-col">
 
   <!-- DaisyUI navbar -->
-  <div class="navbar bg-clean pb-6 flex justify-between">
+  <div class="navbar bg-clean dark:bg-slate pb-6 flex justify-between">
     <div class="navbar-start">
       <a href="dashboard.html" target="_self" class="relative inline-block logo">
         <span>HomeKeep</span>
       </a>
     </div>
     <div class="navbar-end">
+      <!-- Dark Mode Toggle -->
+      <button id="darkModeToggle" class="p-2 rounded-full">
+        <i class="fa-solid fa-moon text-charcoal hover:text-marine"></i>
+      </button>
       <div class="dropdown relative">
         <button class="btn btn-ghost" tabindex="0">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -47,44 +55,44 @@
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-marine rounded-box w-52 right-0">
           <li><a href="about.html" id="tutorialLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-question"></i>About</a></li>
           <li><a href="getting-started.html" id="startLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-regular fa-lightbulb"></i>Getting Started</a></li>
-          <li><a href="#" id="signOutLink" target="_self"><i class="fa-solid fa-user-minus"></i>Sign Out</a></li>
+          <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-user-minus text-forest"></i>Sign Out</a></li>
         </ul>
       </div>
     </div>
   </div>
 
   <!-- Main calendar container -->
-  <main class="container bg-clean max-w-screen-lg mx-auto px-4 rounded-xl pt-6">
+  <main class="container bg-clean dark:bg-slate max-w-screen-lg mx-auto px-4 rounded-xl pt-6">
     <div class="flex">
-      <button onclick="window.location.href = 'dashboard.html';" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">Table</button>
-      <button id="addTaskButton" class="btn border-marine bg-marine text-forest text-sm hover:border-marine hover:text-marine hover:bg-clean m-2">+</button>
+      <button onclick="window.location.href = 'dashboard.html';" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean dark:hover:bg-slate">Table</button>
+      <button id="addTaskButton" class="btn border-marine bg-marine text-forest text-sm hover:border-marine hover:text-marine hover:bg-clean dark:hover:bg-slate m-2">+</button>
     </div>
       <!-- Calendar Header -->
-    <div id="calendar-container" class="container bg-paper max-w-screen-lg mx-auto px-4 py-2 shadow-xl mb-24 rounded-xl">
+    <div id="calendar-container" class="container bg-paper dark:bg-steel max-w-screen-lg mx-auto px-4 py-2 shadow-xl mb-24 rounded-xl">
       <div class="flex justify-between items-center mb-4">
           <!-- Previous month button -->
-          <button id="prevMonth" class="btn btn-outline btn-sm  border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine">
+          <button id="prevMonth" class="btn btn-outline btn-sm border-charcoal bg-charcoal dark:border-marine dark:bg-marine dark:text-steel dark:hover:bg-steel dark:hover:text-marine text-paper hover:border-marine hover:text-charcoal hover:bg-marine">
               <i class="fa-solid fa-backward"></i>
           </button>
           <!-- Current month button and text -->
           <div class="text-center">
-              <h1 class="text-3xl font-normal text-charcoal mb-2" id="currentMonth">April 2024</h1>
-              <button id="currentMonthButton" class="btn btn-outline btn-sm border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine"><i class="fa-solid fa-house"></i></button>
+              <h1 class="text-3xl font-normal text-charcoal dark:text-clean mb-2" id="currentMonth">April 2024</h1>
+              <button id="currentMonthButton" class="btn btn-outline btn-sm border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine dark:border-marine dark:bg-marine dark:text-steel dark:hover:bg-steel dark:hover:text-marine"><i class="fa-solid fa-house"></i></button>
           </div>
           <!-- Next month button -->
-          <button id="nextMonth" class="btn btn-outline btn-sm  border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine">
+          <button id="nextMonth" class="btn btn-outline btn-sm  border-charcoal bg-charcoal text-paper hover:border-marine hover:text-charcoal hover:bg-marine dark:border-marine dark:bg-marine dark:text-steel dark:hover:bg-steel dark:hover:text-marine">
               <i class="fa-solid fa-forward"></i>
           </button>
       </div>
       <!-- Day of the week headers -->
       <div class="grid grid-cols-7">
-        <div class="text-center text-charcoal">Sun</div>
-        <div class="text-center text-charcoal">Mon</div>
-        <div class="text-center text-charcoal">Tue</div>
-        <div class="text-center text-charcoal">Wed</div>
-        <div class="text-center text-charcoal">Thu</div>
-        <div class="text-center text-charcoal">Fri</div>
-        <div class="text-center text-charcoal">Sat</div>
+        <div class="text-center text-charcoal dark:text-clean">Sun</div>
+        <div class="text-center text-charcoal dark:text-clean">Mon</div>
+        <div class="text-center text-charcoal dark:text-clean">Tue</div>
+        <div class="text-center text-charcoal dark:text-clean">Wed</div>
+        <div class="text-center text-charcoal dark:text-clean">Thu</div>
+        <div class="text-center text-charcoal dark:text-clean">Fri</div>
+        <div class="text-center text-charcoal dark:text-clean">Sat</div>
         </div>
       <!-- Calendar grid -->
       <div id="calendar" class="grid grid-cols-7 gap-2 rounded-lg p-2 mb-4">
@@ -94,10 +102,10 @@
   </main>
 
   <!-- Footer -->
-  <footer class="relative bottom-0 left-0 p-2 w-full bg-clean border-t border-clean shadow sm:fixed sm:bottom-0 sm:left-0">
-    <span class="text-md font-normal text-charcoal sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
-    <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
-  </footer>      
+  <footer class="fixed bottom-0 left-0 w-full bg-clean dark:bg-slate shadow sm:fixed sm:bottom-0 sm:left-0">
+    <span class="text-md font-normal text-charcoal dark:text-clean sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
+    <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean dark:text-slate rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
+  </footer>    
 
   <script src="script-calendar.js" type="module"></script>
 </body>

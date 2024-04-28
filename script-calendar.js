@@ -173,6 +173,7 @@ async function displayTasks(user, year, month) {
                             'pl-1',
                             'pr-1',
                             'text-paper',
+                            'text-steel',
                             'overflow-hidden',
                             'hover:text-charcoal'
                         );
@@ -290,7 +291,7 @@ const renderCalendar = (user) => {
         const dateString = getDateString(i, currentMonth, currentYear);
         const currentDate = new Date(currentYear, currentMonth, i);
 
-        let dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
+        let dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal dark:text-clean dark:border-clean rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
 
         if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate()) {
             dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md current-day" data-date="${dateString}" data-day="${i}">${i}</div>`;
@@ -625,6 +626,42 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// Dark Mode functionality //
+
+// Toggle dark mode and save the preference to local storage
+function toggleDarkMode() {
+    const body = document.querySelector("body");
+    const icon = document.getElementById("darkModeToggle").querySelector("i");
+  
+    if (body.classList.contains("dark")) {
+      body.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+      icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
+    } else {
+      body.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+      icon.className = "fa-solid fa-sun text-feather hover:text-marine";
+    }
+  }
+  
+  // Event listener for the dark mode toggle button
+  document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+  
+  // Apply the correct dark mode setting on page load
+  window.addEventListener("load", function() {
+    const darkMode = localStorage.getItem("darkMode");
+    const body = document.querySelector("body");
+    const icon = document.getElementById("darkModeToggle").querySelector("i");
+  
+    if (darkMode === "true") {
+      body.classList.add("dark");
+      icon.className = "fa-solid fa-sun text-feather hover:text-marine";
+    } else {
+      body.classList.remove("dark");
+      icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
+    }
+  });
 
 /* ------- Firebase Auth ------- */
 
