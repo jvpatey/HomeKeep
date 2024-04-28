@@ -390,16 +390,31 @@ function loadModals() {
 function initializeModals() {
     var addTaskModal = document.getElementById('addTaskModal');
     var editTaskModal = document.getElementById('editTaskModal');
+    var deleteTaskButton = document.getElementById('deleteTaskButton');
+    var editTaskButton = document.getElementById('editTaskButton');
 
-    if (addTaskModal && editTaskModal) {
+    if (addTaskModal) {
         document.getElementById('addTaskButton').addEventListener('click', function() {
             addTaskModal.showModal();
         });
 
         document.getElementById('submitTaskButton').addEventListener('click', function() {
-                saveFormData();
+            saveFormData();
         });
-    }}
+    }
+
+    // Hide edit and delete buttons if on a specific page
+    var isTablePage = true; // Set this to true if on the page where you want to hide the buttons
+
+    if (isTablePage) {
+        if (editTaskButton) {
+            editTaskButton.style.display = 'none';
+        }
+        if (deleteTaskButton) {
+            deleteTaskButton.style.display = 'none';
+        }
+    }
+}
 
 // Function to show the add task modal
 function showAddTaskModal() {
@@ -423,7 +438,6 @@ function showTaskDetailsModal(task) {
         taskDetailsModal.showModal();
     }
 }
-
 
 function toggleChatModal() {
     var chatModal = document.getElementById("chatModal");

@@ -33,20 +33,10 @@ auth.onAuthStateChanged(user => {
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
-function convertToMMDDYYYY(dateString) {
-    const date = new Date(dateString);
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${month}-${day}-${year}`;
-}
-
 let formSubmitted = false;
 
 async function saveFormData() {
-    if (formSubmitted) {
-        return;
-    }
+    if (formSubmitted) return;
 
     const user = auth.currentUser;
     if (!user) {
@@ -56,55 +46,38 @@ async function saveFormData() {
 
     formSubmitted = true;
 
-    // Extract form data
+    const rawStartDate = document.getElementById('startDate').value;
+    if (!rawStartDate) {
+        console.error("Start date is empty.");
+        formSubmitted = false;
+        return;
+    }
+    const [year, month, day] = rawStartDate.split('-');
+    const formattedDate = `${month}-${day}-${year}`;
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
-    const rawStartDate = document.getElementById('startDate').value;
-    const formattedStartDate = convertToMMDDYYYY(rawStartDate); // Format the date to MM-DD-YYYY
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
 
-    // Validate the start date format
-    const datePattern = /^\d{2}-\d{2}-\d{4}$/;
-    if (!datePattern.test(formattedStartDate)) {
-        alert("Please enter the start date in the format MM-DD-YYYY.");
-        formSubmitted = false;
-        return;
-    }
-
-    // Take month, day, and year from the formatted start date
-    const [startMonth, startDay, startYear] = formattedStartDate.split('-').map(Number);
-    if (startMonth < 1 || startMonth > 12 || startDay < 1 || startDay > 31 || startYear < 1900 || startYear > 2100) {
-        alert("Please enter a valid start date (MM-DD-YYYY).");
-        formSubmitted = false;
-        return;
-    }
-
     try {
-        // Add a new document with a generated ID and user's authentication information
-        const userDocRef = doc(firestore, 'users', user.uid);
-        const docSnapshot = await getDoc(userDocRef);
-
-        if (!docSnapshot.exists()) {
-            await setDoc(userDocRef, {});
-        }
         await addDoc(collection(firestore, `users/${user.uid}/tasks`), {
-            taskName: taskName,
-            category: category,
-            startDate: formattedStartDate, // Ensure formatted date
-            interval: interval,
-            description: description
+            taskName,
+            category,
+            startDate: formattedDate,
+            interval,
+            description,
         });
+
         console.log("Document successfully written!");
+        // Close the modal and refresh the page
+        const addTaskModal = document.getElementById('addTaskModal');
+        if (addTaskModal) {
+            addTaskModal.close();
+        }
 
-        // Update the table with the new task
-        displayTasks(user, currentYear, currentMonth);
-
-        // Reset form and close modal
-        document.getElementById('addTaskForm').reset();
-        document.getElementById('addTaskModal').close();
+        window.location.reload();
     } catch (error) {
-        console.error("Error writing document: ", error);
+        console.error("Error writing document:", error);
     } finally {
         formSubmitted = false;
     }
@@ -121,6 +94,7 @@ const intervalTextMapping = {
     "365": "Annually",
 };
 
+// Assigning colors for each category
 const categoryColors = {
     "Appliance Maintenance": "#556B2F",
     "Cleaning": "#4682B4",
@@ -136,141 +110,147 @@ const categoryColors = {
 };
 
 async function displayTasks(user, year, month) {
+    if (!user) {
+        console.error("User is not authenticated.");
+        return;
+    }
+
     try {
-        if (!user) {
-            return;
-        }
+        // Clear all existing event containers to prevent duplicate tasks
+        const eventContainers = document.querySelectorAll('.event-container');
+        eventContainers.forEach((container) => (container.innerHTML = ''));
 
-        console.log("Year:", year);
-        console.log("Month:", month);
-
-        // Fetch task data associated with the logged-in user
         const querySnapshot = await getDocs(collection(firestore, `users/${user.uid}/tasks`));
 
-        // Clear the calendar of existing tasks
-        const eventContainers = document.querySelectorAll('.event-container');
-        eventContainers.forEach(container => container.innerHTML = '');
+        const firstDayOfMonth = new Date(year, month, 1);
+        const lastDayOfMonth = new Date(year, month + 1, 0);
 
         querySnapshot.forEach((doc) => {
-            const task = doc.data(); // Get the task data
-            const taskData = {
-                taskId: doc.id, // Ensure the task ID is included
-                taskName: task.taskName,
-                category: task.category,
-                startDate: task.startDate,
-                interval: task.interval,
-                description: task.description
-            };
+            const task = doc.data();
+            const taskId = doc.id;
 
-            const startDateTimestamp = new Date(task.startDate).getTime();
-            const interval = parseInt(task.interval);
+            const taskName = task.taskName;
+            const category = task.category || "No Category";
+            const rawStartDate = task.startDate;
+            const interval = parseInt(task.interval || "365");
+            const description = task.description || "No Description";
 
-            // Calculate the next occurrence date for the task and add it to the calendar
-            let nextOccurrenceDate = new Date(startDateTimestamp);
-            while (nextOccurrenceDate <= new Date(year, month + 1, 0)) {
-                if (nextOccurrenceDate.getFullYear() === year && nextOccurrenceDate.getMonth() === month) {
-                    const formattedDate = nextOccurrenceDate.toISOString().slice(0, 10);
+            const [monthStr, dayStr, yearStr] = rawStartDate.split('-');
+            const taskStartDate = new Date(
+                parseInt(yearStr),
+                parseInt(monthStr) - 1,
+                parseInt(dayStr)
+            );
+
+            if (isNaN(taskStartDate.getTime())) {
+                console.error("Invalid task start date:", rawStartDate);
+                return;
+            }
+
+            let nextOccurrenceDate = new Date(taskStartDate);
+
+            while (nextOccurrenceDate <= lastDayOfMonth) {
+                if (nextOccurrenceDate >= firstDayOfMonth && nextOccurrenceDate <= lastDayOfMonth) {
                     const dayOfMonth = nextOccurrenceDate.getDate();
                     const cell = document.querySelector(`#calendar .date-block[data-day="${dayOfMonth}"]`);
+
                     if (cell) {
                         let eventContainer = cell.querySelector('.event-container');
                         if (!eventContainer) {
                             eventContainer = document.createElement('div');
-                            eventContainer.classList.add('event-container');
-                            eventContainer.classList.add('relative');
+                            eventContainer.classList.add('event-container', 'relative');
                             cell.appendChild(eventContainer);
                         }
 
                         const eventBlock = document.createElement('div');
-                        eventBlock.classList.add('event-block', 'rounded-lg', 'mx-auto', 'mr-2', 'ml-2', 'mb-2', 'mt-2', 'pl-1', 'pr-1', 'text-paper', 'overflow-hidden', 'hover:text-charcoal');
+                        eventBlock.classList.add(
+                            'event-block',
+                            'rounded-lg',
+                            'mx-auto',
+                            'mr-2',
+                            'ml-2',
+                            'mb-2',
+                            'mt-2',
+                            'pl-1',
+                            'pr-1',
+                            'text-paper',
+                            'overflow-hidden',
+                            'hover:text-charcoal'
+                        );
 
-                        // Set background color based on category
-                        eventBlock.style.backgroundColor = categoryColors[task.category];
+                        eventBlock.style.backgroundColor =
+                            categoryColors[category] || '#D3D3D3';
+                        eventBlock.textContent = taskName;
+                        eventBlock.title = taskName;
 
-                        eventBlock.textContent = task.taskName;
-                        eventBlock.title = task.taskName;
-                        eventBlock.dataset.taskId = taskData.taskId;
-                        eventBlock.dataset.category = task.category;
-                        eventBlock.dataset.startDate = task.startDate;
-                        eventBlock.dataset.interval = task.interval;
-                        eventBlock.dataset.description = task.description;
+                        eventBlock.dataset.taskId = taskId;
+                        eventBlock.dataset.category = category;
+                        eventBlock.dataset.startDate = rawStartDate;
+                        eventBlock.dataset.interval = interval.toString();
+                        eventBlock.dataset.description = description;
+
                         eventContainer.appendChild(eventBlock);
                     }
                 }
-                // Move to the next occurrence date
                 nextOccurrenceDate.setDate(nextOccurrenceDate.getDate() + interval);
             }
         });
 
-        // Add scrollbar to date block if needed
+        // Handle scrollbars in event containers
         setTimeout(() => {
             const eventContainers = document.querySelectorAll('.event-container');
-            eventContainers.forEach(container => {
-                if (container.scrollHeight > 60) {
-                    container.style.overflowY = 'auto';
-                    container.style.scrollbarBackgroundColor = 'transparent';
-                } else {
-                    container.style.overflowY = 'hidden';
-                }
+            eventContainers.forEach((container) => {
+                container.style.overflowY = container.scrollHeight > 60 ? 'auto' : 'hidden';
             });
         }, 100);
-
     } catch (error) {
-        console.error("Error fetching tasks: ", error);
+        console.error("Error fetching tasks:", error);
     }
 }
 
-
 /* ------ Calendar functionality ------ */
 
-// Function to show the add-task-form modal
 function showAddTaskFormModal(clickedDate = null) {
-    var addTaskModal = document.getElementById('addTaskModal');
+    const addTaskModal = document.getElementById('addTaskModal');
     if (addTaskModal) {
         addTaskModal.showModal();
-        
+
         const startDateInput = document.getElementById('startDate');
         if (startDateInput) {
             if (clickedDate) { // Only preload if a date is provided
-                startDateInput.value = formatDate(clickedDate.getTime());
-            } else { // Clear the input if no date is provided
-                startDateInput.value = ''; 
+                const formattedDate = clickedDate.toISOString().split('T')[0];
+                startDateInput.value = formattedDate;
+            } else { // Clear if no date is provided
+                startDateInput.value = '';
             }
         }
     }
 };
 
-// Function to format date as YYYY-MM-DD
-function formatDate(timestamp) {
-    const date = new Date(timestamp);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-}
-
-// Add event listener to bring up add task form to the date blocks when clicked
+// Show the add task modal when date block is clicked in calendar
 document.getElementById('calendar').addEventListener('click', function(event) {
     if (event.target.classList.contains('date-block') || event.target.parentElement.classList.contains('date-block')) {
-        // Get the clicked date string from the dataset
-        var clickedDateStr = event.target.dataset.date;
+        const clickedDateStr = event.target.dataset.date; // The date string from the calendar
         console.log("Clicked date:", clickedDateStr);
+        let clickedDate = null;
+
         if (clickedDateStr) {
-            var dateParts = clickedDateStr.split('-');
+            const dateParts = clickedDateStr.split('-');
             if (dateParts.length === 3) {
-                var month = parseInt(dateParts[0]) - 1;
-                var day = parseInt(dateParts[1]);
-                var year = parseInt(dateParts[2]);
-                var clickedDate = new Date(year, month, day);
+                const month = parseInt(dateParts[0]) - 1;
+                const day = parseInt(dateParts[1]);
+                const year = parseInt(dateParts[2]);
+                clickedDate = new Date(year, month, day);
+
                 if (!isNaN(clickedDate.getTime())) {
                     showAddTaskFormModal(clickedDate);
-                    return;
+                } else {
+                    console.error("Invalid date created:", clickedDateStr);
                 }
             }
         } else {
-            console.log(event.target.outerHTML);
+            console.error("Invalid data-date attribute:", clickedDateStr);
         }
-        console.error("Invalid data-date attribute:", clickedDateStr);
     }
 });
 
@@ -324,7 +304,7 @@ const renderCalendar = (user) => {
     }
 };
                                                  
-//event listeners for calendar buttons
+// event listeners for calendar buttons
 document.getElementById('prevMonth').addEventListener('click', () => {
     currentMonth -= 1;
     if (currentMonth < 0) {
@@ -361,60 +341,49 @@ document.getElementById('currentMonthButton').addEventListener('click', () => {
 
 renderCalendar();
 
-let currentTaskId = null; // Declare at a global scope
+let currentTaskId = null;
 function showTaskDetailsModal(taskData) {
-    if (!taskData.taskId) {
-        console.error("Task ID is missing.");
+    // Ensure the task data and task ID are valid
+    if (!taskData || !taskData.taskId) {
+        console.error("Task data or task ID is missing.");
         return;
     }
+    currentTaskId = taskData.taskId;
 
-    currentTaskId = taskData.taskId; // Store the current task ID
-    // Update the modal content
-    document.getElementById('taskDetailsName').textContent = taskData.taskName;
-    document.getElementById('taskDetailsCategory').textContent = taskData.category;
-    document.getElementById('taskDetailsStartDate').textContent = taskData.startDate;
-    document.getElementById('taskDetailsInterval').textContent = intervalTextMapping[taskData.interval] || 'Unknown Interval';
-    document.getElementById('taskDetailsDescription').textContent = taskData.description;
-
-    // Open the modal
     const taskDetailsModal = document.getElementById('taskDetailsModal');
-    if (taskDetailsModal) {
-        taskDetailsModal.showModal();
-    }
-}
+    const taskNameElement = document.getElementById('taskDetailsName');
+    const taskCategoryElement = document.getElementById('taskDetailsCategory');
+    const taskStartDateElement = document.getElementById('taskDetailsStartDate');
+    const taskIntervalElement = document.getElementById('taskDetailsInterval');
+    const taskDescriptionElement = document.getElementById('taskDetailsDescription');
 
-async function deleteTask() {
-    if (!currentTaskId) {
-        console.error("Task ID is missing.");
+    if (!taskDetailsModal || !taskNameElement || !taskCategoryElement || !taskStartDateElement || !taskIntervalElement || !taskDescriptionElement) {
+        console.error("Task details modal or its elements are missing.");
         return;
     }
 
-    const user = auth.currentUser;
-    if (user) {
-        const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), currentTaskId);
+    // Assign default values if task data is missing
+    const taskName = taskData.taskName || "No Name";
+    const taskCategory = taskData.category || "No Category";
+    const taskStartDate = taskData.startDate ? convertToMMDDYYYY(taskData.startDate) : "Unknown Start Date";
+    const taskInterval = intervalTextMapping[taskData.interval] || "Unknown Interval";
+    const taskDescription = taskData.description || "No Description";
 
-        const userConfirmed = confirm("Are you sure you want to delete this task?");
-        
-        if (userConfirmed) {
-            try {
-                await deleteDoc(docRef);
-                console.log("Task deleted successfully.");
-                const taskDetailsModal = document.getElementById('taskDetailsModal');
-                if (taskDetailsModal) {
-                    taskDetailsModal.close();
-                }
-                displayTasks(user, currentYear, currentMonth); // Refresh the tasks
-            } catch (error) {
-                console.error("Error deleting task:", error);
-            }
-        }
-    }
+    // Assign data to modal fields
+    taskNameElement.textContent = taskName;
+    taskCategoryElement.textContent = taskCategory;
+    taskStartDateElement.textContent = taskStartDate;
+    taskIntervalElement.textContent = taskInterval;
+    taskDescriptionElement.textContent = taskDescription;
+
+    // Show the task details modal
+    taskDetailsModal.showModal();
 }
 
-
+// Show task details modal when event block is clicked in calendar
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('event-block')) {
-        const taskId = event.target.dataset.taskId; // Retrieve the task ID
+        const taskId = event.target.dataset.taskId;
         if (!taskId) {
             console.error("Task ID is missing.");
             return;
@@ -429,10 +398,9 @@ document.addEventListener('click', function(event) {
             description: event.target.dataset.description
         };
 
-        showTaskDetailsModal(taskData); // Pass the task data, including task ID
+        showTaskDetailsModal(taskData);
     }
 });
-
 
 /* -------- Modal and HTML javascript ------- */
 
@@ -448,17 +416,50 @@ function loadModals() {
         .then(html => {
             console.log('Modal content loaded successfully');
             document.body.insertAdjacentHTML('beforeend', html);
-            initializeModals(); // Initialize the event listeners after modals are loaded
+            initializeModals();
         })
         .catch(error => {
             console.error('Error fetching modal content:', error);
         });
 }
 
+let lastFunction;
 
+// Delete function for calendar view
+async function deleteTask() {
+    const user = auth.currentUser;
+
+    if (!user) {
+        console.error("User is not authenticated.");
+        return;
+    }
+
+    if (!currentTaskId) {
+        console.error("No task ID specified for deletion.");
+        return;
+    }
+
+    try {
+        const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), currentTaskId);
+        await deleteDoc(docRef);
+        console.log("Task successfully deleted!");
+
+        const taskDetailsModal = document.getElementById('taskDetailsModal');
+        if (taskDetailsModal && taskDetailsModal.open) {
+            taskDetailsModal.close();
+        }
+
+        displayTasks(user, currentYear, currentMonth);
+    } catch (error) {
+        console.error("Error deleting task:", error);
+    }
+}
+
+// Function to initialize modals and event listeners
 function initializeModals() {
     const addTaskModal = document.getElementById('addTaskModal');
-    const deleteTaskButton = document.getElementById('deleteTaskButton'); // Your delete button's ID
+    const deleteTaskButton = document.getElementById('deleteTaskButton');
+    const editTaskButton = document.getElementById('editTaskButton');
 
     if (addTaskModal) {
         document.getElementById('addTaskButton').addEventListener('click', showAddTaskFormModal);
@@ -466,13 +467,132 @@ function initializeModals() {
     }
 
     if (deleteTaskButton) {
-        deleteTaskButton.onclick = () => {
+        deleteTaskButton.addEventListener('click', async () => {
             if (currentTaskId) {
-                deleteTask();
+                await deleteTask();
             } else {
                 console.error("Task ID is missing.");
             }
-        };
+        });
+    }
+
+    if (editTaskButton) {
+        editTaskButton.addEventListener('click', async () => {
+            await showEditTaskFormModal();
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    initializeModals();
+});
+
+
+// Function to show the edit task modal with preloaded data
+async function showEditTaskFormModal() {
+    const user = auth.currentUser;
+    if (!user || !currentTaskId) {
+        console.error("User not logged in or no task ID specified.");
+        return;
+    }
+
+    const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), currentTaskId);
+
+    const docSnapshot = await getDoc(docRef);
+    if (docSnapshot.exists()) {
+        const taskData = docSnapshot.data();
+
+        const editTaskForm = document.getElementById('editTaskForm');
+
+        if (editTaskForm) {
+            // Ensure previous event listeners are removed
+            if (lastFunction !== undefined) {
+                editTaskForm.removeEventListener('submit', lastFunction);
+            }
+
+            editTaskForm.querySelector('#editTaskName'). value = taskData.taskName;
+            editTaskForm.querySelector('#editCategory'). value = taskData.category;
+            editTaskForm.querySelector('#editStartDate').value = convertToISO(taskData.startDate);
+
+            const intervalText = intervalTextMapping[taskData.interval] || taskData.interval;
+            const editInterval = editTaskForm.querySelector('#editInterval');
+            for (let option of editInterval.options) {
+                if (option.text === intervalText) {
+                    option.selected = true;
+                    break;
+                }
+            }
+
+            editTaskForm.querySelector('#editDescription').value = taskData.description;
+
+            // submission of the form
+            lastFunction = async (event) => {
+                event.preventDefault();
+
+                const rawStartDate = editTaskForm.querySelector('#editStartDate').value;
+                const formattedStartDate = convertToMMDDYYYY(rawStartDate);
+
+                const updatedTaskData = {
+                    taskName: editTaskForm.querySelector('#editTaskName').value,
+                    category: editTaskForm.querySelector('#editCategory').value,
+                    startDate: formattedStartDate,
+                    interval: editTaskForm.querySelector('#editInterval').value,
+                    description: editTaskForm.querySelector('#editDescription').value,
+                };
+
+                const docRef = doc(collection(firestore, `users/${auth.currentUser.uid}/tasks`), currentTaskId);
+
+                try {
+                    await updateDoc(docRef, updatedTaskData);
+                    console.log("Task successfully updated!");
+                    const editTaskModal = document.getElementById('editTaskModal');
+                    const taskDetailsModal = document.getElementById('taskDetailsModal');
+
+                    if (editTaskModal) {
+                        editTaskModal.close();
+                    }
+
+                    if (taskDetailsModal) {
+                        taskDetailsModal.close();
+                    }
+
+                    displayTasks(auth.currentUser, currentYear, currentMonth);
+                } catch (error) {
+                    console.error("Error updating task:", error);
+                }
+            };
+
+            // Add the event listener for form submission
+            editTaskForm.addEventListener('submit', lastFunction);
+            document.getElementById('editTaskModal').showModal();
+        }
+    } else {
+        console.error("Task data does not exist.");
+    }
+}
+
+// Function to convert MM-DD-YYYY to ISO
+function convertToISO(dateString) {
+    const [month, day, year] = dateString.split('-');
+    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+}
+
+// Function to convert a UTC Date to MM-DD-YYYY for display
+function convertToMMDDYYYY(dateString) {
+    const date = new Date(dateString);
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const year = date.getUTCFullYear();
+    return `${month}-${day}-${year}`;
+}
+
+// Function to update task data in Firestore
+async function updateTask(updatedTaskData, docRef) {
+    try {
+        await updateDoc(docRef, updatedTaskData);
+        console.log("Task successfully updated!");
+    } catch (error) {
+        console.error("Error updating document: ", error);
     }
 }
 
@@ -484,9 +604,18 @@ function toggleChatModal() {
 
 document.addEventListener('DOMContentLoaded', () => {
     loadModals();
+    initializeModals();
 
-    // Show chat modal when chat icon is clicked
     document.getElementById("chatIcon").addEventListener("click", toggleChatModal);
+
+    const editSubmitBtn = document.getElementById('editSubmitBtn');
+
+    if (editSubmitBtn) {
+        editSubmitBtn.addEventListener('click', (event) => {
+            event.preventDefault();
+            updateTask();
+        });
+    }
 });
 
 /* ------- Firebase Auth ------- */
