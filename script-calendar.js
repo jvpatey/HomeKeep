@@ -217,20 +217,21 @@ function showAddTaskFormModal(clickedDate = null) {
 
         const startDateInput = document.getElementById('startDate');
         if (startDateInput) {
-            if (clickedDate) { // Only preload if a date is provided
+            if (clickedDate instanceof Date && !isNaN(clickedDate.getTime())) {
                 const formattedDate = clickedDate.toISOString().split('T')[0];
                 startDateInput.value = formattedDate;
-            } else { // Clear if no date is provided
+            } else {
                 startDateInput.value = '';
             }
         }
     }
-};
+}
+
 
 // Show the add task modal when date block is clicked in calendar
 document.getElementById('calendar').addEventListener('click', function(event) {
     if (event.target.classList.contains('date-block') || event.target.parentElement.classList.contains('date-block')) {
-        const clickedDateStr = event.target.dataset.date; // The date string from the calendar
+        const clickedDateStr = event.target.dataset.date;
         console.log("Clicked date:", clickedDateStr);
         let clickedDate = null;
 
