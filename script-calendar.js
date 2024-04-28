@@ -425,7 +425,7 @@ function loadModals() {
 
 let lastFunction;
 
-// Delete function for calendar view
+// Delete function with confirmation prompt for calendar view
 async function deleteTask() {
     const user = auth.currentUser;
 
@@ -439,6 +439,13 @@ async function deleteTask() {
         return;
     }
 
+    // Ask for confirmation before deleting
+    const confirmDelete = window.confirm("Are you sure you want to delete this task?");
+    if (!confirmDelete) {
+        console.log("Task deletion canceled by user.");
+        return; // Do not proceed with deletion if user cancels
+    }
+
     try {
         const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), currentTaskId);
         await deleteDoc(docRef);
@@ -449,11 +456,13 @@ async function deleteTask() {
             taskDetailsModal.close();
         }
 
+        // Refresh the calendar after deleting the task
         displayTasks(user, currentYear, currentMonth);
     } catch (error) {
         console.error("Error deleting task:", error);
     }
 }
+
 
 // Function to initialize modals and event listeners
 function initializeModals() {
