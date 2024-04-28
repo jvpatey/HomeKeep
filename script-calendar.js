@@ -443,7 +443,7 @@ async function deleteTask() {
     const confirmDelete = window.confirm("Are you sure you want to delete this task?");
     if (!confirmDelete) {
         console.log("Task deletion canceled by user.");
-        return; // Do not proceed with deletion if user cancels
+        return;
     }
 
     try {
