@@ -369,4 +369,10 @@ border-radius: 5px;
   }
 }
 
+/* invert colors to simulate dark mode on the google form */
+.dark .chat-popup {
+  /* Apply a dark filter to simulate dark mode */
+  filter: invert(100%) hue-rotate(180deg);
+}
+
 
