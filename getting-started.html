@@ -9,35 +9,42 @@
     <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
     <script>
-        tailwind.config = {
-          theme: {
-            extend: {
-              colors: {
-                clean: '#D9D9D9',
-                paper:'#E9E9E9',
-                feather: '#77C9D4',
-                marine: '#57BC90',
-                forest: '#015249',
-                grey: '#9099A2',
-                charcoal: '#3C3C3C'
-              }
+      tailwind.config = {
+        darkMode: 'selector',
+        theme: {
+          extend: {
+            colors: {
+              clean: '#D9D9D9',
+              paper:'#E9E9E9',
+              feather: '#77C9D4',
+              marine: '#57BC90',
+              forest: '#015249',
+              grey: '#9099A2',
+              charcoal: '#3C3C3C',
+              steel: '#31363F',
+              smoke: '#222831d9',
+              slate: '#222831'
             }
           }
         }
-      </script>
+      }
+    </script>
 </head>
 
-<body class="bg-clean min-h-screen flex flex-col">
+<body class="bg-clean dark:bg-slate min-h-screen flex flex-col">
 
   <!--navbar -->
 
-  <div class="navbar bg-clean pb-6">
+  <div class="navbar bg-clean dark:bg-slate pb-6">
     <div class="navbar-start">
           <a href="dashboard.html" target="_self" class="relative inline-block logo">
               <span>HomeKeep</span>
           </a>
     </div>
     <div class="navbar-end">
+      <button id="darkModeToggle" class="p-2 rounded-full">
+        <i class="fa-solid fa-moon text-charcoal hover:text-marine"></i>
+      </button>
       <div class="dropdown relative">
         <button class="btn btn-ghost" tabindex="0">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -58,40 +65,40 @@
 
   <!-- DaisyUI accordian wrapped in card for getting started steps-->
 
-  <div class="max-w-3xl mx-auto mt-10 pr-2 pl-2 pb-10">
-    <div class="card shadow-xl w-full h-full md:max-w-none rounded-lg bg-paper">
+  <div class="max-w-3xl mx-auto mt-10 mb-10 pr-2 pl-2 pb-10">
+    <div class="card shadow-xl w-full h-full md:max-w-none rounded-lg bg-paper dark:bg-steel">
       <div class="card-header text-center font-bold text-marine text-3xl py-4 rounded-t-lg">
         Getting Started
       </div>
       <div class="card-body">
-        <div class="collapse collapse-plus bg-clean">
+        <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal text-xl font-medium">
+          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
             1. Welcome
           </div>
-          <div class="collapse-content text-charcoal"> 
+          <div class="collapse-content text-charcoal dark:text-clean"> 
             <p>- You will be greeted with a welcome page upon visiting HomeKeep for the first time.</p>
             <p>- The welcome page includes a sign in form, description of the app, and a link to create an account.</p>
             <p>- The first step is for you to create an account to personalize your experience and securely store your data.</p>
           </div>
         </div>
-        <div class="collapse collapse-plus bg-clean">
+        <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal text-xl font-medium">
+          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
             2. Signing in
           </div>
-          <div class="collapse-content text-charcoal"> 
+          <div class="collapse-content text-charcoal dark:text-clean"> 
             <p>- HomeKeep supports two sign-in methods: <b>username/password</b> and <b>Google sign-in</b>.</p>
             <p>- You can create an account via the provided form, or use your existing Google credentials.</p>
             <p>- Accounts are essential for a personalized experience and linking maintenance tasks to each user.</p>
           </div>
         </div>
-        <div class="collapse collapse-plus bg-clean">
+        <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal text-xl font-medium">
+          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
             3. Dashboard
           </div>
-          <div class="collapse-content text-charcoal"> 
+          <div class="collapse-content text-charcoal dark:text-clean"> 
             <p>- After signing in, you will be directed to the dashboard.</p>
             <p>- The dashboard provides a table view of all maintenance tasks linked to your account.</p>
             <p>- You can easily add new maintenance tasks to the database and table via the <b>add task (+)</b> button</p>
@@ -99,42 +106,42 @@
             <p>- Edit and delete functionality are available for you to manage your tasks effectively.</p>
           </div>
         </div>
-        <div class="collapse collapse-plus bg-clean">
+        <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal text-xl font-medium">
+          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
             4. Calendar
           </div>
-          <div class="collapse-content text-charcoal"> 
+          <div class="collapse-content text-charcoal dark:text-clean"> 
             <p>- HomeKeep offers a calendar view as an extension to the dashboard's table.</p>
             <p>- Tasks can be added directly to the calendar by <b>clicking on the date block</b>, or using the <b>add task (+)</b> button.</p>
             <p>- Data between the table and calendar views are synchronized to ensure consistency.</p>
             <p>- You can navigate through following months to see scheduled maintenance based on the intervals you provide.</p>
           </div>
         </div>
-        <div class="collapse collapse-plus bg-clean">
+        <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal text-xl font-medium">
+          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
             5. Notifications
           </div>
-          <div class="collapse-content text-charcoal"> 
+          <div class="collapse-content text-charcoal dark:text-clean"> 
             <p>- You have the option to turn your notifications on/off for your maintenance tasks.</p>
             <p>- Toggle switches are available in the table view, allowing you to customize your notification preferences.</p>
             <p>- Notifications are sent via the cloud on the day the task is due, providing you with timely reminders.</p>
           </div>
         </div>
-        <div class="collapse collapse-plus bg-clean">
+        <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal text-xl font-medium">
+          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
             6. Getting Help
           </div>
-          <div class="collapse-content text-charcoal"> 
+          <div class="collapse-content text-charcoal dark:text-clean"> 
             <p>- HomeKeep includes a help request feature to assist you with any questions or issues you may experience.</p>
             <p>- Chat windows are available to help you send help request messages.</p>
             <p>- Responses to help requests are provided as soon as possible to ensure a seamless experience.</p>
           </div>
         </div>
         <div class="w-30 card-actions justify-center mt-2">
-          <button class="btn btn-primary bg-feather border-feather text-paper hover:bg-paper hover:border-feather hover:text-feather" onclick="window.location.href = 'dashboard.html'">Go to Dashboard</button>
+          <button class="btn btn-primary bg-feather border-feather text-paper dark:text-slate hover:bg-paper dark:hover:bg-steel hover:border-feather hover:text-feather" onclick="window.location.href = 'dashboard.html'">Go to Dashboard</button>
         </div>
       </div>
     </div>
@@ -142,10 +149,11 @@
   
   <!-- Footer -->
   
-  <footer class="relative bottom-0 left-0 z-0 w-full bg-clean border-t border-clean shadow md:flex md:items-center md:justify-between md:p-6">
-      <span class="text-md font-normal text-charcoal sm:text-center">© 2024 All Rights Reserved.
-      </span>
-  </footer>
+  <footer class="fixed bottom-0 left-0 w-full bg-clean dark:bg-slate shadow sm:fixed sm:bottom-0 sm:left-0">
+    <span class="text-md font-normal text-charcoal dark:text-clean sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
+    <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean dark:text-slate rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
+  </footer> 
 
+  <script src="script-ui.js"></script>
   </body>
 </html>
