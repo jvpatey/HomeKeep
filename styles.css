@@ -60,19 +60,32 @@
   background-color: #D9D9D9;
 }
 
-@media (max-width: 814px) {
+@media (max-width: 839px) {
+  /* Table background and styling for small screens */
   table {
     display: block !important;
     width: 100%;
-    padding-bottom: 5px; 
-    padding-left: 5px; 
+    padding-bottom: 5px;
+    padding-left: 5px;
     margin-bottom: 20px;
     border-collapse: collapse;
-    border: none; 
+    border: none;
   }
 
-    .instruction-header {
+  /* Dark mode background and text color */
+  .dark table {
+    background-color: #31363F;
+    color: #E9E9E9;
+  }
+
+  .instruction-header {
     display: block;
+  }
+
+  /* Dark mode styles for instruction header */
+  .dark .instruction-header {
+    background-color: #222831;
+    color: #E9E9E9;
   }
 
   thead {
@@ -90,10 +103,12 @@
     margin-bottom: 5px;
   }
 
-  td {
+  /* Dark mode text color for table data */
+  .dark td {
     display: block;
     border-bottom: none;
     font-size: 15px;
+    color: #E9E9E9;
   }
 
   td:first-child {
@@ -113,10 +128,16 @@
     justify-content: flex-end;
     gap: 10px;
   }
+
+  /* Dark mode styling for the last cell (optional, if needed) */
+  .dark td:last-child {
+    justify-content: flex-end;
+    gap: 10px;
+  }
 }
 
 /* Styling table for larger screens */
-@media (min-width: 815px) {
+@media (min-width: 840px) {
   #table-container {
     display: block;
     padding: 20px;
@@ -142,9 +163,21 @@
     background-color: #eaeaea;
   }
 
-  /* Rounded corners for the table */
-  table {
-    border-radius: 10px;
+  /* Alternate row colors for visibility in dark mode */
+  .dark tbody tr:nth-child(odd) {
+    background-color: #31363F;
+  }
+
+  .dark tbody tr:nth-child(even) {
+    background-color: #222831d9;
+  }
+
+  .dark thead {
+    background-color: #222831d9;
+  }
+  /* Dark mode styles for table */
+  .dark table {
+    border: none;
   }
 
   /* Maintain proper cell and row structure */

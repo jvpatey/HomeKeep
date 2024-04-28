@@ -94,19 +94,18 @@ const intervalTextMapping = {
     "365": "Annually",
 };
 
-// Assigning colors for each category
 const categoryColors = {
-    "Appliance Maintenance": "#556B2F",
-    "Cleaning": "#4682B4",
-    "Electrical and Safety": "#708090",
-    "Exterior Maintenance": "#6B8E23",
-    "Filters and Ventilation": "#8FBC8F",
-    "General Home Maintenance": "#2F4F4F",
-    "Laundry": "#696969",
-    "Plumbing and Water Systems": "#5F9EA0",
-    "Seasonal Tasks": "#6A5ACD",
-    "Yard Work": "#8B4513",
-    "Other": "#A0522D",
+    "Appliance Maintenance": "#85BB65",
+    "Cleaning": "#1E90FF",
+    "Electrical and Safety": "#FF6347",
+    "Exterior Maintenance": "#32CD32",
+    "Filters and Ventilation": "#00CED1",
+    "General Home Maintenance": "#9932CC",
+    "Laundry": "#FF4500",
+    "Plumbing and Water Systems": "#4682B4",
+    "Seasonal Tasks": "#DAA520",
+    "Yard Work": "#B8860B",
+    "Other": "#8B008B",
 };
 
 async function displayTasks(user, year, month) {

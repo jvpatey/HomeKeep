@@ -162,17 +162,17 @@ async function updateTask(taskData, docRef, row) {
 }
 
 const categoryColors = {
-    "Appliance Maintenance": "#556B2F",
-    "Cleaning": "#4682B4",
-    "Electrical and Safety": "#708090",
-    "Exterior Maintenance": "#6B8E23",
-    "Filters and Ventilation": "#8FBC8F",
-    "General Home Maintenance": "#2F4F4F",
-    "Laundry": "#696969",
-    "Plumbing and Water Systems": "#5F9EA0",
-    "Seasonal Tasks": "#6A5ACD",
-    "Yard Work": "#8B4513",
-    "Other": "#A0522D",
+    "Appliance Maintenance": "#85BB65",
+    "Cleaning": "#1E90FF",
+    "Electrical and Safety": "#FF6347",
+    "Exterior Maintenance": "#32CD32",
+    "Filters and Ventilation": "#00CED1",
+    "General Home Maintenance": "#9932CC",
+    "Laundry": "#FF4500",
+    "Plumbing and Water Systems": "#4682B4",
+    "Seasonal Tasks": "#DAA520",
+    "Yard Work": "#B8860B",
+    "Other": "#8B008B",
 };
 
 // Mapping from interval value to display text
@@ -229,7 +229,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                 const intervalText = intervalTextMapping[task.interval] || task.interval;
                 const taskColor = categoryColors[task.category] || '#3C3C3C';
                 row.innerHTML = `
-                    <td><a href="#" class="task-name-link" style="color: ${taskColor}">${task.taskName}</a></td>
+                    <td><a href="#" class="task-name-link font-bold" style="color: ${taskColor}">${task.taskName}</a></td>
                     <td>${task.category}</td>
                     <td>${task.startDate}</td>
                     <td>${intervalText}</td>
@@ -497,6 +497,41 @@ document.getElementById('categoryHeader').addEventListener('click', () => {
     displayTasks(false, false, !isDescending);
 });
 
+// Dark Mode functionality //
+
+// Toggle dark mode and save the preference to local storage
+function toggleDarkMode() {
+    const body = document.querySelector("body");
+    const icon = document.getElementById("darkModeToggle").querySelector("i");
+  
+    if (body.classList.contains("dark")) {
+      body.classList.remove("dark");
+      localStorage.setItem("darkMode", "false");
+      icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
+    } else {
+      body.classList.add("dark");
+      localStorage.setItem("darkMode", "true");
+      icon.className = "fa-solid fa-sun text-feather hover:text-marine";
+    }
+  }
+  
+  // Event listener for the dark mode toggle button
+  document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+  
+  // Apply the correct dark mode setting on page load
+  window.addEventListener("load", function() {
+    const darkMode = localStorage.getItem("darkMode");
+    const body = document.querySelector("body");
+    const icon = document.getElementById("darkModeToggle").querySelector("i");
+  
+    if (darkMode === "true") {
+      body.classList.add("dark");
+      icon.className = "fa-solid fa-sun text-feather hover:text-marine";
+    } else {
+      body.classList.remove("dark");
+      icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
+    }
+  });
 
 /* ---- Firbase Auth Sign Out JS ----- */
 

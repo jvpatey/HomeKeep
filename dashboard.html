@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <script>
         tailwind.config = {
+          darkMode: 'selector',
           theme: {
             extend: {
               colors: {
@@ -19,7 +20,10 @@
                 marine: '#57BC90',
                 forest: '#015249',
                 grey: '#9099A2',
-                charcoal: '#3C3C3C'
+                charcoal: '#3C3C3C',
+                steel: '#31363F',
+                smoke: '#222831d9',
+                slate: '#222831'
               }
             }
           }
@@ -27,20 +31,24 @@
       </script>
 </head>
 
-<body class="bg-clean min-h-screen flex flex-col">
+<body class="bg-clean dark:bg-slate min-h-screen flex flex-col">
 
   <!-- daisyUI navbar -->
 
-  <div class="navbar bg-clean pb-6">
+  <div class="navbar bg-clean dark:bg-slate pb-6">
     <div class="navbar-start">
           <a href="dashboard.html" target="_self" class="relative inline-block logo">
               <span>HomeKeep</span>
           </a>
     </div>
     <div class="navbar-end">
+          <!-- Dark Mode Toggle -->
+          <button id="darkModeToggle" class="p-2 rounded-full">
+            <i class="fa-solid fa-moon text-charcoal hover:text-marine"></i>
+          </button>
       <div class="dropdown relative">
         <button class="btn btn-ghost" tabindex="0">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
           </svg>
         </button>
@@ -57,28 +65,28 @@
   </div>
 
   <!-- Task table -->
-  <div id="table-container" class="flex flex-col px-8 pb-12 sm:pb-4 mb-3 bg-clean overflow-y-auto">
+  <div id="table-container" class="flex flex-col px-8 pb-12 sm:pb-4 mb-3 bg-clean dark:bg-slate overflow-y-auto border-none">
     <div class="flex">
-      <button onclick="window.location.href = 'dashboard-calendar.html';" class=" btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">Calendar</button>
-      <button id="addTaskButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean">+</button>
+      <button onclick="window.location.href = 'dashboard-calendar.html';" class=" btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean dark:hover:bg-slate">Calendar</button>
+      <button id="addTaskButton" class="btn border-marine bg-marine text-forest text-sm m-2 hover:border-marine hover:text-marine hover:bg-clean dark:hover:bg-slate">+</button>
     </div>
-    <table class="table border bg-paper border-charcoal shadow-xl" id="taskTable">
-      <thead class="text-charcoal text-lg">
+    <table class="table bg-paper shadow-xl border-none" id="taskTable">
+      <thead class="text-charcoal dark:text-clean text-lg">
         <tr class="table-header">
           <!-- Instruction header to be shown in small view -->
           <div id="instructionHeader" class="instruction-header">
             Click on the task name to view task details
           </div>
-          <th class="font-normal hover:text-marine border-charcoal" id="taskNameHeader">Task <button id="sortTasksButton" class="btn-sort hover: text-marine">▼</button></th>
-          <th class="font-normal hover:text-marine border-charcoal" id="categoryHeader">Category <button id="sortTasksByCategoryButton" class="btn-sort hover:text-marine">▼</button></th>
-          <th class="font-normal hover:text-marine border-charcoal" id="startDateHeader">Start Date <button id="sortTasksByStartDateButton" class="btn-sort hover: text-marine">▼</button></th>
-          <th class="font-normal border-charcoal">Interval</th>
-          <th class="font-normal border-charcoal">Description</th>
-          <th class="font-normal border-charcoal">Notifications</th>
-          <th class="border-charcoal"></th>
+          <th class="font-normal hover:text-marine" id="taskNameHeader">Task <button id="sortTasksButton" class="btn-sort hover: text-marine">▼</button></th>
+          <th class="font-normal hover:text-marine" id="categoryHeader">Category <button id="sortTasksByCategoryButton" class="btn-sort hover:text-marine">▼</button></th>
+          <th class="font-normal hover:text-marine" id="startDateHeader">Start Date <button id="sortTasksByStartDateButton" class="btn-sort hover: text-marine">▼</button></th>
+          <th class="font-normal">Interval</th>
+          <th class="font-normal">Description</th>
+          <th class="font-normal">Notifications</th>
+          <th class=""></th>
         </tr>
       </thead>
-      <tbody class="text-charcoal" id="taskTableBody">
+      <tbody class="text-charcoal dark:text-clean" id="taskTableBody">
         <!-- Table rows are added dynamically here -->
       </tbody>
     </table>
@@ -86,8 +94,8 @@
 
   <!-- Footer -->
   
-  <footer class="fixed bottom-0 left-0 w-full bg-clean border-t border-clean shadow sm:fixed sm:bottom-0 sm:left-0">
-    <span class="text-md font-normal text-charcoal sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
+  <footer class="fixed bottom-0 left-0 w-full bg-clean dark:bg-slate shadow sm:fixed sm:bottom-0 sm:left-0">
+    <span class="text-md font-normal text-charcoal dark:text-clean sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
     <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
   </footer>    
 
