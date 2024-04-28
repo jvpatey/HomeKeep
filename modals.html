@@ -54,8 +54,14 @@
 
 <!-- DaisyUI task details modal -->
 <dialog id="taskDetailsModal" class="modal">
-    <div class="modal-box bg-clean p-4 rounded-lg">
-        <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('taskDetailsModal').close()">✕</button>
+    <div class="modal-box bg-clean p-4 rounded-lg relative">
+        <!-- Close Button -->
+        <button 
+            class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2"
+            onclick="document.getElementById('taskDetailsModal').close()">✕
+        </button>
+        
+        <!-- Task Details Content -->
         <div class="w-full max-w-lg bg-clean rounded-md p-4">
             <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Task Details</h1>
             <div class="flex flex-col gap-4 mb-4">
@@ -81,8 +87,13 @@
                 </div>
             </div>
         </div>
+        <div class="flex justify-end gap-4 p-4 border-t border-charcoal">
+            <button id="editTaskButton" class="btn btn-outline bg-marine border-marine text-charcoal hover:border-marine hover:bg-clean hover:text-marine"> Edit Task</button>
+            <button id="deleteTaskButton" onclick="deleteTask()" class="btn btn-outline bg-marine border-marine text-charcoal hover:border-marine hover:bg-clean hover:text-marine"> Delete Task</button>
+        </div>
     </div>
 </dialog>
+
 
 <!-- DaisyUI edit task modal -->
 <dialog id="editTaskModal" class="modal">

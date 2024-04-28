@@ -152,8 +152,15 @@ async function displayTasks(user, year, month) {
         eventContainers.forEach(container => container.innerHTML = '');
 
         querySnapshot.forEach((doc) => {
-            const task = doc.data();
-            console.log("Task data:", task);
+            const task = doc.data(); // Get the task data
+            const taskData = {
+                taskId: doc.id, // Ensure the task ID is included
+                taskName: task.taskName,
+                category: task.category,
+                startDate: task.startDate,
+                interval: task.interval,
+                description: task.description
+            };
 
             const startDateTimestamp = new Date(task.startDate).getTime();
             const interval = parseInt(task.interval);
@@ -182,7 +189,7 @@ async function displayTasks(user, year, month) {
 
                         eventBlock.textContent = task.taskName;
                         eventBlock.title = task.taskName;
-                        eventBlock.dataset.taskId = doc.id;
+                        eventBlock.dataset.taskId = taskData.taskId;
                         eventBlock.dataset.category = task.category;
                         eventBlock.dataset.startDate = task.startDate;
                         eventBlock.dataset.interval = task.interval;
@@ -354,42 +361,84 @@ document.getElementById('currentMonthButton').addEventListener('click', () => {
 
 renderCalendar();
 
+let currentTaskId = null; // Declare at a global scope
 function showTaskDetailsModal(taskData) {
-    const intervalText = intervalTextMapping[taskData.interval] || 'Unknown Interval';
+    if (!taskData.taskId) {
+        console.error("Task ID is missing.");
+        return;
+    }
 
+    currentTaskId = taskData.taskId; // Store the current task ID
+    // Update the modal content
     document.getElementById('taskDetailsName').textContent = taskData.taskName;
     document.getElementById('taskDetailsCategory').textContent = taskData.category;
     document.getElementById('taskDetailsStartDate').textContent = taskData.startDate;
-    document.getElementById('taskDetailsInterval').textContent = intervalText;
+    document.getElementById('taskDetailsInterval').textContent = intervalTextMapping[taskData.interval] || 'Unknown Interval';
     document.getElementById('taskDetailsDescription').textContent = taskData.description;
 
-    var taskDetailsModal = document.getElementById('taskDetailsModal');
+    // Open the modal
+    const taskDetailsModal = document.getElementById('taskDetailsModal');
     if (taskDetailsModal) {
         taskDetailsModal.showModal();
     }
 }
 
+async function deleteTask() {
+    if (!currentTaskId) {
+        console.error("Task ID is missing.");
+        return;
+    }
 
-// event listener to show task details modal when task is clicked in calendar
+    const user = auth.currentUser;
+    if (user) {
+        const docRef = doc(collection(firestore, `users/${user.uid}/tasks`), currentTaskId);
+
+        const userConfirmed = confirm("Are you sure you want to delete this task?");
+        
+        if (userConfirmed) {
+            try {
+                await deleteDoc(docRef);
+                console.log("Task deleted successfully.");
+                const taskDetailsModal = document.getElementById('taskDetailsModal');
+                if (taskDetailsModal) {
+                    taskDetailsModal.close();
+                }
+                displayTasks(user, currentYear, currentMonth); // Refresh the tasks
+            } catch (error) {
+                console.error("Error deleting task:", error);
+            }
+        }
+    }
+}
+
+
 document.addEventListener('click', function(event) {
     if (event.target.classList.contains('event-block')) {
-        // Get the task data from the clicked element
+        const taskId = event.target.dataset.taskId; // Retrieve the task ID
+        if (!taskId) {
+            console.error("Task ID is missing.");
+            return;
+        }
+
         const taskData = {
+            taskId: taskId,
             taskName: event.target.textContent,
             category: event.target.dataset.category,
             startDate: event.target.dataset.startDate,
             interval: event.target.dataset.interval,
             description: event.target.dataset.description
         };
-        showTaskDetailsModal(taskData);
+
+        showTaskDetailsModal(taskData); // Pass the task data, including task ID
     }
 });
+
 
 /* -------- Modal and HTML javascript ------- */
 
 // Function to load modal content from modals.html and initialize the modals
 function loadModals() {
-    fetch('modals.html')
+    return fetch('modals.html')
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok');
@@ -397,26 +446,33 @@ function loadModals() {
             return response.text();
         })
         .then(html => {
-            console.log('Modal content fetched successfully');
+            console.log('Modal content loaded successfully');
             document.body.insertAdjacentHTML('beforeend', html);
-            initializeModals();
+            initializeModals(); // Initialize the event listeners after modals are loaded
         })
         .catch(error => {
             console.error('Error fetching modal content:', error);
         });
 }
 
-// Function to initialize modal-related event listeners
+
 function initializeModals() {
     const addTaskModal = document.getElementById('addTaskModal');
+    const deleteTaskButton = document.getElementById('deleteTaskButton'); // Your delete button's ID
 
     if (addTaskModal) {
-        document.getElementById('addTaskButton').addEventListener('click', () => {
-            showAddTaskFormModal();
-        });
-
-        // Call the form submission function when the submit button is clicked
+        document.getElementById('addTaskButton').addEventListener('click', showAddTaskFormModal);
         document.getElementById('submitTaskButton').addEventListener('click', saveFormData);
+    }
+
+    if (deleteTaskButton) {
+        deleteTaskButton.onclick = () => {
+            if (currentTaskId) {
+                deleteTask();
+            } else {
+                console.error("Task ID is missing.");
+            }
+        };
     }
 }
 
