@@ -2,16 +2,16 @@
 
 <!-- DaisyUI add-task form modal -->
 <dialog id="addTaskModal" class="modal">
-    <div class="modal-box bg-clean p-4 rounded-lg">
+    <div class="modal-box bg-clean dark:bg-slate p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('addTaskModal').close()">✕</button>
-        <form id="addTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
-            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Add a Task</h1>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
-                <input id="taskName" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
+        <form id="addTaskForm" class="w-full max-w-lg bg-clean dark:bg-slate p-4 rounded-md">
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal dark:text-clean border-b border-charcoal dark:border-clean">Add a Task</h1>
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal dark:text-clean border-marine dark:bg-slate">
+                <input id="taskName" type="text" class="flex-grow text-charcoal placeholder-charcoal dark:text-clean dark:placeholder-clean" placeholder="Task Name" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean text-charcoal border-marine">
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean dark:bg-slate dark:text-clean text-charcoal border-marine">
                 <!-- Drop-down list for category -->
-                <select id="category" class="flex-grow bg-clean text-charcoal border-marine" placeholder="Category">
+                <select id="category" class="flex-grow bg-clean dark:bg-slate dark:text-clean text-charcoal border-marine" placeholder="Category">
                     <option disabled selected>Select Category</option>
                     <option value="Appliance Maintenance">Appliance Maintenance</option>
                     <option value="Cleaning">Cleaning</option>
@@ -27,13 +27,13 @@
                 </select>
             </label>
             <div class="flex items-center gap-2 mb-2">
-                <label class="text-charcoal">Start Date:</label>
-                <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
-                    <input id="startDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" required />
+                <label class="text-charcoal dark:text-clean">Start Date:</label>
+                <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal dark:bg-slate dark:text-clean border-marine flex-grow">
+                    <input id="startDate" type="date" class="flex-grow text-charcoal placeholder-charcoal dark:text-clean dark:placeholder-clean" required />
                 </label>
             </div>
-            <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine">
-                <select id="interval" class="flex-grow bg-clean text-charcoal border-marine">
+            <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal dark:bg-slate dark:text-clean border-marine">
+                <select id="interval" class="flex-grow bg-clean text-charcoal dark:bg-slate dark:text-clean border-marine">
                     <option disabled selected>Select Interval</option>
                     <option value="1">Daily</option>
                     <option value="7">Weekly</option>
@@ -44,9 +44,9 @@
                     <option value="365">Annually</option>
                 </select>
             </label>
-            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-clean gap-2 text-charcoal border-marine placeholder-charcoal" placeholder="Task Description"></textarea>
+            <textarea id="description" class="text-base w-full mt-2 textarea textarea-bordered bg-clean dark:bg-slate gap-2 text-charcoal dark:text-clean dark:placeholder-clean border-marine placeholder-charcoal" placeholder="Task Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center">
-                <button id="submitTaskButton" type="button" class="btn text-charcoal font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
+                <button id="submitTaskButton" type="button" class="btn text-charcoal font-semibold bg-marine border-marine hover:border-marine hover:bg-clean dark:hover:bg-slate hover:text-marine w-full">Submit</button>
             </div>
         </form>
     </div>
@@ -54,7 +54,7 @@
 
 <!-- DaisyUI task details modal -->
 <dialog id="taskDetailsModal" class="modal">
-    <div class="modal-box bg-clean p-4 rounded-lg relative">
+    <div class="modal-box bg-clean dark:bg-slate p-4 rounded-lg relative">
         <!-- Close Button -->
         <button 
             class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2"
@@ -62,49 +62,49 @@
         </button>
         
         <!-- Task Details Content -->
-        <div class="w-full max-w-lg bg-clean rounded-md p-4">
-            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Task Details</h1>
+        <div class="w-full max-w-lg bg-clean dark:bg-slate rounded-md p-4">
+            <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal dark:text-clean dark:border-clean border-b border-charcoal">Task Details</h1>
             <div class="flex flex-col gap-4 mb-4">
                 <div>
                     <span class="text-md font-semibold text-marine">Task Name:</span>
-                    <p id="taskDetailsName" class="text-base text-charcoal"></p>
+                    <p id="taskDetailsName" class="text-base text-charcoal dark:text-clean"></p>
                 </div>
                 <div>
                     <span class="text-md font-semibold text-marine">Category:</span>
-                    <p id="taskDetailsCategory" class="text-base text-charcoal"></p>
+                    <p id="taskDetailsCategory" class="text-base text-charcoal dark:text-clean"></p>
                 </div>
                 <div>
                     <span class="text-md font-semibold text-marine">Start Date:</span>
-                    <p id="taskDetailsStartDate" class="text-base text-charcoal"></p>
+                    <p id="taskDetailsStartDate" class="text-base text-charcoal dark:text-clean"></p>
                 </div>
                 <div>
                     <span class="text-md font-semibold text-marine">Maintenance Interval:</span>
-                    <p id="taskDetailsInterval" class="text-base text-charcoal"></p>
+                    <p id="taskDetailsInterval" class="text-base text-charcoal dark:text-clean"></p>
                 </div>
                 <div>
                     <span class="text-md font-semibold text-marine">Description:</span>
-                    <p id="taskDetailsDescription" class="text-base text-charcoal"></p>
+                    <p id="taskDetailsDescription" class="text-base text-charcoal dark:text-clean"></p>
                 </div>
             </div>
         </div>
-        <div class="flex justify-end gap-4 p-4 border-t border-charcoal">
-            <button id="editTaskButton" class="btn btn-outline bg-marine border-marine text-charcoal hover:border-marine hover:bg-clean hover:text-marine"> Edit Task</button>
-            <button id="deleteTaskButton" class="btn btn-outline bg-marine border-marine text-charcoal hover:border-marine hover:bg-clean hover:text-marine"> Delete Task</button>
+        <div class="flex justify-end gap-4 p-4 border-t border-charcoal dark:border-clean">
+            <button id="editTaskButton" class="btn btn-outline bg-marine border-marine text-charcoal hover:border-marine hover:bg-clean dark:hover:bg-slate hover:text-marine"> Edit Task</button>
+            <button id="deleteTaskButton" class="btn btn-outline bg-marine border-marine text-charcoal hover:border-marine hover:bg-clean dark:hover:bg-slate hover:text-marine"> Delete Task</button>
         </div>
     </div>
 </dialog>
 
 <!-- DaisyUI edit task modal -->
 <dialog id="editTaskModal" class="modal">
-    <div class="modal-box bg-clean p-4 rounded-lg">
+    <div class="modal-box bg-clean dark:bg-slate p-4 rounded-lg">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('editTaskModal').close()">✕</button>
-        <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Edit a Task</h1>
-        <form id="editTaskForm" class="w-full max-w-lg bg-clean p-4 rounded-md">
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                <input id="editTaskName" type="text" class="flex-grow text-charcoal placeholder-charcoal" placeholder="Task Name" />
+        <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal dark:text-clean dark:border-clean border-b border-charcoal">Edit a Task</h1>
+        <form id="editTaskForm" class="w-full max-w-lg bg-clean dark:bg-slate p-4 rounded-md">
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean dark:bg-slate border-marine">
+                <input id="editTaskName" type="text" class="flex-grow text-charcoal placeholder-charcoal dark:text-clean dark:placeholder-clean" placeholder="Task Name" />
             </label>
-            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean border-marine">
-                <select id="editCategory" class="flex-grow bg-clean text-charcoal border-marine">
+            <label class="input input-bordered flex items-center gap-2 mb-2 bg-clean dark:bg-slate border-marine">
+                <select id="editCategory" class="flex-grow bg-clean dark:bg-slate text-charcoal dark:text-clean dark:placeholder-clean border-marine">
                     <option disabled selected>Select Category</option>
                     <option value="Appliance Maintenance">Appliance Maintenance</option>
                     <option value="Cleaning">Cleaning</option>
@@ -120,13 +120,13 @@
                 </select>
             </label>
             <div class="flex items-center gap-2 mb-2">
-                <label class="text-charcoal">Start Date:</label>
-                <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine flex-grow">
-                    <input id="editStartDate" type="date" class="flex-grow text-charcoal placeholder-charcoal" required />
+                <label class="text-charcoal dark:text-clean">Start Date:</label>
+                <label class="input input-bordered flex items-center gap-2 bg-clean dark:bg-slate dark:text-clean text-charcoal border-marine flex-grow">
+                    <input id="editStartDate" type="date" class="flex-grow text-charcoal placeholder-charcoal dark:text-clean dark:placeholder-clean" required />
                 </label>
             </div>
-            <label class="input input-bordered flex items-center gap-2 bg-clean text-charcoal border-marine">
-                <select id="editInterval" class="flex-grow bg-clean text-charcoal border-marine">
+            <label class="input input-bordered flex items-center gap-2 bg-clean dark:bg-slate dark:text-clean text-charcoal border-marine">
+                <select id="editInterval" class="flex-grow bg-clean dark:bg-slate dark:text-clean text-charcoal border-marine">
                     <option disabled selected>Select Interval</option>
                     <option value="1">Daily</option>
                     <option value="7">Weekly</option>
@@ -137,9 +137,9 @@
                     <option value="365">Annually</option>
                 </select>
             </label>
-            <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal bg-clean border-marine" placeholder="Maintenance Description"></textarea>
+            <textarea id="editDescription" class="text-base w-full mt-2 textarea textarea-bordered text-charcoal bg-clean dark:text-clean dark:bg-slate border-marine" placeholder="Maintenance Description"></textarea>
             <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                <button id="editSubmitBtn" class="btn text-charcoal font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Submit</button>
+                <button id="editSubmitBtn" class="btn text-charcoal font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine dark:hover:bg-slate w-full">Submit</button>
             </div>
         </form>
     </div>
@@ -147,26 +147,26 @@
 
 <!-- DaisyUI create account Modal -->
 <dialog id="createAccountModal" class="modal">
-    <div class="modal-box bg-clean p-1 rounded-md">
+    <div class="modal-box bg-clean dark:bg-slate p-1 rounded-md">
         <button class="btn btn-sm btn-circle btn-ghost absolute top-2 right-2" onclick="document.getElementById('createAccountModal').close()">✕</button>
-        <div class="w-full max-w-lg bg-clean p-1 rounded-md">
+        <div class="w-full max-w-lg bg-clean dark:bg-slate p-1 rounded-md">
             <form id="signupForm" class="card-body">
-                <h1 class="text-left p-2 text-2xl mb-5 font-light text-charcoal border-b border-charcoal">Create an Account</h1>
+                <h1 class="text-left p-2 text-2xl mb-5 font-light dark:text-clean text-charcoal border-b border-charcoal dark:border-clean">Create an Account</h1>
                 <div class="form-control">
-                    <input id="firstName" type="text" placeholder="First Name" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
+                    <input id="firstName" type="text" placeholder="First Name" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine dark:bg-slate dark:text-clean dark:placeholder-clean" required />
                 </div>
                 <div class="form-control">
-                    <input id="lastName" type="text" placeholder="Last Name" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
+                    <input id="lastName" type="text" placeholder="Last Name" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine dark:bg-slate dark:text-clean dark:placeholder-clean" required />
                 </div>
                 <div class="form-control">
-                    <input id="signupEmail" type="email" placeholder="Email Address" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
+                    <input id="signupEmail" type="email" placeholder="Email Address" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine dark:bg-slate dark:text-clean dark:placeholder-clean" required />
                 </div>
                 <div class="form-control">
-                    <input id="signupPassword" type="password" placeholder="Password" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine" required />
+                    <input id="signupPassword" type="password" placeholder="Password" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine dark:bg-slate dark:text-clean dark:placeholder-clean" required />
                 </div>
                 <!-- Buttons -->
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
-                    <button type="submit" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full">Create Account</button>
+                    <button type="submit" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full dark:text-slate dark:hover:bg-slate">Create Account</button>
                 </div>
             </form>
         </div>
