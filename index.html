@@ -10,36 +10,51 @@
     <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
     <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        clean: '#D9D9D9',
-                        paper:'#E9E9E9',
-                        feather: '#77C9D4',
-                        marine: '#57BC90',
-                        forest: '#015249',
-                        grey: '#9099A2',
-                        charcoal: '#3C3C3C',
-                        feather_2: '#27bfd3'
-                    }
+    tailwind.config = {
+        darkMode: 'selector',
+        theme: {
+            extend: {
+                colors: {
+                    clean: '#D9D9D9',
+                    paper:'#E9E9E9',
+                    feather: '#77C9D4',
+                    feather_2: '#27bfd3',
+                    marine: '#57BC90',
+                    forest: '#015249',
+                    grey: '#9099A2',
+                    charcoal: '#3C3C3C',
+                    steel: '#31363F',
+                    smoke: '#222831d9',
+                    slate: '#222831'
                 }
             }
         }
+    }
     </script>
 </head>
 
-<body class="bg-clean h-screen">
+<body class="bg-clean dark:bg-slate h-screen">
+
+      <!-- daisyUI Navbar -->
+
+      <div class="navbar bg-clean dark:bg-slate pb-6 flex justify-end"> 
+        <div class="navbar-end flex items-center">
+          <!-- Dark Mode Toggle -->
+          <button id="darkModeToggle" class="p-2 rounded-full">
+            <i class="fa-solid fa-moon text-xl text-charcoal hover:text-marine"></i>
+          </button>
+        </div>
+      </div>
 
     <!-- daisyUI Hero for main content -->
 
-    <div class="hero min-h-screen bg-clean">
+    <div class="hero min-h-screen bg-clean dark:bg-slate">
         <div class="hero-content flex-col lg:flex-row-reverse">
             <div class="text-center">
-                <h1 class="lg:flex md:inline text-5xl font-bold lg:ml-6 md:ml-2 text-forest">Welcome to</h1>
+                <h1 class="lg:flex md:inline text-5xl font-bold lg:ml-6 md:ml-2 text-forest dark:text-clean">Welcome to</h1>
                 <h1 class="lg:flex md:inline text-7xl lg:ml-6 md:ml-2 font-bold bg-gradient-to-r from-marine to-feather_2 text-transparent bg-clip-text">HomeKeep</h1>
                 <div class="max-w-[calc(100%-4rem)] mx-auto lg:text-left md:text-center" >
-                    <p class="mt-6 text-xl text-forest">Effortlessly schedule maintenance tasks, receive notifications, and ensure your home is always in top condition with our intuitive app. Start simplifying your life today</p>
+                    <p class="mt-6 text-xl text-forest dark:text-clean">Effortlessly schedule maintenance tasks, receive notifications, and ensure your home is always in top condition with our intuitive app. Start simplifying your life today</p>
                 </div>
             </div>
 
@@ -47,20 +62,20 @@
 
             <div class="card shrink-0 w-full max-w-md shadow-2xl bg-marine h-auto lg:h-full mb-24">
                 <div class="card-body">
-                    <h1 class="text-center p-2 text-3xl mb-5 font-base text-clean border-b border-clean">Sign In</h1>
+                    <h1 class="text-center p-2 text-3xl mb-5 font-base text-clean dark:text-slate dark:border-slate border-b border-clean">Sign In</h1>
                     <div class="form-control">
-                        <input id="email" type="email" placeholder="email" class="input input-bordered bg-clean placeholder-forest" required />
+                        <input id="email" type="email" placeholder="email" class="input input-bordered bg-clean dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest" required />
                     </div>
                     <div class="form-control">
-                        <input id="password" type="password" placeholder="password" class="input input-bordered bg-clean placeholder-forest" required />
-                        <a href="#" class="font-base text-forest mt-2 ml-1 text-sm hover:text-clean" id="forgotPasswordLink">Forgot Password?</a>
+                        <input id="password" type="password" placeholder="password" class="input input-bordered bg-clean dark:bg-slate dark:text-clean dark:placeholder-clean  placeholder-forest" required />
+                        <a href="#" class="font-base text-forest dark:text-slate mt-2 ml-1 text-sm hover:text-clean" id="forgotPasswordLink">Forgot Password?</a>
                     </div>
                     <div class="flex justify-center mx-auto w-2/5 py-1 text-center m-2">
-                        <button id="loginEmailPassword" class="mr-2 btn text-clean font-semibold bg-forest border-forest hover:border-clean hover:bg-clean hover:text-forest w-full">Sign In</button>
-                        <button id="loginGoogleBtn" class="ml-2 btn text-forest font-semibold bg-clean border-clean hover:border-forest hover:bg-forest hover:text-clean w-full">Sign in with Google</button>
+                        <button id="loginEmailPassword" class="mr-2 btn text-clean dark:text-clean font-semibold bg-forest border-forest hover:border-clean hover:bg-clean hover:text-forest dark:hover:border-slate dark:hover:bg-slate dark:hover:text-clean w-full">Sign In</button>
+                        <button id="loginGoogleBtn" class="ml-2 btn text-forest dark:text-slate font-semibold bg-clean border-clean hover:border-forest hover:bg-forest hover:text-clean dark:hover:border-slate dark:hover:bg-slate dark:hover:text-clean w-full">Sign in with Google</button>
                     </div>
-                    <div class="border-t border-clean p-3 text-center">
-                        <a href="#" class="font-base text-forest text-md hover:text-clean" id="createAccountLink"><b>New user?</b> Create an account</a>
+                    <div class="border-t border-clean dark:border-slate p-3 text-center">
+                        <a href="#" class="font-base text-forest dark:text-slate text-md hover:text-clean" id="createAccountLink"><b>New user?</b> Create an account</a>
                     </div>
                 </div>
             </div>
@@ -69,9 +84,9 @@
 
     <!-- Footer -->
 
-    <footer class="fixed bottom-0 left-0 z-0 w-full bg-clean border-t pt-5 border-clean shadow">
-      <span class="text-sm font-normal text-charcoal sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
-      <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
+    <footer class="fixed bottom-0 left-0 z-0 w-full bg-clean dark:bg-slate pt-5 shadow">
+      <span class="text-sm font-normal dark:text-clean text-charcoal sm:text-center block md:inline-block md:mr-auto p-4">© 2024. HomeKeep. All Rights Reserved.</span>
+      <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean dark:text-slate rounded-2xl hover:bg-marine absolute bottom-0 right-0 mb-2 mr-2"><i class="fa-solid fa-comment"></i></button>
     </footer>
 
     <script src="script-index.js" type="module"></script>
