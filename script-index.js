@@ -1,27 +1,21 @@
 /* ----- Firebase Initialization ----- */
 
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
-import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
-// Firbase config
 const firebaseConfig = {
-    apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
-    authDomain: "homekeep-x.firebaseapp.com",
-    projectId: "homekeep-x",
-    storageBucket: "homekeep-x.appspot.com",
-    messagingSenderId: "142689184811",
-    appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
-  };
+  apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
+  authDomain: "homekeep-x.firebaseapp.com",
+  projectId: "homekeep-x",
+  storageBucket: "homekeep-x",
+  messagingSenderId: "142689184811",
+  appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
+};
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const firestore = getFirestore(app);
 
-// Check authentication status
-console.log(auth.currentUser);
+// Check if user is signed in
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("User is logged in:", user);
@@ -30,68 +24,76 @@ auth.onAuthStateChanged(user => {
     }
 });
 
-/* -----Firebase Auth----- */
+/* ----- Firebase Authorization ----- */
 
-// Sign in with google auth
+// Sign in with google firebase auth
 function signInWithGoogle() {
-    console.log(auth)
-    var provider = new GoogleAuthProvider();
+    const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
-        .then((result) => {
-            var user = result.user;
-            console.log("Signed in user:", user);
-            window.location.href = "dashboard.html";
-        })
-        .catch((error) => {
-            console.error("Google sign-in error:", error);
-        });
+    .then(result => {
+        const user = result.user;
+        console.log("Signed in user:", user);
+        window.location.href = "dashboard.html";
+    })
+    .catch(error => {
+        console.error("Google sign-in error:", error);
+    });
 }
 
-// Sign in with username and password through firebase
+// Add event listeners once DOM is loadeed
 document.addEventListener("DOMContentLoaded", function() {
+
+    // event listener for google sign in btn
+    document.getElementById("loginGoogleBtn").addEventListener("click", signInWithGoogle);
+
+    // event listener for email/pass login
     document.getElementById("loginEmailPassword").addEventListener("click", function(event) {
         event.preventDefault();
         const email = document.getElementById("email").value;
         const password = document.getElementById("password").value;
         signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("Signed in user:", user);
-            window.location.href = "dashboard.html";
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            alert("Incorrect email or password. Please try again.");
-        });
-    })
+            .then(userCredential => {
+                const user = userCredential.user;
+                console.log("Signed in user:", user);
+                window.location.href = "dashboard.html";
+            })
+                .catch(error => {
+                console.error("Error:", error);
+                alert("Incorrect email or password. Please try again.");
+            });
+    });
+
+    // event listener for forgot password link
+    document.getElementById("forgotPasswordLink").addEventListener("click", function(event) {
+        event.preventDefault();
+        const email = prompt("Please enter your email address to reset your password:");
+        if (email) {
+            sendPasswordResetEmail(auth, email)
+            .then(() => {
+                alert("Password reset email sent. Please check your email inbox.");
+            })
+            .catch(error => {
+                console.error("Error sending password reset email:", error);
+                alert("Error sending password reset email. Please try again later.");
+            });
+        }
+    });
+
+    // event listener for create account form
+    document.getElementById("createAccountLink").addEventListener("click", showCreateAccountModal);
+
+    // event listener for help form icon
+    document.getElementById("chatIcon").addEventListener("click", toggleChatModal);
+
+    // loadModals function call
+    loadModals();
 });
 
-// Function to handle forgot password link click
-document.getElementById('forgotPasswordLink').addEventListener('click', function(event) {
-    event.preventDefault();
-    const email = prompt("Please enter your email address to reset your password:");
-    if (email) {
-        sendPasswordResetEmail(auth, email)
-        .then(() => {
-            alert("Password reset email sent. Please check your email inbox.");
-        })
-        .catch((error) => {
-            console.error("Error sending password reset email:", error);
-            alert("Error sending password reset email. Please try again later.");
-        });
-    }
-});
+/* ----- Modals ----- */
 
-// Event listener for sign in with google button
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("loginGoogleBtn").addEventListener("click", signInWithGoogle);
-});
-
-/* -----Javascript to handle fetching and displaying modals------ */
-
-// Function to load modal content from modals.html
+// function to fetch and load modals
 function loadModals() {
-    fetch('modals.html')
+  fetch('modals.html')
     .then(response => {
         if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -99,98 +101,82 @@ function loadModals() {
         return response.text();
     })
     .then(html => {
-        console.log('Modal content fetched successfully:');
-        document.body.insertAdjacentHTML('beforeend', html);
-        initializeModals();
+      document.body.insertAdjacentHTML('beforeend', html);
+
+        // Event listener for create account form submission
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            const firstName = document.getElementById("firstName").value;
+            const lastName = document.getElementById("lastName").value;
+            const email = document.getElementById("signupEmail").value;
+            const password = document.getElementById("signupPassword").value;
+
+            // create new user with firestore auth
+            createUserWithEmailAndPassword(auth, email, password)
+            .then(userCredential => {
+                const user = userCredential.user;
+                console.log("User created:", user);
+                const createAccountModal = document.getElementById('createAccountModal');
+                createAccountModal.close();
+            })
+            .catch(error => {
+                console.error("Error creating user:", error);
+                alert(error.message);
+            });
+        });
     })
     .catch(error => {
         console.error('Error fetching modal content:', error);
     });
 };
 
-// Function to initialize modals and sign up form in create account modal
-function initializeModals() {
-    var signupForm = document.getElementById('signupForm');
-
-    // Event listener for create account form submission
-    signupForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        console.log("Form submitted");
-        const firstName = document.getElementById("firstName").value;
-        const lastName = document.getElementById("lastName").value;
-        const email = document.getElementById("signupEmail").value;
-        const password = document.getElementById("signupPassword").value;
-
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            const user = userCredential.user;
-            console.log("User created:", user);
-            createAccountModal.close();
-        })
-        .catch((error) => {
-            console.error("Error creating user:", error);
-            alert(error.message);
-        });
- })};
-
-// Function to show the create account modal
+// function to show create account modal
 function showCreateAccountModal() {
-    var createAccountModal = document.getElementById('createAccountModal');
-    if (createAccountModal) {
-        createAccountModal.showModal();
-    }
-}
-
-function toggleChatModal() {
-    var chatModal = document.getElementById("chatModal");
-    if (chatModal.style.display === "block") {
-        chatModal.style.display = "none";
-        } else {
-        chatModal.style.display = "block";
-    }
-}
-
-// Dark Mode functionality //
-
-// Toggle dark mode and save the preference to local storage
-function toggleDarkMode() {
-    const body = document.querySelector("body");
-    const icon = document.getElementById("darkModeToggle").querySelector("i");
-  
-    if (body.classList.contains("dark")) {
-      body.classList.remove("dark");
-      localStorage.setItem("darkMode", "false");
-      icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
-    } else {
-      body.classList.add("dark");
-      localStorage.setItem("darkMode", "true");
-      icon.className = "fa-solid fa-sun text-feather hover:text-marine";
-    }
+  var createAccountModal = document.getElementById('createAccountModal');
+  if (createAccountModal) {
+    createAccountModal.showModal();
   }
-  
-  // Event listener for the dark mode toggle button
-  document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
-  
-  // Apply the correct dark mode setting on page load
-  window.addEventListener("load", function() {
-    const darkMode = localStorage.getItem("darkMode");
-    const body = document.querySelector("body");
-    const icon = document.getElementById("darkModeToggle").querySelector("i");
-  
-    if (darkMode === "true") {
-      body.classList.add("dark");
-      icon.className = "fa-solid fa-sun text-feather hover:text-marine";
-    } else {
-      body.classList.remove("dark");
-      icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
-    }
-  });
+}
 
-// Add event listeners to show modals
-document.getElementById('createAccountLink').addEventListener('click', showCreateAccountModal);
-document.getElementById("chatIcon").addEventListener("click", toggleChatModal)
+// function to toggle help for when clicking chat icon
+function toggleChatModal() {
+  var chatModal = document.getElementById("chatModal");
+  chatModal.style.display = chatModal.style.display === "block" ? "none" : "block";
+}
 
-//call load modals function
-document.addEventListener('DOMContentLoaded', function() {
-    loadModals();
+/* ----- Dark Mode functionality ----- */
+
+// function to toggle dark mode with icon
+function toggleDarkMode() {
+  const body = document.querySelector("body");
+  const icon = document.getElementById("darkModeToggle").querySelector("i");
+
+  if (body.classList.contains("dark")) {
+    body.classList.remove("dark");
+    localStorage.setItem("darkMode", "false");
+    icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
+  } else {
+    body.classList.add("dark");
+    localStorage.setItem("darkMode", "true");
+    icon.className = "fa-solid fa-sun text-feather hover:text-marine";
+  }
+}
+
+// event listener for dark mode icon
+document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+
+// changing icon based on current mode
+window.addEventListener("load", function() {
+  const darkMode = localStorage.getItem("darkMode");
+  const body = document.querySelector("body");
+  const icon = document.getElementById("darkModeToggle").querySelector("i");
+
+  if (darkMode === "true") {
+    body.classList.add("dark");
+    icon.className = "fa-solid fa-sun text-feather hover:text-marine";
+  } else {
+    body.classList.remove("dark");
+    icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
+  }
 });
