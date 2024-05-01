@@ -2,7 +2,7 @@
 
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
-import { getFirestore, collection, doc, addDoc, getDoc, setDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
+import { getFirestore, collection, doc, addDoc, getDoc, setDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
 // Firbase config
@@ -20,7 +20,7 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
-// Check authentication status
+// Check if user is signed in
 auth.onAuthStateChanged(user => {
     if (user) {
         console.log("User is logged in:", user);
@@ -34,18 +34,20 @@ auth.onAuthStateChanged(user => {
 
 let formSubmitted = false;
 
+// function to save data from add task form and add it to firestore db
 async function saveFormData() {
     if (formSubmitted) {
         return;
     }
 
+    // get current user
     const user = auth.currentUser;
     if (!user) {
         console.error("No user logged in.");
         return;
     }
 
-    // Set the flag to true to prevent multiple submissions
+    // Set the flag to true to prevent multiple form submissions
     formSubmitted = true;
 
     // Extract form data
@@ -53,35 +55,9 @@ async function saveFormData() {
     const category = document.getElementById('category').value;
     const rawStartDate = document.getElementById('startDate').value;
     const startDateParts = rawStartDate.split('-');
-    const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`; // Convert to MM-DD-YYYY format
+    const formattedStartDate = `${startDateParts[1]}-${startDateParts[2]}-${startDateParts[0]}`;
     const interval = document.getElementById('interval').value;
     const description = document.getElementById('description').value;
-
-    // Validate the start date format
-    const datePattern = /^\d{2}-\d{2}-\d{4}$/;
-    if (!datePattern.test(formattedStartDate)) {
-        alert("Please enter the start date in the format MM-DD-YYYY.");
-        formSubmitted = false;
-        return;
-    }
-
-    // Take month, day, and year from the input field for start date
-    const [startMonth, startDay, startYear] = formattedStartDate.split('-').map(Number);
-    if (startMonth < 1 || startMonth > 12) {
-        alert("Please enter a valid start month (1-12).");
-        formSubmitted = false;
-        return;
-    }
-    if (startDay < 1 || startDay > 31) {
-        alert("Please enter a valid start day (1-31).");
-        formSubmitted = false;
-        return;
-    }
-    if (startYear < 1900 || startYear > 2100) {
-        alert("Please enter a valid start year (1900-2100).");
-        formSubmitted = false;
-        return;
-    }
 
     try {
         // Add a new document with a generated ID and user's authentication information
@@ -108,23 +84,18 @@ async function saveFormData() {
     } finally {
         formSubmitted = false;
     }
-}
+};
 
-function formatToMMDDYYYY(date) {
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = String(date.getFullYear());
-    return `${month}-${day}-${year}`;
-}
-
+// convert date to ISO standard
 function convertToISO(date) {
     const dateParts = date.split('-');
     const month = dateParts[0];
     const day = dateParts[1];
     const year = dateParts[2];
     return `${year}-${month}-${day}`;
-}
+};
 
+// function to populate edit task modal with row data
 function populateEditTaskModal(taskData) {
     const editTaskForm = document.getElementById('editTaskForm');
     
@@ -144,7 +115,7 @@ function populateEditTaskModal(taskData) {
     }
 
     editTaskForm.querySelector('#editDescription').value = taskData.description;
-}
+};
 
 // Function to update task data in Firestore and the table
 async function updateTask(taskData, docRef, row) {
@@ -159,8 +130,9 @@ async function updateTask(taskData, docRef, row) {
     } catch (error) {
         console.error("Error updating document: ", error);
     }
-}
+};
 
+// assigning colors to task categories
 const categoryColors = {
     "Appliance Maintenance": "#85BB65",
     "Cleaning": "#1E90FF",
@@ -175,7 +147,7 @@ const categoryColors = {
     "Other": "#8B008B",
 };
 
-// Mapping from interval value to display text
+// Mapping from interval value to display text versions
 const intervalTextMapping = {
     "1": "Daily",
     "7": "Weekly",
@@ -185,6 +157,8 @@ const intervalTextMapping = {
     "180": "Bi-Annually",
     "365": "Annually",
 };
+
+/* ----- Displaying table data ----- */
 
 var lastFunction;
 
@@ -239,14 +213,14 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                 `;
                 document.getElementById('taskTableBody').appendChild(row);
             
-                // Add event listener to the task name link
+                // Add event listener to the task name link to show task details modal
                 const taskNameLink = row.querySelector('.task-name-link');
                 taskNameLink.addEventListener('click', (event) => {
                     event.preventDefault();
                     showTaskDetailsModal(task);
                 });
 
-                // DaisyUI toggle switch for cell 6
+                // DaisyUI toggle switch
                 const toggleSwitchContainer = document.createElement('div');
                 toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center');
 
@@ -263,7 +237,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
 
                 row.children[5].appendChild(toggleSwitchContainer);
 
-                // Flex container for icons in cell 7
+                // Flex container for icons
                 const iconsContainer = document.createElement('div');
                 iconsContainer.classList.add('flex', 'items-center');
 
@@ -273,16 +247,18 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                 editLink.style.marginRight = '8px';
                 iconsContainer.appendChild(editLink);
 
-                // Font Awesome pencil icon
+                // Generating pencil icon
                 const pencilIcon = document.createElement('i');
                 pencilIcon.className = 'fas fa-pencil-alt';
                 pencilIcon.classList.add('hover:text-marine', 'text-lg', 'mr-2');
                 editLink.appendChild(pencilIcon);
 
-                // Font Awesome garbage can icon
+                // Generating garbagecan icon
                 const garbageIcon = document.createElement('i');
                 garbageIcon.className = 'fas fa-trash-alt';
                 garbageIcon.classList.add('hover:text-marine', 'text-lg', 'mr-2');
+
+                // event listener for garbagecan icon
                 garbageIcon.addEventListener('click', async () => {
                     // Ask for confirmation before deleting the task
                     const userConfirmed = confirm("Are you sure you want to delete this task?");
@@ -320,8 +296,6 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                     // Populate the edit task modal with data from the corresponding row
                     populateEditTaskModal(taskData);
                     document.getElementById('editTaskModal').showModal();
-
-                    // Add event listener to the submit button on the edit task form
                     const editTaskForm = document.getElementById('editTaskForm');
 
                     if (lastFunction !== undefined) {
@@ -349,19 +323,16 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                         document.getElementById('editTaskModal').close();
                         displayTasks();
                     };
-                    
-                    
+                    // Add event listener to the submit button on the edit task form
                     editTaskForm.addEventListener('submit', lastFunction);
                 });
-
                 taskTableBody.appendChild(row);
-
             });
         }
     } catch (error) {
         console.error("Error fetching tasks: ", error);
     }
-}
+};
 
 displayTasks();
 
