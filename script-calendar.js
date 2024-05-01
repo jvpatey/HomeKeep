@@ -249,8 +249,6 @@ document.getElementById('calendar').addEventListener('click', function(event) {
                     console.error("Invalid date created:", clickedDateStr);
                 }
             }
-        } else {
-            console.error("Invalid data-date attribute:", clickedDateStr);
         }
     }
 });
