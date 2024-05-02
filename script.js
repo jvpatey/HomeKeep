@@ -5,15 +5,15 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/fireba
 import { getFirestore, collection, doc, addDoc, getDoc, setDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
-// Firbase config
 const firebaseConfig = {
-  apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
-  authDomain: "homekeep-x.firebaseapp.com",
-  projectId: "homekeep-x",
-  storageBucket: "homekeep-x.appspot.com",
-  messagingSenderId: "142689184811",
-  appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
-};
+    apiKey: "AIzaSyBdfiZqwh7k_iRTpxFyK2_hJy4VpS8PViU",
+    authDomain: "homekeep-site.firebaseapp.com",
+    projectId: "homekeep-site",
+    storageBucket: "homekeep-site.appspot.com",
+    messagingSenderId: "135503627537",
+    appId: "1:135503627537:web:aabcbcf703a4ec60bbb8b0",
+    measurementId: "G-EKK8D35QH8"
+  };
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
