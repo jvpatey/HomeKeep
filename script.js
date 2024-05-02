@@ -209,7 +209,6 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                     <td>${intervalText}</td>
                     <td>${task.description}</td>
                     <td></td>
-                    <td></td>
                 `;
                 document.getElementById('taskTableBody').appendChild(row);
             
@@ -219,23 +218,6 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                     event.preventDefault();
                     showTaskDetailsModal(task);
                 });
-
-                // DaisyUI toggle switch
-                const toggleSwitchContainer = document.createElement('div');
-                toggleSwitchContainer.classList.add('form-switch', 'flex', 'items-center');
-
-                const toggleSwitchInput = document.createElement('input');
-                toggleSwitchInput.type = 'checkbox';
-                toggleSwitchInput.classList.add('toggle', 'toggle-success');
-                toggleSwitchInput.checked = true;
-
-                const toggleSwitchMark = document.createElement('span');
-                toggleSwitchMark.classList.add('toggle-mark');
-
-                toggleSwitchContainer.appendChild(toggleSwitchInput);
-                toggleSwitchContainer.appendChild(toggleSwitchMark);
-
-                row.children[5].appendChild(toggleSwitchContainer);
 
                 // Flex container for icons
                 const iconsContainer = document.createElement('div');
@@ -289,7 +271,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                 });
 
                 iconsContainer.appendChild(garbageIcon);
-                row.children[6].appendChild(iconsContainer);
+                row.children[5].appendChild(iconsContainer);
 
                 // Add event listener to the pencil icon
                 pencilIcon.addEventListener('click', async () => {
