@@ -4,12 +4,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/fireba
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCrQCy3XJHfkusqmoXafsCqjAcZJWInx7s",
-  authDomain: "homekeep-x.firebaseapp.com",
-  projectId: "homekeep-x",
-  storageBucket: "homekeep-x",
-  messagingSenderId: "142689184811",
-  appId: "1:142689184811:web:61e53ac8ec053c68bc0e6e"
+  apiKey: "AIzaSyBdfiZqwh7k_iRTpxFyK2_hJy4VpS8PViU",
+  authDomain: "homekeep-site.firebaseapp.com",
+  projectId: "homekeep-site",
+  storageBucket: "homekeep-site.appspot.com",
+  messagingSenderId: "135503627537",
+  appId: "1:135503627537:web:aabcbcf703a4ec60bbb8b0",
+  measurementId: "G-EKK8D35QH8"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -107,8 +108,6 @@ function loadModals() {
         const signupForm = document.getElementById('signupForm');
         signupForm.addEventListener("submit", function(event) {
             event.preventDefault();
-            const firstName = document.getElementById("firstName").value;
-            const lastName = document.getElementById("lastName").value;
             const email = document.getElementById("signupEmail").value;
             const password = document.getElementById("signupPassword").value;
 
@@ -119,6 +118,7 @@ function loadModals() {
                 console.log("User created:", user);
                 const createAccountModal = document.getElementById('createAccountModal');
                 createAccountModal.close();
+                alert("Your account has been successfully created!");
             })
             .catch(error => {
                 console.error("Error creating user:", error);
