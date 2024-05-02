@@ -134,6 +134,10 @@
     justify-content: flex-end;
     gap: 10px;
   }
+
+  #emptyRow {
+    justify-content: flex-start;
+  }
 }
 
 /* Styling table for larger screens */

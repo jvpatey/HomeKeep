@@ -179,7 +179,7 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
         if (querySnapshot.empty) {
             // If no data - append a row with the message "No tasks entered yet if no data"
             const emptyRow = document.createElement('tr');
-            emptyRow.innerHTML = '<td colspan="8" class="text-center py-4">No tasks entered yet</td>';
+            emptyRow.innerHTML = '<td colspan="8" id="emptyRow" class="text-center py-4">No tasks entered yet</td>';
             taskTableBody.appendChild(emptyRow);
         } else {
             // Convert querySnapshot to an array of tasks
@@ -273,6 +273,13 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                 
                             // Remove the row from the table
                             taskTableBody.removeChild(row);
+
+                            // Add the empty row if no tasks remain
+                            if (taskTableBody.childElementCount === 0) {
+                                const emptyRow = document.createElement('tr');
+                                emptyRow.innerHTML = '<td colspan="8" id="emptyRow" class="text-center py-4">No tasks entered yet</td>';
+                                taskTableBody.appendChild(emptyRow);
+                            }
                 
                             console.log("Task deleted successfully.");
                         } catch (error) {
