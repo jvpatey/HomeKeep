@@ -7,7 +7,7 @@ HomeKeep is a user-friendly web application designed to help you manage and trac
 To start, you need to create a user account, allowing you to add maintenance tasks to a Firestore database and set notifications based on your chosen frequency and start date.
 
 You can view tasks in two formats: a detailed table that shows all scheduled maintenance tasks and a calendar view for a more visual representation of your maintenance schedule. 
-HomeKeep's flexible notification system ensures you receive timely reminders and toggle them on/off at your preference.
+HomeKeep's flexible cloud-based notification system ensures you receive timely reminders via email on the day your task is due. 
 Check it out!
 
 
