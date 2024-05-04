@@ -396,12 +396,12 @@ border-radius: 5px;
   .chat-popup {
     right: 12px;
     bottom: 12px;
-    max-width: 280px;
+    max-width: 325px;
     padding: 12px;
   }
 
   .chat-popup iframe {
-    width: 260px;
+    width: 300px;
     height: 450px;
   }
 };
