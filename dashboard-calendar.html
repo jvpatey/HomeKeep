@@ -36,23 +36,23 @@
 <body class="bg-clean dark:bg-slate min-h-screen flex flex-col">
 
   <!-- DaisyUI navbar -->
-  <div class="navbar bg-clean dark:bg-slate pb-6 flex justify-between">
+
+  <div class="navbar bg-clean dark:bg-slate pb-6">
     <div class="navbar-start">
-      <a href="dashboard.html" target="_self" class="relative inline-block logo">
-        <span>HomeKeep</span>
-      </a>
+          <a href="dashboard.html" target="_self" class="relative inline-block logo">
+              <span>HomeKeep</span>
+          </a>
     </div>
     <div class="navbar-end">
-      <!-- Dark Mode Toggle -->
-      <button id="darkModeToggle" class="p-2 rounded-full">
-        <i class="fa-solid fa-moon text-charcoal hover:text-marine"></i>
-      </button>
-      <div class="dropdown relative">
-        <button class="btn btn-ghost" tabindex="0">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
-          </svg>
-        </button>
+          <!-- Dark Mode Toggle -->
+          <button id="darkModeToggle" class="p-2 rounded-full btn-ghost">
+            <i class="fa-solid fa-moon text-charcoal hover:text-marine"></i>
+          </button>
+          <div class="dropdown relative">
+            <button class="btn btn-ghost text-slate dark:text-paper hover:text-marine" tabindex="0">
+              <i class="fa fa-bars dropdown-icon"></i>
+            </button>
+            
         <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-marine rounded-box w-52 right-0">
           <li><a href="about.html" id="tutorialLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-question"></i>About</a></li>
           <li><a href="getting-started.html" id="startLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-regular fa-lightbulb"></i>Getting Started</a></li>

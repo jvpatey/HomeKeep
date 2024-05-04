@@ -493,6 +493,30 @@ function toggleDarkMode() {
     }
   });
 
+  document.addEventListener('DOMContentLoaded', function() {
+    const dropdownButton = document.querySelector('.dropdown .btn-ghost');
+    const dropdownContent = document.querySelector('.dropdown-content');
+    
+    dropdownButton.addEventListener('click', function(event) {
+      event.stopPropagation();
+      
+      // Check if the dropdown is open
+      const isOpen = dropdownContent.style.display === 'block'; 
+      
+      // Toggle display
+      if (isOpen) {
+        dropdownContent.style.display = 'none';
+      } else {
+        dropdownContent.style.display = 'block';
+      }
+    });
+  
+    // Close the dropdown if clicked outside
+    document.addEventListener('click', function() {
+      dropdownContent.style.display = 'none';
+    });
+  });
+
 /* ---- Firbase Auth Sign Out JS ----- */
 
 // Function to sign out the user
