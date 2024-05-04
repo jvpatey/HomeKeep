@@ -604,17 +604,37 @@ async function updateTask(updatedTaskData, docRef) {
     }
 }
 
-// Function to show the chat modal when the chat icon is clicked
+/* -----  Help request pop up ----- */
+
+// function to toggle open/close of modal when icon is clicked
 function toggleChatModal() {
-    const chatModal = document.getElementById("chatModal");
-    chatModal.style.display = chatModal.style.display === "block" ? "none" : "block";
+    var chatModal = document.getElementById("chatModal");
+    if (chatModal.style.display === "block") {
+        chatModal.style.display = "none";
+    } else {
+        chatModal.style.display = "block";
+    }
 }
+
+// Close the chat modal if clicked outside the window
+document.addEventListener('click', function(event) {
+    const chatModal = document.getElementById("chatModal");
+    const isClickInside = chatModal.contains(event.target);
+
+    if (!isClickInside && chatModal.style.display === "block") {
+        chatModal.style.display = "none";
+    }
+});
+
+// Ensure the chat modal toggle doesn't close when clicking inside
+document.getElementById("chatIcon").addEventListener("click", function(event) {
+    event.stopPropagation();
+    toggleChatModal();
+});
 
 document.addEventListener('DOMContentLoaded', () => {
     loadModals();
     initializeModals();
-
-    document.getElementById("chatIcon").addEventListener("click", toggleChatModal);
 
     const editSubmitBtn = document.getElementById('editSubmitBtn');
 

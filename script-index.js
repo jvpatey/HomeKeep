@@ -83,9 +83,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // event listener for create account form
     document.getElementById("createAccountLink").addEventListener("click", showCreateAccountModal);
 
-    // event listener for help form icon
-    document.getElementById("chatIcon").addEventListener("click", toggleChatModal);
-
     // loadModals function call
     loadModals();
 });
@@ -139,11 +136,33 @@ function showCreateAccountModal() {
   }
 }
 
-// function to toggle help for when clicking chat icon
+/* -----  Help request pop up ----- */
+
+// function to toggle open/close of modal when icon is clicked
 function toggleChatModal() {
   var chatModal = document.getElementById("chatModal");
-  chatModal.style.display = chatModal.style.display === "block" ? "none" : "block";
+  if (chatModal.style.display === "block") {
+      chatModal.style.display = "none";
+  } else {
+      chatModal.style.display = "block";
+  }
 }
+
+// Close the chat modal if clicked outside the window
+document.addEventListener('click', function(event) {
+  const chatModal = document.getElementById("chatModal");
+  const isClickInside = chatModal.contains(event.target);
+
+  if (!isClickInside && chatModal.style.display === "block") {
+      chatModal.style.display = "none";
+  }
+});
+
+// Ensure the chat modal toggle doesn't close when clicking inside
+document.getElementById("chatIcon").addEventListener("click", function(event) {
+  event.stopPropagation();
+  toggleChatModal();
+});
 
 /* ----- Dark Mode functionality ----- */
 

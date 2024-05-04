@@ -375,9 +375,15 @@ border-radius: 5px;
 
 /* Chat pop up styles*/
 
-/* Explicity set bg color to white to prevent transparent background */
 .chat-popup {
-  background: white;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: none; /* Start hidden */
+  background-color: white; /* Ensure it's visible */
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1000; /* Ensure it's above other elements */
 }
 
 /* invert colors to simulate dark mode on the google form */

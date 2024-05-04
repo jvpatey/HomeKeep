@@ -399,6 +399,9 @@ function showTaskDetailsModal(task) {
     }
 }
 
+/* -----  Help request pop up ----- */
+
+// function to toggle open/close of modal when icon is clicked
 function toggleChatModal() {
     var chatModal = document.getElementById("chatModal");
     if (chatModal.style.display === "block") {
@@ -408,10 +411,24 @@ function toggleChatModal() {
     }
 }
 
+// Close the chat modal if clicked outside the window
+document.addEventListener('click', function(event) {
+    const chatModal = document.getElementById("chatModal");
+    const isClickInside = chatModal.contains(event.target);
+
+    if (!isClickInside && chatModal.style.display === "block") {
+        chatModal.style.display = "none";
+    }
+});
+
+// Ensure the chat modal toggle doesn't close when clicking inside
+document.getElementById("chatIcon").addEventListener("click", function(event) {
+    event.stopPropagation();
+    toggleChatModal();
+});
+
 // Add event listeners to show modals
 document.getElementById('addTaskButton').addEventListener('click', showAddTaskModal);
-document.getElementById("chatIcon").addEventListener("click", toggleChatModal)
-
 document.addEventListener('DOMContentLoaded', function() {
     loadModals();
 });
