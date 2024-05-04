@@ -373,10 +373,30 @@ border-radius: 5px;
   }
 }
 
+/* Chat pop up styles*/
+
+/* Explicity set bg color to white to prevent transparent background */
+.chat-popup {
+  background: white;
+}
+
 /* invert colors to simulate dark mode on the google form */
 .dark .chat-popup {
-  /* Apply a dark filter to simulate dark mode */
   filter: invert(100%) hue-rotate(180deg);
 }
 
+/* Make form smaller for small screens */
+@media (max-width: 800px) {
+  .chat-popup {
+    right: 12px;
+    bottom: 12px;
+    max-width: 280px;
+    padding: 12px;
+  }
+
+  .chat-popup iframe {
+    width: 260px;
+    height: 450px;
+  }
+};
 
