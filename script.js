@@ -232,13 +232,13 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
                 // Generating pencil icon
                 const pencilIcon = document.createElement('i');
                 pencilIcon.className = 'fas fa-pencil-alt';
-                pencilIcon.classList.add('hover:text-marine', 'text-lg', 'mr-2');
+                pencilIcon.classList.add('bg-marine', 'px-2', 'py-1', 'text-paper', 'dark:text-slate', 'rounded-lg', 'hover:bg-feather', 'text-lg', 'mr-2');
                 editLink.appendChild(pencilIcon);
 
                 // Generating garbagecan icon
                 const garbageIcon = document.createElement('i');
                 garbageIcon.className = 'fas fa-trash-alt';
-                garbageIcon.classList.add('hover:text-marine', 'text-lg', 'mr-2');
+                garbageIcon.classList.add('bg-marine', 'px-2.5', 'py-1', 'text-paper', 'dark:text-slate', 'rounded-lg', 'hover:bg-feather', 'text-lg', 'mr-2');
 
                 // event listener for garbagecan icon
                 garbageIcon.addEventListener('click', async () => {
