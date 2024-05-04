@@ -20,10 +20,13 @@ However, forgetting to perform regular maintenance can lead to unnecessary wear 
 This application aims to provide homeowners with an easy way stay on top of their maintenance schedules and avoid these issues.
 
  
-How to setup/install
+How to run
 -
 
+This project is hosted and deployed through Firebase. To access the web app, use the link below:
 
-How to run
+https://homekeep-site.web.app/
+
+How to use
 -
 
