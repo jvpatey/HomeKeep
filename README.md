@@ -84,6 +84,8 @@ You will receive an email for each task on the day it's due, through the email y
 
 Need assistance? Click the chat icon in the bottom right corner to access a Google Forms-based help request form. Describe your issue, and I'll respond via your provided email to assist you.
 
+<img width="564" alt="Help request" src="https://github.com/jvpatey/HomeKeep/assets/160293578/42824d82-c198-4074-b8c0-3ff93012b359">
+
 ### Dark Mode
 
 A dark mode toggle is available on each page to switch between light/dark mode at your preference.
