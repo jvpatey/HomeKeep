@@ -325,9 +325,9 @@ async function displayTasks(sortByTaskName = false, sortByStartDate = false, sor
 
 displayTasks();
 
-/* -------- Functions to handle modal functionality ------- */
+/* -------- Functions to handle modals ------- */
 
-// Function to load modal content from modals.html
+// Function to load modal content from modals.html and initialize modals
 function loadModals() {
     fetch('modals.html')
         .then(response => {
@@ -337,43 +337,36 @@ function loadModals() {
             return response.text();
         })
         .then(html => {
-            console.log('Modal content fetched successfully:');
             document.body.insertAdjacentHTML('beforeend', html);
-            initializeModals();
+            
+            // Setup Add Task Modal event listener
+            const addTaskModal = document.getElementById('addTaskModal');
+            if (addTaskModal) {
+                document.getElementById('addTaskButton').addEventListener('click', function() {
+                    addTaskModal.showModal();
+                });
+                document.getElementById('submitTaskButton').addEventListener('click', function() {
+                    saveFormData();
+                });
+            }
+
+            // Hide edit/delete buttons on task details modal for table page
+            const isTablePage = true;
+            const editTaskButton = document.getElementById('editTaskButton');
+            const deleteTaskButton = document.getElementById('deleteTaskButton');
+
+            if (isTablePage) {
+                if (editTaskButton) {
+                    editTaskButton.style.display = 'none';
+                }
+                if (deleteTaskButton) {
+                    deleteTaskButton.style.display = 'none';
+                }
+            }
         })
         .catch(error => {
             console.error('Error fetching modal content:', error);
         });
-}
-
-// Function to initialize modals after loading
-function initializeModals() {
-    var addTaskModal = document.getElementById('addTaskModal');
-    var editTaskModal = document.getElementById('editTaskModal');
-    var deleteTaskButton = document.getElementById('deleteTaskButton');
-    var editTaskButton = document.getElementById('editTaskButton');
-
-    if (addTaskModal) {
-        document.getElementById('addTaskButton').addEventListener('click', function() {
-            addTaskModal.showModal();
-        });
-
-        document.getElementById('submitTaskButton').addEventListener('click', function() {
-            saveFormData();
-        });
-    }
-
-    // Hide edit and delete buttons if on a specific page
-    var isTablePage = true; // Set this to true if on the page where you want to hide the buttons
-
-    if (isTablePage) {
-        if (editTaskButton) {
-            editTaskButton.style.display = 'none';
-        }
-        if (deleteTaskButton) {
-            deleteTaskButton.style.display = 'none';
-        }
-    }
 }
 
 // Function to show the add task modal
@@ -384,6 +377,7 @@ function showAddTaskModal() {
     }
 }
 
+// function to show the task details modal
 function showTaskDetailsModal(task) {
     const taskDetailsModal = document.getElementById('taskDetailsModal');
     if (taskDetailsModal) {
@@ -399,39 +393,13 @@ function showTaskDetailsModal(task) {
     }
 }
 
-/* -----  Help request pop up ----- */
-
-// function to toggle open/close of modal when icon is clicked
-function toggleChatModal() {
-    var chatModal = document.getElementById("chatModal");
-    if (chatModal.style.display === "block") {
-        chatModal.style.display = "none";
-    } else {
-        chatModal.style.display = "block";
-    }
-}
-
-// Close the chat modal if clicked outside the window
-document.addEventListener('click', function(event) {
-    const chatModal = document.getElementById("chatModal");
-    const isClickInside = chatModal.contains(event.target);
-
-    if (!isClickInside && chatModal.style.display === "block") {
-        chatModal.style.display = "none";
-    }
-});
-
-// Ensure the chat modal toggle doesn't close when clicking inside
-document.getElementById("chatIcon").addEventListener("click", function(event) {
-    event.stopPropagation();
-    toggleChatModal();
-});
-
 // Add event listeners to show modals
 document.getElementById('addTaskButton').addEventListener('click', showAddTaskModal);
 document.addEventListener('DOMContentLoaded', function() {
     loadModals();
 });
+
+/* ----- Sorting functionality for table ----- */
 
 // Add event listener to task name header to sort tasks when clicked
 document.getElementById('taskNameHeader').addEventListener('click', () => {
@@ -474,7 +442,35 @@ document.getElementById('categoryHeader').addEventListener('click', () => {
     displayTasks(false, false, !isDescending);
 });
 
-// Dark Mode functionality //
+/* -----  Help request pop up handling ----- */
+
+// function to toggle open/close of modal when icon is clicked
+function toggleChatModal() {
+    var chatModal = document.getElementById("chatModal");
+    if (chatModal.style.display === "block") {
+        chatModal.style.display = "none";
+    } else {
+        chatModal.style.display = "block";
+    }
+}
+
+// Close the chat modal if clicked outside the window
+document.addEventListener('click', function(event) {
+    const chatModal = document.getElementById("chatModal");
+    const isClickInside = chatModal.contains(event.target);
+
+    if (!isClickInside && chatModal.style.display === "block") {
+        chatModal.style.display = "none";
+    }
+});
+
+// Ensure the chat modal toggle doesn't close when clicking inside
+document.getElementById("chatIcon").addEventListener("click", function(event) {
+    event.stopPropagation();
+    toggleChatModal();
+});
+
+/* ----- Dark Mode functionality ----- */
 
 // Toggle dark mode and save the preference to local storage
 function toggleDarkMode() {
@@ -534,7 +530,7 @@ function toggleDarkMode() {
     });
   });
 
-/* ---- Firbase Auth Sign Out JS ----- */
+/* ----- Firbase Auth Sign Out JS ----- */
 
 // Function to sign out the user
 function signOutUser() {
