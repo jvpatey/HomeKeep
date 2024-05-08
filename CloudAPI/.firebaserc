@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "homekeep-x",
+    "production": "homekeep-site",
+    "homekeep-x": "homekeep-x"
+  },
+  "targets": {},
+  "etags": {}
+}
