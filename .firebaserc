@@ -1,8 +1,10 @@
 {
   "projects": {
     "default": "homekeep-x",
-    "production": "homekeep-site"
+    "production": "homekeep-site",
+    "test-project": "homekeep-x"
   },
   "targets": {},
-  "etags": {}
+  "etags": {},
+  "dataconnectEmulatorConfig": {}
 }

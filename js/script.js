@@ -3,7 +3,7 @@
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
 import { getFirestore, collection, doc, addDoc, getDoc, setDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
-import { getAuth, signOut } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
+import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 
 const firebaseConfig = {
     apiKey: "AIzaSyBdfiZqwh7k_iRTpxFyK2_hJy4VpS8PViU",
@@ -20,15 +20,19 @@ const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
-// Check if user is signed in
-auth.onAuthStateChanged(user => {
+// Check if user is signed in and redirect if not
+onAuthStateChanged(auth, (user) => {
     if (user) {
-        console.log("User is logged in:", user);
-        displayTasks();
+      console.log("User is logged in:", user);
+      displayTasks();
     } else {
-        console.log("No user logged in.");
+      console.log("No user logged in.");
+      // Redirect to login page or index.html if no user is logged in
+      window.location.href = "index.html";
+      console.log("redirected to index.html - no user logged in.")
+      alert("Please log in to access this page.")
     }
-});
+  });
 
 /* ------ Functions to handle form data and table data ------- */
 
