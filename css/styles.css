@@ -136,7 +136,8 @@
   }
 
   #emptyRow {
-    justify-content: flex-start;
+    display: inline-block;
+    font-weight: normal;
   }
 }
 
@@ -405,4 +406,5 @@ border-radius: 5px;
     height: 450px;
   }
 };
+
 

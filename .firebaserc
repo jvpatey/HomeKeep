@@ -2,7 +2,7 @@
   "projects": {
     "default": "homekeep-x",
     "production": "homekeep-site",
-    "test-project": "homekeep-x"
+    "test-project": "homekeep-site"
   },
   "targets": {},
   "etags": {},
