@@ -21,18 +21,32 @@ const firestore = getFirestore(firebaseApp);
 const auth = getAuth(firebaseApp);
 
 // Check if user is signed in and redirect if not
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
-      console.log("User is logged in:", user);
-      displayTasks();
+        console.log("User is logged in:", user);
+        const userDocRef = doc(firestore, 'users', user.uid);
+        const docSnapshot = await getDoc(userDocRef);
+
+        if (!docSnapshot.exists()) {
+            // If user document doesn't exist, it's the first login
+            console.log("First time login for this user.");
+
+            // Set the flag indicating first login
+            await setDoc(userDocRef, { firstLogin: true });
+
+            // Show the instructions modal for first-time users
+            showInstructionsModal();
+        }
+
+        displayTasks();
     } else {
-      console.log("No user logged in.");
-      // Redirect to login page or index.html if no user is logged in
-      window.location.href = "index.html";
-      console.log("redirected to index.html - no user logged in.")
-      alert("Please log in to access this page.")
+        console.log("No user logged in.");
+        // Redirect to login page or index.html if no user is logged in
+        window.location.href = "index.html";
+        console.log("redirected to index.html - no user logged in.")
+        alert("Please log in to access this page.")
     }
-  });
+});
 
 /* ------ Functions to handle form data and table data ------- */
 
@@ -394,6 +408,14 @@ function showTaskDetailsModal(task) {
         document.getElementById('taskDetailsDescription').textContent = task.description;
 
         taskDetailsModal.showModal();
+    }
+}
+
+// Function to show instructions modal for first-time users
+function showInstructionsModal() {
+    const instructionsModal = document.getElementById('instructionsModal');
+    if (instructionsModal) {
+        instructionsModal.showModal();
     }
 }
 

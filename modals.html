@@ -177,6 +177,79 @@
 <div id="chatModal" class="chat-popup bottom-24 rounded-xl">
     <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeVsLFIqVvFndKxTw34VOhbTh-ZZ7xnw3yDTsPld0u02yi8gg/viewform?embedded=true" width="500" height="550" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
 </div>
+
+<!-- Instructions Modal -->
+<dialog id="instructionsModal" class="modal">
+    <div class="modal-box bg-clean dark:bg-slate p-1 rounded-md relative">
+        <div class="card-body">
+            <!-- Accordion content with black small circle bullet points -->
+            <div class="collapse collapse-plus bg-clean dark:bg-slate">
+                <input type="radio" name="my-accordion-3" defaultChecked /> 
+                <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
+                    Welcome to HomeKeep 🏠
+                </div>
+                <div class="collapse-content text-charcoal dark:text-clean"> 
+                    <p><span style="color: #57BC90;">&#9702;</span> This app is designed to provide you with notifications for home maintenance tasks.</p>
+                    <p><span style="color: #57BC90;">&#9702;</span> To get started, click the [+] button to add a task to the table.</p>
+                </div>
+            </div>
+            <!-- Add more accordion sections with black small circle bullet points as needed -->
+            <div class="collapse collapse-plus bg-clean dark:bg-slate">
+                <input type="radio" name="my-accordion-3" defaultChecked /> 
+                <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
+                    Adding a task
+                </div>
+                <div class="collapse-content text-charcoal dark:text-clean"> 
+                    <p><span style="color: #57BC90;">&#9702;</span> Fill out the form with the required information.</p>
+                    <p><span style="color: #57BC90;">&#9702;</span> The start date indicates when you would like the task to begin, and interval tells us how often it is due.</p>
+                    <p><span style="color: #57BC90;">&#9702;</span> Edit/delete functions are available once the task is added to the table with the buttons provided.</p>
+                </div>
+            </div>
+            <div class="collapse collapse-plus bg-clean dark:bg-slate">
+                <input type="radio" name="my-accordion-3" defaultChecked /> 
+                <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
+                    Notifications
+                </div>
+                <div class="collapse-content text-charcoal dark:text-clean"> 
+                    <p><span style="color: #57BC90;">&#9702;</span> Notifications will automatically be delivered to your login email at 8am on the day that task is due, so they aren't forgotten.</p>
+                </div>
+            </div>
+            <div class="collapse collapse-plus bg-clean dark:bg-slate">
+                <input type="radio" name="my-accordion-3" defaultChecked /> 
+                <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
+                    Delete tasks
+                </div>
+                <div class="collapse-content text-charcoal dark:text-clean"> 
+                    <p><span style="color: #57BC90;">&#9702;</span> If you no longer wish to receive notifications, simply delete the task from the table.</p>
+                </div>
+            </div>
+            <div class="collapse collapse-plus bg-clean dark:bg-slate">
+                <input type="radio" name="my-accordion-3" defaultChecked /> 
+                <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
+                    Calendar view
+                </div>
+                <div class="collapse-content text-charcoal dark:text-clean"> 
+                    <p><span style="color: #57BC90;">&#9702;</span> A calendar view is also available to you to provide a fuller view of when your tasks are due.</p>
+                </div>
+            </div>
+            <div class="collapse collapse-plus bg-clean dark:bg-slate">
+                <input type="radio" name="my-accordion-3" defaultChecked /> 
+                <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
+                    Get started now
+                </div>
+                <div class="collapse-content text-charcoal dark:text-clean"> 
+                    <p><span style="color: #57BC90;">&#9702;</span> Thank you for choosing HomeKeep to help with your home maintenance needs! Click the button below to get started.</p>
+                </div>
+            </div>
+            <div class="w-30 card-actions justify-center mt-2">
+                <button class="btn btn-primary bg-feather border-feather text-paper dark:text-slate hover:bg-paper dark:hover:bg-steel hover:border-feather hover:text-feather" onclick="window.location.href = 'dashboard.html'">Get Started!</button>
+            </div>
+        </div>
+    </div>
+</dialog>
+
+
+
   
 
 
