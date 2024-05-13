@@ -60,16 +60,20 @@
             </div>
 
             <!-- daisyUI Card containing login methods -->
-
+            
             <div class="card shrink-0 w-full max-w-md shadow-2xl bg-marine h-auto lg:h-full mb-24">
                 <div class="card-body">
                     <h1 class="text-center p-2 text-3xl mb-5 font-base text-clean dark:text-slate dark:border-slate border-b border-clean">Sign In</h1>
                     <div class="form-control">
-                        <input id="email" type="email" placeholder="email" class="input input-bordered bg-clean dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest" required />
+                        <input id="email" type="email" placeholder="Email" class="input input-bordered bg-clean dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest" required />
                     </div>
-                    <div class="form-control">
-                        <input id="password" type="password" placeholder="password" class="input input-bordered bg-clean dark:bg-slate dark:text-clean dark:placeholder-clean  placeholder-forest" required />
-                        <a href="#" class="font-base text-forest dark:text-slate mt-2 ml-1 text-sm hover:text-clean" id="forgotPasswordLink">Forgot Password?</a>
+                    <div class="form-control relative">
+                        <input id="password" type="password" placeholder="Password" class="input input-bordered bg-clean dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest" required />
+                        <!-- Eye toggle button -->
+                        <button type="button" id="toggleIndexPassword" class="absolute inset-y-0 right-0 px-2 py-1 bg-transparent text-marine focus:outline-none">
+                            <i id="eyeClosedIcon" class="fas fa-eye-slash eye-closed"></i>
+                            <i id="eyeOpenIcon" class="fas fa-eye eye-open" style="display: none;"></i>
+                        </button>
                     </div>
                     <div class="flex justify-center mx-auto w-2/5 py-1 text-center m-2">
                         <button id="loginEmailPassword" class="mr-2 btn text-clean dark:text-clean font-semibold bg-forest border-forest hover:border-clean hover:bg-clean hover:text-forest dark:hover:border-slate dark:hover:bg-slate dark:hover:text-clean w-full">Sign In</button>
@@ -77,6 +81,8 @@
                     </div>
                     <div class="border-t border-clean dark:border-slate p-3 text-center">
                         <a href="#" class="font-base text-forest dark:text-slate text-md hover:text-clean" id="createAccountLink"><b>New user?</b> Create an account</a>
+                        <br>
+                        <a href="#" class="font-base text-forest dark:text-slate text-md hover:text-clean" id="forgotPasswordLink"><b>Forgot password?</b></a>
                     </div>
                 </div>
             </div>
