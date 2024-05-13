@@ -128,13 +128,37 @@ function loadModals() {
     });
 };
 
+// Click event for password toggle
+document.addEventListener('click', function(event) {
+  if (event.target && (event.target.id === 'togglePassword' || event.target.parentElement.id === 'togglePassword')) {
+      togglePasswordVisibility();
+  }
+});
+
+// Function to toggle password visibility
+function togglePasswordVisibility() {
+  const passwordInput = document.getElementById('signupPassword');
+  const eyeClosedIcon = document.getElementById('eyeClosedIcon');
+  const eyeOpenIcon = document.getElementById('eyeOpenIcon');
+
+  if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      eyeClosedIcon.style.display = "none";
+      eyeOpenIcon.style.display = "inline";
+  } else {
+      passwordInput.type = "password";
+      eyeClosedIcon.style.display = "inline";
+      eyeOpenIcon.style.display = "none";
+  }
+};
+
 // function to show create account modal
 function showCreateAccountModal() {
   var createAccountModal = document.getElementById('createAccountModal');
   if (createAccountModal) {
     createAccountModal.showModal();
   }
-}
+};
 
 /* -----  Help request pop up ----- */
 

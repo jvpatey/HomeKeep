@@ -161,9 +161,13 @@
                 <div class="form-control">
                     <input id="signupEmail" type="email" placeholder="Email Address" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine dark:bg-slate dark:text-clean dark:placeholder-clean" required />
                 </div>
-                <div class="form-control">
+                <div class="form-control relative">
                     <input id="signupPassword" type="password" placeholder="Password" class="input input-bordered bg-clean text-charcoal placeholder-charcoal border-marine dark:bg-slate dark:text-clean dark:placeholder-clean" required />
-                </div>
+                    <button type="button" id="togglePassword" class="absolute inset-y-0 right-0 px-2 py-1 bg-transparent text-charcoal dark:text-clean focus:outline-none">
+                        <i id="eyeClosedIcon" class="fas fa-eye-slash eye-closed"></i>
+                        <i id="eyeOpenIcon" class="fas fa-eye eye-open" style="display: none;"></i>
+                    </button>
+                </div>                                                      
                 <!-- Buttons -->
                 <div class="mx-auto w-1/2 py-1 text-center mt-2">
                     <button type="submit" class="btn text-forest font-semibold bg-marine border-marine hover:border-marine hover:bg-clean hover:text-marine w-full dark:text-slate dark:hover:bg-slate">Create Account</button>
