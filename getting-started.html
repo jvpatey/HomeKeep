@@ -63,81 +63,61 @@
     </div>
   </div>
 
-  <!-- DaisyUI accordian wrapped in card for getting started steps-->
+  <!-- DaisyUI accordion wrapped in card for getting started steps-->
 
   <div class="max-w-3xl mx-auto mt-10 mb-10 pr-2 pl-2 pb-10">
     <div class="card shadow-xl w-full h-full md:max-w-none rounded-lg bg-paper dark:bg-steel">
-      <div class="card-header text-center font-bold text-marine text-3xl py-4 rounded-t-lg">
+      <div class="card-header text-center font-bold text-marine text-2xl py-4 rounded-t-lg">
         Getting Started
       </div>
       <div class="card-body">
         <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
           <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
-            1. Welcome
+            Dashboard
           </div>
           <div class="collapse-content text-charcoal dark:text-clean"> 
-            <p>- You will be greeted with a welcome page upon visiting HomeKeep for the first time.</p>
-            <p>- The welcome page includes a sign in form, description of the app, and a link to create an account.</p>
-            <p>- The first step is for you to create an account to personalize your experience and securely store your data.</p>
+            <p>- Upon logging in, you are brought to the dashboard, which serves as the hub for HomeKeep. From here, you can navigate to other sections of the app.</p>
+            <p>- The dashboard by default offers a table view of all your maintenance tasks.</p>
+            <p>- Easily add new tasks using the <b>add task (+)</b> button.</p>
+            <p>- Each task includes details such as name, category, start date, interval, and description.</p>
+            <p>- You can edit and delete tasks to manage them effectively.</p>
           </div>
         </div>
         <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
           <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
-            2. Signing in
+            Calendar
           </div>
           <div class="collapse-content text-charcoal dark:text-clean"> 
-            <p>- HomeKeep supports two sign-in methods: <b>username/password</b> and <b>Google sign-in</b>.</p>
-            <p>- You can create an account via the provided form, or use your existing Google credentials.</p>
-            <p>- Accounts are essential for a personalized experience and linking maintenance tasks to each user.</p>
+            <p>- HomeKeep provides a calendar view in addition to the dashboard's table.</p>
+            <p>- Add tasks directly to the calendar by <b>clicking on a date block</b> or using the <b>add task (+)</b> button.</p>
+            <p>- Data between the table and calendar views is synchronized for consistency.</p>
+            <p>- Navigate through upcoming months to see scheduled maintenance tasks.</p>
+            <p>- You can edit and delete tasks directly from the calendar view.</p>
           </div>
         </div>
         <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
           <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
-            3. Dashboard
+            Notifications
           </div>
           <div class="collapse-content text-charcoal dark:text-clean"> 
-            <p>- After signing in, you will be directed to the dashboard.</p>
-            <p>- The dashboard provides a table view of all maintenance tasks linked to your account.</p>
-            <p>- You can easily add new maintenance tasks to the database and table via the <b>add task (+)</b> button</p>
-            <p>- Each task includes details such as name, category, start date, end date, interval, and description.</p>
-            <p>- Edit and delete functionality are available for you to manage your tasks effectively.</p>
+            <p>- Receive cloud-based email notifications when your tasks are due.</p>
+            <p>- Notifications are active as long as the task is in the table or calendar.</p>
+            <p>- Delivery is based on the interval you set for each task.</p>
+            <p>- To stop notifications for a task, simply delete it from the table or calendar.</p>
           </div>
         </div>
         <div class="collapse collapse-plus bg-clean dark:bg-slate">
           <input type="radio" name="my-accordion-3" defaultChecked /> 
           <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
-            4. Calendar
+            Getting Help
           </div>
           <div class="collapse-content text-charcoal dark:text-clean"> 
-            <p>- HomeKeep offers a calendar view as an extension to the dashboard's table.</p>
-            <p>- Tasks can be added directly to the calendar by <b>clicking on the date block</b>, or using the <b>add task (+)</b> button.</p>
-            <p>- Data between the table and calendar views are synchronized to ensure consistency.</p>
-            <p>- You can navigate through following months to see scheduled maintenance based on the intervals you provide.</p>
-          </div>
-        </div>
-        <div class="collapse collapse-plus bg-clean dark:bg-slate">
-          <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
-            5. Notifications
-          </div>
-          <div class="collapse-content text-charcoal dark:text-clean"> 
-            <p>- Cloud based notifications will be provided via email on the day that your entered tasks are due.</p>
-            <p>- As long as the task is stored in the table or calendar, the notifications for that task are active.</p>
-            <p>- Notifications will be delivered to you at the interval you provide for your maintenance task.</p>
-          </div>
-        </div>
-        <div class="collapse collapse-plus bg-clean dark:bg-slate">
-          <input type="radio" name="my-accordion-3" defaultChecked /> 
-          <div class="collapse-title text-charcoal dark:text-clean text-xl font-medium">
-            6. Getting Help
-          </div>
-          <div class="collapse-content text-charcoal dark:text-clean"> 
-            <p>- HomeKeep includes a help request feature to assist you with any questions or issues you may experience.</p>
-            <p>- Chat windows are available to help you send help request messages.</p>
-            <p>- Responses to help requests are provided as soon as possible to ensure a seamless experience.</p>
+            <p>- Use the help request feature for any questions or issues.</p>
+            <p>- Chat windows are available throughout the app for sending help requests.</p>
+            <p>- We aim to respond to help requests promptly to ensure a smooth experience.</p>
           </div>
         </div>
         <div class="w-30 card-actions justify-center mt-2">
@@ -146,6 +126,7 @@
       </div>
     </div>
   </div>
+
   
   <!-- Footer -->
   <footer class="fixed bottom-0 left-0 w-full bg-clean dark:bg-slate shadow sm:fixed sm:bottom-0 sm:left-0">
