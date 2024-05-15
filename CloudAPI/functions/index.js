@@ -127,27 +127,3 @@ function sendNotification(userId, userEmail, task) {
 		},
 	});
 };
-
-// exports.notify = onRequest((request, response) => {
-// 	notificationapi.init('', '');
-
-// 	const schedule = request.query.schedule;
-
-// 	const trackingIdPromise = notificationapi.send({
-// 		notificationId: 'x',
-// 		user: {
-// 			id: 'allan.lavell',
-// 			email: 'alavell@gmail.com'
-// 		},
-// 		mergeTags: {
-// 			item: 'Krabby Patty Burger',
-// 			address: '124 Conch Street',
-// 			orderId: '1234567890'
-// 		},
-// 		schedule: schedule
-// 	});
-
-// 	trackingIdPromise.then((value) => {
-// 		console.log(value.data.trackingId);
-// 	})
-// });
