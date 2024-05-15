@@ -3,16 +3,7 @@
 // Import Firebase, Firestore, Auth
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
 import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBdfiZqwh7k_iRTpxFyK2_hJy4VpS8PViU",
-    authDomain: "homekeep-site.firebaseapp.com",
-    projectId: "homekeep-site",
-    storageBucket: "homekeep-site.appspot.com",
-    messagingSenderId: "135503627537",
-    appId: "1:135503627537:web:aabcbcf703a4ec60bbb8b0",
-    measurementId: "G-EKK8D35QH8"
-  };
+import { firebaseConfig } from './firebase-config';
 
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
