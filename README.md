@@ -93,7 +93,7 @@ A dark mode toggle is available on each page to switch between light/dark mode a
 <img width="1506" alt="Dark mode" src="https://github.com/jvpatey/HomeKeep/assets/160293578/18c7a814-815e-462f-966c-9987a83f0146">
 
 🏄‍♀️ Custom Installation 
-_
+-
 
 To run the HomeKeep frontend locally, you'll need to serve the files with a server. 
 A simple solution is to use python:
