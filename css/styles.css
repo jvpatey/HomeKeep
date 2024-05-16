@@ -208,6 +208,13 @@
 
 /* Calendar Styles*/
 
+/* greying out previous dates on the calendar and making them unclickable */
+.date-block.past-day {
+  background-color: #dcdcdc;
+  color: #999;
+  pointer-events: none;
+}
+
 /* Color for current day indicator */
 .current-day {
   background-color: #77C9D4;

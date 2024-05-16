@@ -4,7 +4,7 @@
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js'
 import { getFirestore, doc, collection, getDoc, addDoc, getDocs, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js'
 import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
-import { firebaseConfig } from './firebase-config';
+import { firebaseConfig } from './firebase-config.js';
 
 
 // Initialize Firebase
@@ -269,7 +269,7 @@ const renderCalendar = (user) => {
 
     calendarGrid.innerHTML = '';
 
-    // Add empty date blocks for days before the start of the month
+    // Add empty date blocks for days before the start of the month to keep correct calendar format
     for (let i = 0; i < startingDay; i++) {
         calendarGrid.innerHTML += `<div class="date-block h-16"></div>`;
     }
@@ -281,6 +281,11 @@ const renderCalendar = (user) => {
 
         let dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal dark:text-clean dark:border-clean rounded-md" data-date="${dateString}" data-day="${i}">${i}</div>`;
 
+        // if statment to check what dates are previous to todays date
+        if (currentDate < today) {
+            dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md past-day" data-date="${dateString}" data-day="${i}" disabled>${i}</div>`;
+        }
+
         if (currentDate.getMonth() === today.getMonth() && currentDate.getDate() === today.getDate()) {
             dateBlock = `<div class="date-block border h-16 text-center text-charcoal border-charcoal rounded-md current-day" data-date="${dateString}" data-day="${i}">${i}</div>`;
         }
@@ -291,6 +296,7 @@ const renderCalendar = (user) => {
         displayTasks(user, currentYear, currentMonth);
     }
 };
+                    
                                                  
 // event listener for previous month button
 document.getElementById('prevMonth').addEventListener('click', () => {
