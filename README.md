@@ -26,6 +26,46 @@ This project is hosted and deployed through Firebase. To access the application,
 
 https://homekeep-site.web.app/
 
+🏄‍♀️ Custom Installation 
+-
+
+To run the HomeKeep frontend locally, you'll need to serve the files with a server. 
+A simple solution is to use python:
+
+On MacOS:
+
+```python3 -m http.server 8100```
+
+On Windows:
+
+```py -m http.server 8100```
+
+### Firebase Configuration
+
+HomeKeep is already configured to use a Firebase instance by default, but if you want to 
+use your own custom firebase: 
+
+### Custom Firebase for Frontend
+
+You can replace the config in js/firebase-config.js.
+
+### Cloud Functions
+
+HomeKeep uses Firebase Cloud Functions to manage the notification backend. 
+The functions can be found in CloudAPI. 
+
+```
+cd CloudAPI
+firebase login
+firebase use 
+```
+
+After you perform firebase use, select your project from the list.
+
+```
+firebase deploy --only functions
+```
+
 📖 How to use
 -
 
@@ -91,43 +131,3 @@ Need assistance? Click the chat icon in the bottom right corner to access a Goog
 A dark mode toggle is available on each page to switch between light/dark mode at your preference.
 
 <img width="1506" alt="Dark mode" src="https://github.com/jvpatey/HomeKeep/assets/160293578/18c7a814-815e-462f-966c-9987a83f0146">
-
-🏄‍♀️ Custom Installation 
--
-
-To run the HomeKeep frontend locally, you'll need to serve the files with a server. 
-A simple solution is to use python:
-
-On MacOS:
-
-```python3 -m http.server 8100```
-
-On Windows:
-
-```py -m http.server 8100```
-
-### Firebase Configuration
-
-HomeKeep is already configured to use a Firebase instance by default, but if you want to 
-use your own custom firebase: 
-
-### Custom Firebase for Frontend
-
-You can replace the config in js/firebase-config.js.
-
-### Cloud Functions
-
-HomeKeep uses Firebase Cloud Functions to manage the notification backend. 
-The functions can be found in CloudAPI. 
-
-```
-cd CloudAPI
-firebase login
-firebase use 
-```
-
-After you perform firebase use, select your project from the list.
-
-```
-firebase deploy --only functions
-```
