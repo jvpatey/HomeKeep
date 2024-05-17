@@ -6,7 +6,6 @@ import { getFirestore, doc, collection, getDoc, addDoc, getDocs, deleteDoc, upda
 import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js';
 import { firebaseConfig } from './firebase-config.js';
 
-
 // Initialize Firebase
 const firebaseApp = initializeApp(firebaseConfig);
 const firestore = getFirestore(firebaseApp);
@@ -34,28 +33,12 @@ function convertToISO(dateString) {
     return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
 };
 
-// Function to make sure date is shown in format MM-DD-YYYY
+// Function to convert a UTC Date to MM-DD-YYYY for display
 function convertToMMDDYYYY(dateString) {
-    if (!dateString) {
-        console.error("Invalid date format:", dateString);
-        return dateString;
-    }
-
-    // Attempt to parse the input string as a date
     const date = new Date(dateString);
-    
-    // Check if the parsed date is valid
-    if (isNaN(date.getTime())) {
-        console.error("Invalid date format:", dateString);
-        return dateString;
-    }
-
-    // Extract month, day, and year components from the parsed date
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const year = String(date.getFullYear());
-
-    // Return the date in MM-DD-YYYY format
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+    const day = String(date.getUTCDate()).padStart(2, '0');
+    const year = date.getUTCFullYear();
     return `${month}-${day}-${year}`;
 };
 
@@ -269,7 +252,7 @@ const renderCalendar = (user) => {
 
     calendarGrid.innerHTML = '';
 
-    // Add empty date blocks for days before the start of the month to keep correct calendar format
+    // Add empty date blocks for days before the start of the month
     for (let i = 0; i < startingDay; i++) {
         calendarGrid.innerHTML += `<div class="date-block h-16"></div>`;
     }
@@ -296,7 +279,6 @@ const renderCalendar = (user) => {
         displayTasks(user, currentYear, currentMonth);
     }
 };
-                    
                                                  
 // event listener for previous month button
 document.getElementById('prevMonth').addEventListener('click', () => {
