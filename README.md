@@ -1,6 +1,6 @@
 # 🏠 HomeKeep
 
-🗒️ Description
+📝 Description
 -
  
 Welcome to HomeKeep: your go-to app for effortless home maintenance.
@@ -19,7 +19,7 @@ This application aims to provide homeowners with an easy way stay on top of thei
 
 [![My Skills](https://skillicons.dev/icons?i=html,css,tailwind,js,firebase)](https://skillicons.dev)
 
-▶️ How to run
+🚀 How to run
 -
 
 This project is hosted and deployed through Firebase. To access the application, use the link below:
@@ -34,11 +34,15 @@ A simple solution is to use python:
 
 On MacOS:
 
-```python3 -m http.server 8100```
+```
+python3 -m http.server 8100
+```
 
 On Windows:
 
-```py -m http.server 8100```
+```
+py -m http.server 8100
+```
 
 ### Firebase Configuration
 
@@ -51,8 +55,8 @@ You can replace the config in js/firebase-config.js.
 
 ### Cloud Functions
 
-HomeKeep uses Firebase Cloud Functions to manage the notification backend. 
-The functions can be found in CloudAPI. 
+HomeKeep uses Firebase Cloud Functions to manage the notification backend, which interacts with NotificationAPI to trigger the sending of notifications for tasks. To use the Cloud Functions, you will need to set up an account with [NotificationAPI](https://www.notificationapi.com/). In the cloud function, you will need to replace 'your_client_id' and 'your_client_secret' with your NotificationAPI credentials.
+The functions can be found in CloudAPI.
 
 ```
 cd CloudAPI
@@ -66,7 +70,7 @@ After you perform firebase use, select your project from the list.
 firebase deploy --only functions
 ```
 
-📖 How to use
+📋 How to use
 -
 
 ### Account creation
