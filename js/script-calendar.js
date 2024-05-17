@@ -36,11 +36,18 @@ function convertToISO(dateString) {
 // Function to convert a UTC Date to MM-DD-YYYY for display
 function convertToMMDDYYYY(dateString) {
     const date = new Date(dateString);
-    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-    const day = String(date.getUTCDate()).padStart(2, '0');
-    const year = date.getUTCFullYear();
-    return `${month}-${day}-${year}`;
+    if (isNaN(date.getTime())) {
+        // If the date is invalid, return the original date string
+        return dateString;
+    } else {
+        // If the date is valid, proceed with formatting
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const year = date.getUTCFullYear();
+        return `${month}-${day}-${year}`;
+    }
 };
+
 
 let formSubmitted = false;
 

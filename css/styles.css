@@ -215,6 +215,12 @@
   pointer-events: none;
 }
 
+.dark .date-block.past-day {
+  background-color: #222831;
+  color: #999;
+  pointer-events: none;
+}
+
 /* Color for current day indicator */
 .current-day {
   background-color: #77C9D4;
