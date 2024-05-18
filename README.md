@@ -142,3 +142,8 @@ Need assistance? Click the chat icon in the bottom right corner to access a Goog
 A dark mode toggle is available on each page to switch between light/dark mode at your preference.
 
 <img width="1506" alt="Dark mode" src="https://github.com/jvpatey/HomeKeep/assets/160293578/18c7a814-815e-462f-966c-9987a83f0146">
+
+🌟 Credits
+-
+
+As my first project in module 1 with GetCoding, I want to give thanks to my coach, Allan Lavell, for his guidance and support throughout this project. Allan's work in developing the backend and implementing cloud functions for notifications allowed this project to work as it should. Thank you, Allan, for helping make this project a success!
