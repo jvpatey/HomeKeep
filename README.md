@@ -55,7 +55,14 @@ You can replace the config in js/firebase-config.js.
 
 ### Cloud Functions
 
-HomeKeep uses Firebase Cloud Functions to manage the notification backend, which interacts with NotificationAPI to trigger the sending of notifications for tasks. To use the Cloud Functions, you will need to set up an account with [NotificationAPI](https://www.notificationapi.com/). In the cloud function, you will need to replace 'your_client_id' and 'your_client_secret' with your NotificationAPI credentials.
+HomeKeep uses Firebase Cloud Functions to manage the notification backend. It interacts with NotificationAPI to trigger the sending of notifications for tasks. To use the Cloud Functions, you will need to set up an account with [NotificationAPI](https://www.notificationapi.com/). Once you are logged in, you'll need to:
+
+- Create a new notification
+- Configure it to use email as the channel.
+- Design the notification using the template in the NotificationAPI interface.
+- After setup, you'll receive a clientID and clientSecret.
+- Replace 'your_client_id' and 'your_client_secret' with your NotificationAPI credentials in the provided cloud function.
+
 The functions can be found in CloudAPI.
 
 ```
