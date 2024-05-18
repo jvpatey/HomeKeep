@@ -122,7 +122,6 @@ function populateEditTaskModal(taskData) {
             break;
         }
     }
-
     editTaskForm.querySelector('#editDescription').value = taskData.description;
 };
 
@@ -376,7 +375,7 @@ function loadModals() {
         .catch(error => {
             console.error('Error fetching modal content:', error);
         });
-}
+};
 
 // Function to show the add task modal
 function showAddTaskModal() {
@@ -384,7 +383,7 @@ function showAddTaskModal() {
     if (addTaskModal) {
         addTaskModal.showModal();
     }
-}
+};
 
 // function to show the task details modal
 function showTaskDetailsModal(task) {
@@ -400,7 +399,7 @@ function showTaskDetailsModal(task) {
 
         taskDetailsModal.showModal();
     }
-}
+};
 
 // Function to show instructions modal for first-time users
 function showInstructionsModal() {
@@ -408,7 +407,7 @@ function showInstructionsModal() {
     if (instructionsModal) {
         instructionsModal.showModal();
     }
-}
+};
 
 // Add event listeners to show modals
 document.getElementById('addTaskButton').addEventListener('click', showAddTaskModal);
@@ -469,7 +468,7 @@ function toggleChatModal() {
     } else {
         chatModal.style.display = "block";
     }
-}
+};
 
 // Close the chat modal if clicked outside the window
 document.addEventListener('click', function(event) {
@@ -503,27 +502,27 @@ function toggleDarkMode() {
       localStorage.setItem("darkMode", "true");
       icon.className = "fa-solid fa-sun text-feather hover:text-marine";
     }
-  }
+}
   
-  // Event listener for the dark mode toggle button
-  document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
-  
-  // Apply the correct dark mode setting on page load
-  window.addEventListener("load", function() {
+// Event listener for the dark mode toggle button
+document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);
+
+// Apply the correct dark mode setting on page load
+window.addEventListener("load", function() {
     const darkMode = localStorage.getItem("darkMode");
     const body = document.querySelector("body");
     const icon = document.getElementById("darkModeToggle").querySelector("i");
-  
-    if (darkMode === "true") {
-      body.classList.add("dark");
-      icon.className = "fa-solid fa-sun text-feather hover:text-marine";
-    } else {
-      body.classList.remove("dark");
-      icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
-    }
-  });
 
-  document.addEventListener('DOMContentLoaded', function() {
+    if (darkMode === "true") {
+        body.classList.add("dark");
+        icon.className = "fa-solid fa-sun text-feather hover:text-marine";
+    } else {
+        body.classList.remove("dark");
+        icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
     const dropdownButton = document.querySelector('.dropdown .btn-ghost');
     const dropdownContent = document.querySelector('.dropdown-content');
     
@@ -545,7 +544,7 @@ function toggleDarkMode() {
     document.addEventListener('click', function() {
       dropdownContent.style.display = 'none';
     });
-  });
+});
 
 /* ----- Firbase Auth Sign Out JS ----- */
 
@@ -558,7 +557,7 @@ function signOutUser() {
         .catch((error) => {
             console.error("Error signing out: ", error);
         });
-}
+};
 
 // Add event listener to the sign out link
 document.getElementById('signOutLink').addEventListener('click', function(event) {

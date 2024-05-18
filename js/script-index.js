@@ -30,7 +30,7 @@ function signInWithGoogle() {
     .catch(error => {
         console.error("Google sign-in error:", error);
     });
-}
+};
 
 // Add event listeners once DOM is loadeed
 document.addEventListener("DOMContentLoaded", function() {
@@ -92,27 +92,27 @@ function loadModals() {
     .then(html => {
       document.body.insertAdjacentHTML('beforeend', html);
 
-        // Event listener for create account form submission
-        const signupForm = document.getElementById('signupForm');
-        signupForm.addEventListener("submit", function(event) {
-            event.preventDefault();
-            const email = document.getElementById("signupEmail").value;
-            const password = document.getElementById("signupPassword").value;
+      // Event listener for create account form submission
+      const signupForm = document.getElementById('signupForm');
+      signupForm.addEventListener("submit", function(event) {
+          event.preventDefault();
+          const email = document.getElementById("signupEmail").value;
+          const password = document.getElementById("signupPassword").value;
 
-            // create new user with firestore auth
-            createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                const user = userCredential.user;
-                console.log("User created:", user);
-                const createAccountModal = document.getElementById('createAccountModal');
-                createAccountModal.close();
-                alert("Your account has been successfully created!");
-            })
-            .catch(error => {
-                console.error("Error creating user:", error);
-                alert(error.message);
-            });
-        });
+          // create new user with firestore auth
+          createUserWithEmailAndPassword(auth, email, password)
+          .then(userCredential => {
+              const user = userCredential.user;
+              console.log("User created:", user);
+              const createAccountModal = document.getElementById('createAccountModal');
+              createAccountModal.close();
+              alert("Your account has been successfully created!");
+          })
+          .catch(error => {
+              console.error("Error creating user:", error);
+              alert(error.message);
+          });
+      });
     })
     .catch(error => {
         console.error('Error fetching modal content:', error);
@@ -137,7 +137,7 @@ function toggleChatModal() {
   } else {
       chatModal.style.display = "block";
   }
-}
+};
 
 // Close the chat modal if clicked outside the window
 document.addEventListener('click', function(event) {
@@ -205,7 +205,6 @@ function toggleIndexPasswordVisibility() {
   }
 };
 
-
 /* ----- Dark Mode functionality ----- */
 
 // function to toggle dark mode with icon
@@ -222,7 +221,7 @@ function toggleDarkMode() {
     localStorage.setItem("darkMode", "true");
     icon.className = "fa-solid fa-sun text-feather hover:text-marine";
   }
-}
+};
 
 // event listener for dark mode icon
 document.getElementById("darkModeToggle").addEventListener("click", toggleDarkMode);

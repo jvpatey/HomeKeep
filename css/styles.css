@@ -228,25 +228,6 @@
   font-weight: bold;
 }
 
-/* Scrollbar styles */
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-filter: invert(100%);
-}
-
-.event-container::-webkit-scrollbar {
-width: 10px;
-}
-
-.event-container::-webkit-scrollbar-track {
-background-color: transparent;
-}
-
-.event-container::-webkit-scrollbar-thumb {
-background-color: #888;
-border-radius: 5px;
-}
-
 #calendar-container {
   position: relative;
   max-width: 1000px;
@@ -385,6 +366,25 @@ border-radius: 5px;
   .event-container::-webkit-scrollbar {
     display: none;
   }
+};
+
+/* Scrollbar styles */
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(100%);
+}
+  
+.event-container::-webkit-scrollbar {
+width: 10px;
+}
+
+.event-container::-webkit-scrollbar-track {
+background-color: transparent;
+}
+
+.event-container::-webkit-scrollbar-thumb {
+background-color: #888;
+border-radius: 5px;
 }
 
 /* Chat pop up styles*/

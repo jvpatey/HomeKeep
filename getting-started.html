@@ -40,31 +40,29 @@
 <body class="bg-clean dark:bg-slate min-h-screen flex flex-col">
 
   <!--navbar -->
-
   <div class="navbar bg-clean dark:bg-slate pb-6">
     <div class="navbar-start">
-          <a href="dashboard.html" target="_self" class="relative inline-block logo">
-              <span>HomeKeep</span>
-          </a>
+        <a href="dashboard.html" target="_self" class="relative inline-block logo">
+            <span>HomeKeep</span>
+        </a>
     </div>
     <div class="navbar-end">
-          <!-- Dark Mode Toggle -->
-          <button id="darkModeToggle" class="p-2 rounded-full btn-ghost">
-            <i class="fa-solid fa-moon text-charcoal hover:text-marine"></i>
+        <!-- Dark Mode Toggle -->
+        <button id="darkModeToggle" class="p-2 rounded-full btn-ghost">
+          <i class="fa-solid fa-moon text-charcoal hover:text-marine"></i>
+        </button>
+        <div class="dropdown relative">
+          <button class="btn btn-ghost text-slate dark:text-paper hover:text-marine" tabindex="0">
+            <i class="fa fa-bars dropdown-icon"></i>
           </button>
-          <div class="dropdown relative">
-            <button class="btn btn-ghost text-slate dark:text-paper hover:text-marine" tabindex="0">
-              <i class="fa fa-bars dropdown-icon"></i>
-            </button>
 
-        <!-- Dropdown list -->
-
-        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-marine rounded-box w-52 right-0">
-            <li><a href="about.html" id="tutorialLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-question"></i>About</a></li>
-            <li><a href="dashboard.html" id="dashboardLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-gauge"></i>Dashboard</a></li>
-            <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
-        </ul>
-      </div>
+          <!-- Dropdown list -->
+          <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-marine rounded-box w-52 right-0">
+              <li><a href="about.html" id="tutorialLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-question"></i>About</a></li>
+              <li><a href="dashboard.html" id="dashboardLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-gauge"></i>Dashboard</a></li>
+              <li><a href="#" id="signOutLink" target="_self" class="label-text-alt no-underline link text-base text-forest mt-2"><i class="fa-solid fa-user-minus"></i>Sign out</a></li>
+          </ul>
+        </div>
     </div>
   </div>
 
@@ -131,7 +129,6 @@
       </div>
     </div>
   </div>
-
   
   <!-- Footer -->
   <footer class="fixed bottom-0 left-0 w-full bg-clean dark:bg-slate shadow sm:fixed sm:bottom-0 sm:left-0">

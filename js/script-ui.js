@@ -70,7 +70,7 @@ function toggleChatModal() {
   } else {
       chatModal.style.display = "block";
   }
-}
+};
 
 // Close the chat modal if clicked outside the window
 document.addEventListener('click', function(event) {
@@ -148,7 +148,7 @@ function signOutUser() {
       .catch((error) => {
           console.error("Error signing out: ", error);
       });
-}
+};
 
 // Add event listener to the sign out link
 document.getElementById('signOutLink').addEventListener('click', function(event) {

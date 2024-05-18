@@ -23,7 +23,7 @@ onAuthStateChanged(auth, (user) => {
       console.log("redirected to index.html - no user logged in.")
       alert("Please log in to access this page.")
     }
-  });
+});
 
 /* ------ Handling FireStore Task Data with Calendar ------ */
 
@@ -72,8 +72,6 @@ async function saveFormData() {
     }
     const [year, month, day] = rawStartDate.split('-');
     const formattedDate = `${month}-${day}-${year}`;
-
-    // get remaining task data
     const taskName = document.getElementById('taskName').value;
     const category = document.getElementById('category').value;
     const interval = document.getElementById('interval').value;
@@ -244,8 +242,7 @@ const renderCalendar = (user) => {
     const calendarGrid = document.getElementById('calendar');
     // Display the current month and year
     document.getElementById('currentMonth').textContent = `${monthNames[currentMonth]} ${currentYear}`;
-
-    // Function to generate date string in "MM-DD-YYYY" format
+    
     const getDateString = (day, month, year) => {
         return `${month + 1}-${day}-${year}`;
     };
@@ -253,7 +250,6 @@ const renderCalendar = (user) => {
     const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
     const startingDay = firstDayOfMonth.getDay();
     const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-
     const today = new Date();
     const currentDay = today.getDate();
 
@@ -343,7 +339,6 @@ async function showEditTaskFormModal() {
     const docSnapshot = await getDoc(docRef);
     if (docSnapshot.exists()) {
         const taskData = docSnapshot.data();
-
         const editTaskForm = document.getElementById('editTaskForm');
 
         if (editTaskForm) {
@@ -421,7 +416,7 @@ async function updateTask(updatedTaskData, docRef) {
     } catch (error) {
         console.error("Error updating document: ", error);
     }
-}
+};
 
 /* ----- Deleting task handling ----- */
 
@@ -687,7 +682,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.addEventListener('click', function() {
       dropdownContent.style.display = 'none';
     });
-  });
+});
 
 // ----- Dark Mode functionality ----- //
 
@@ -723,7 +718,7 @@ function toggleDarkMode() {
       body.classList.remove("dark");
       icon.className = "fa-solid fa-moon text-charcoal hover:text-marine";
     }
-  });
+});
 
 /* ------- Firebase Auth ------- */
 
@@ -734,7 +729,7 @@ function signOutUser() {
     }).catch((error) => {
     console.error("Error signing out: ", error);
     });
-}
+};
 
 // Add event listener to the sign out link
 document.getElementById('signOutLink').addEventListener('click', function(event) {
