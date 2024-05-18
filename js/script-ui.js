@@ -15,7 +15,6 @@ const auth = getAuth(firebaseApp);
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User is logged in:", user);
-    displayTasks();
   } else {
     console.log("No user logged in.");
     // Redirect to login page or index.html if no user is logged in
