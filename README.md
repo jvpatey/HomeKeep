@@ -1,30 +1,22 @@
 # 🏠 HomeKeep
 
-📝 Description
--
- 
-Welcome to HomeKeep: your go-to app for effortless home maintenance.
+## 📝 Description
+
+Welcome to HomeKeep: your go-to app for effortless home maintenance.  
 HomeKeep is designed to streamline your household tasks by setting up timely notifications for all your home maintenance needs. With HomeKeep, you can easily input tasks, assign start dates, and receive notifications when they are due, ensuring that nothing falls through the cracks.
 
-✨ Motivation
--
- 
-The motivation for this project came from the desire to make managing home maintenance schedules simpler and more efficient. 
-In today's fast-paced world, it's easy to overlook critical home maintenance tasks. 
-However, forgetting to perform regular maintenance can lead to unnecessary wear and tear on equipment, resulting in costly repairs. 
+## ✨ Motivation
+
+The motivation for this project came from the desire to make managing home maintenance schedules simpler and more efficient.  
+In today's fast-paced world, it's easy to overlook critical home maintenance tasks.  
+However, forgetting to perform regular maintenance can lead to unnecessary wear and tear on equipment, resulting in costly repairs.  
 This application aims to provide homeowners with an easy way stay on top of their maintenance schedules and avoid these issues.
 
-🛠️ Built with
--
+## 🚀 Demo
 
-[![My Skills](https://skillicons.dev/icons?i=html,css,tailwind,js,firebase)](https://skillicons.dev)
+Try the live application here:
 
-🚀 How to run
--
-
-This project is hosted and deployed through Firebase. To access the application, use the link below:
-
-https://homekeep-site.web.app/
+[https://homekeep-site.web.app/](https://homekeep-site.web.app/)
 
 🏄‍♀️ Custom Installation 
 -
