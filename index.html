@@ -1,112 +1,204 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta property="og:title" content="HomeKeep" />
-    <meta property="og:description" content="Homekeep is a web app for managing home maintenance tasks. Easily create, track, and schedule tasks, view them on a calendar, and get notifications for upcoming due dates." />
-    <meta property="og:image" content="https://i.imgur.com/Z1Jn0uJ.jpeg" />
+    <meta
+      property="og:description"
+      content="Homekeep is a web app for managing home maintenance tasks. Easily create, track, and schedule tasks, view them on a calendar, and get notifications for upcoming due dates."
+    />
+    <meta property="og:image" content="https://imgur.com/3u32UrN" />
     <meta property="og:url" content="https://homekeep-site.web.app/" />
     <meta property="og:type" content="website" />
     <title>HomeKeep - Welcome</title>
-    <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+    <link rel="icon" type="image/x-icon" href="assets/images/logo.png" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
-    <script src="https://kit.fontawesome.com/7c7dc82fdb.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/styles.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <script
+      src="https://kit.fontawesome.com/7c7dc82fdb.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="css/styles.css" />
     <script>
-    tailwind.config = {
-        darkMode: 'selector',
+      tailwind.config = {
+        darkMode: "selector",
         theme: {
-            extend: {
-                colors: {
-                    clean: '#D9D9D9',
-                    paper:'#E9E9E9',
-                    feather: '#77C9D4',
-                    feather_2: '#27bfd3',
-                    marine: '#57BC90',
-                    forest: '#015249',
-                    grey: '#9099A2',
-                    charcoal: '#3C3C3C',
-                    steel: '#31363F',
-                    smoke: '#222831d9',
-                    slate: '#222831'
-                }
-            }
-        }
-    }
+          extend: {
+            colors: {
+              clean: "#D9D9D9",
+              paper: "#E9E9E9",
+              feather: "#77C9D4",
+              feather_2: "#27bfd3",
+              marine: "#57BC90",
+              forest: "#015249",
+              grey: "#9099A2",
+              charcoal: "#3C3C3C",
+              steel: "#31363F",
+              smoke: "#222831d9",
+              slate: "#222831",
+            },
+          },
+        },
+      };
     </script>
-</head>
+  </head>
 
-<body class="bg-clean dark:bg-slate h-screen">
-
-      <!-- daisyUI Navbar -->
-      <div class="navbar bg-clean dark:bg-slate pb-6 flex justify-end"> 
-        <div class="navbar-end flex items-center">
-          <!-- Dark Mode Toggle -->
-          <button id="darkModeToggle" class="p-2 rounded-full">
-            <i class="fa-solid fa-moon text-xl text-charcoal hover:text-marine"></i>
-          </button>
-        </div>
+  <body class="bg-clean dark:bg-slate h-screen">
+    <!-- daisyUI Navbar -->
+    <div class="navbar bg-clean dark:bg-slate pb-6 flex justify-end">
+      <div class="navbar-end flex items-center">
+        <!-- Dark Mode Toggle -->
+        <button id="darkModeToggle" class="p-2 rounded-full">
+          <i
+            class="fa-solid fa-moon text-xl text-charcoal hover:text-marine"
+          ></i>
+        </button>
       </div>
+    </div>
 
     <!-- daisyUI Hero for main content -->
     <div class="hero min-h-screen bg-clean dark:bg-slate">
-        <div class="hero-content flex-col lg:flex-row-reverse">
-            <div class="text-center">
-                <h1 class="lg:flex md:inline text-5xl font-bold lg:ml-6 md:ml-2 text-forest dark:text-clean">Welcome to</h1>
-                <h1 class="lg:flex md:inline text-7xl lg:ml-6 md:ml-2 font-bold bg-gradient-to-r from-marine to-feather_2 text-transparent bg-clip-text">HomeKeep</h1>
-                <div class="max-w-[calc(100%-4rem)] mx-auto lg:text-left md:text-center" >
-                    <p class="mt-6 text-xl text-forest dark:text-clean">Effortlessly schedule maintenance tasks, receive notifications, and ensure your home is always in top condition with our intuitive app. Start simplifying your life today</p>
-                </div>
-            </div>
-
-            <!-- daisyUI Card containing login methods -->
-            <div class="card shrink-0 w-full max-w-md shadow-2xl bg-marine h-auto lg:h-full mb-24">
-                <div class="card-body">
-                    <h1 class="text-center p-2 text-3xl mb-5 font-base text-clean dark:text-slate dark:border-slate border-b border-clean">Sign In</h1>
-                    <div class="form-control">
-                        <input id="email" type="email" placeholder="Email" class="input input-bordered bg-clean text-charcoal dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest" required />
-                    </div>
-                    <div class="form-control relative">
-                        <input id="password" type="password" placeholder="Password" class="input input-bordered bg-clean text-charcoal dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest" required />
-                        <!-- Eye toggle button -->
-                        <button type="button" id="toggleIndexPassword" class="absolute inset-y-0 right-0 px-2 py-1 bg-transparent text-marine focus:outline-none">
-                            <i id="eyeClosedIcon" class="fas fa-eye-slash eye-closed"></i>
-                            <i id="eyeOpenIcon" class="fas fa-eye eye-open" style="display: none;"></i>
-                        </button>
-                    </div>
-                    <div class="flex justify-center mx-auto w-2/5 py-1 text-center m-2">
-                        <button id="loginEmailPassword" class="mr-2 btn text-clean dark:text-clean font-semibold bg-forest border-forest hover:border-clean hover:bg-clean hover:text-forest dark:hover:border-slate dark:hover:bg-slate dark:hover:text-clean w-full">Sign In</button>
-                        <button id="loginGoogleBtn" class="ml-2 btn text-forest dark:text-clean dark:bg-slate dark:border-slate font-semibold bg-clean border-clean hover:border-forest hover:bg-forest hover:text-clean dark:hover:border-clean dark:hover:bg-clean dark:hover:text-slate w-full">Sign in with Google</button>
-                    </div>
-                    <div class="border-t border-clean dark:border-slate p-3 text-center">
-                        <a href="#" class="font-base text-forest dark:text-slate text-md hover:text-clean" id="createAccountLink"><b>New user?</b> Create an account</a>
-                        <br>
-                        <a href="#" class="font-base text-forest dark:text-slate text-md hover:text-clean" id="forgotPasswordLink"><b>Forgot password?</b></a>
-                    </div>
-                </div>
-            </div>
+      <div class="hero-content flex-col lg:flex-row-reverse">
+        <div class="text-center">
+          <h1
+            class="lg:flex md:inline text-5xl font-bold lg:ml-6 md:ml-2 text-forest dark:text-clean"
+          >
+            Welcome to
+          </h1>
+          <h1
+            class="lg:flex md:inline text-7xl lg:ml-6 md:ml-2 font-bold bg-gradient-to-r from-marine to-feather_2 text-transparent bg-clip-text"
+          >
+            HomeKeep
+          </h1>
+          <div
+            class="max-w-[calc(100%-4rem)] mx-auto lg:text-left md:text-center"
+          >
+            <p class="mt-6 text-xl text-forest dark:text-clean">
+              Effortlessly schedule maintenance tasks, receive notifications,
+              and ensure your home is always in top condition with our intuitive
+              app. Start simplifying your life today
+            </p>
+          </div>
         </div>
+
+        <!-- daisyUI Card containing login methods -->
+        <div
+          class="card shrink-0 w-full max-w-md shadow-2xl bg-marine h-auto lg:h-full mb-24"
+        >
+          <div class="card-body">
+            <h1
+              class="text-center p-2 text-3xl mb-5 font-base text-clean dark:text-slate dark:border-slate border-b border-clean"
+            >
+              Sign In
+            </h1>
+            <div class="form-control">
+              <input
+                id="email"
+                type="email"
+                placeholder="Email"
+                class="input input-bordered bg-clean text-charcoal dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest"
+                required
+              />
+            </div>
+            <div class="form-control relative">
+              <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                class="input input-bordered bg-clean text-charcoal dark:bg-slate dark:text-clean dark:placeholder-clean placeholder-forest"
+                required
+              />
+              <!-- Eye toggle button -->
+              <button
+                type="button"
+                id="toggleIndexPassword"
+                class="absolute inset-y-0 right-0 px-2 py-1 bg-transparent text-marine focus:outline-none"
+              >
+                <i id="eyeClosedIcon" class="fas fa-eye-slash eye-closed"></i>
+                <i
+                  id="eyeOpenIcon"
+                  class="fas fa-eye eye-open"
+                  style="display: none"
+                ></i>
+              </button>
+            </div>
+            <div class="flex justify-center mx-auto w-2/5 py-1 text-center m-2">
+              <button
+                id="loginEmailPassword"
+                class="mr-2 btn text-clean dark:text-clean font-semibold bg-forest border-forest hover:border-clean hover:bg-clean hover:text-forest dark:hover:border-slate dark:hover:bg-slate dark:hover:text-clean w-full"
+              >
+                Sign In
+              </button>
+              <button
+                id="loginGoogleBtn"
+                class="ml-2 btn text-forest dark:text-clean dark:bg-slate dark:border-slate font-semibold bg-clean border-clean hover:border-forest hover:bg-forest hover:text-clean dark:hover:border-clean dark:hover:bg-clean dark:hover:text-slate w-full"
+              >
+                Sign in with Google
+              </button>
+            </div>
+            <div
+              class="border-t border-clean dark:border-slate p-3 text-center"
+            >
+              <a
+                href="#"
+                class="font-base text-forest dark:text-slate text-md hover:text-clean"
+                id="createAccountLink"
+                ><b>New user?</b> Create an account</a
+              >
+              <br />
+              <a
+                href="#"
+                class="font-base text-forest dark:text-slate text-md hover:text-clean"
+                id="forgotPasswordLink"
+                ><b>Forgot password?</b></a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Footer -->
-    <footer class="fixed bottom-0 left-0 w-full bg-clean dark:bg-slate shadow sm:fixed sm:bottom-0 sm:left-0">
-        <div class="flex items-center justify-between p-4 md:p-2">
-            <span class="text-md font-normal text-charcoal dark:text-clean">© 2024 &#9702; HomeKeep by Jeffrey Patey &#9702; GetCoding Module 1 &#9702; All Rights Reserved &#9702;</span>
-            <div class="flex items-center ml-4">
-                <a href="https://github.com/jvpatey" target="_blank" rel="noopener noreferrer" class="text-xl text-charcoal dark:text-clean mr-2 hover:text-marine">
-                    <i class="fab fa-github"></i>
-                </a>
-                <a href="https://www.linkedin.com/in/jeffrey-patey-3ba715220/" target="_blank" rel="noopener noreferrer" class="text-xl text-charcoal dark:text-clean mr-4 hover:text-marine">
-                    <i class="fab fa-linkedin"></i>
-                </a>
-            </div>
-            <button id="chatIcon" class="text-2xl bg-feather p-3 text-clean dark:text-slate rounded-2xl hover:bg-marine ml-auto"><i class="fa-solid fa-comment"></i></button>
+    <footer
+      class="fixed bottom-0 left-0 w-full bg-clean dark:bg-slate shadow sm:fixed sm:bottom-0 sm:left-0"
+    >
+      <div class="flex items-center justify-between p-4 md:p-2">
+        <span class="text-md font-normal text-charcoal dark:text-clean"
+          >© 2024 &#9702; HomeKeep by Jeffrey Patey &#9702; GetCoding Module 1
+          &#9702; All Rights Reserved &#9702;</span
+        >
+        <div class="flex items-center ml-4">
+          <a
+            href="https://github.com/jvpatey"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xl text-charcoal dark:text-clean mr-2 hover:text-marine"
+          >
+            <i class="fab fa-github"></i>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/jeffrey-patey-3ba715220/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xl text-charcoal dark:text-clean mr-4 hover:text-marine"
+          >
+            <i class="fab fa-linkedin"></i>
+          </a>
         </div>
+        <button
+          id="chatIcon"
+          class="text-2xl bg-feather p-3 text-clean dark:text-slate rounded-2xl hover:bg-marine ml-auto"
+        >
+          <i class="fa-solid fa-comment"></i>
+        </button>
+      </div>
     </footer>
-    
-<script src="js/script-index.js" type="module"></script>
-</body>
+
+    <script src="js/script-index.js" type="module"></script>
+  </body>
 </html>
